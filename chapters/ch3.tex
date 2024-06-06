@@ -1,12 +1,28 @@
-%outline
+%%outline%% ECAL Cluster Calibration using Boosted Decision Tree
 
-PF ECAL cluster calibration intro.
+intro..
+ talk about ECAL.
+ introduce clustering algorithm in ECAL.  
+ HLT vs offline PF ECAL cluster
+ 
+ expand more on:
+  the PF cluster calibration.
+  how it was done perviously, and now in this thesis. 
+  
+computational details.. 
+ 3.1 Boosted Decision Tree (BDT)
+  based semi-parametric regression.
 
-About Boosted Decision Tree (BDT) based semi-parametric regression.
+ 3.2 BDT training details  
+  samples being used. for training and validation.
+  Calibration procedure. Input and target variables to BDT.
 
-MC samples being used.
-
-Calibration procedure. Input variables to BDT.
+ 3.3 fitting function 
+ Crystal Ball (CB) double function
+ 
+Results and Discussion (might be moved to its chapter before conclusion) 
+ compare old vs new corrections
+ check the response, resolution in each regions EE. EB. add comments if the results has improved or stayed the same. 
 
 %plots : showing (EB , EE regions) 
 %-  mu vs pt (covering 3 ranges of pt gen particle) (EB , EE regions)
