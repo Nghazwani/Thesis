@@ -2,48 +2,48 @@
 
 intro..
  talk about ECAL.
- introduce clustering algorithm in ECAL.  
+ introduce clustering algorithm in ECAL.
  HLT vs offline PF ECAL cluster
- 
+
  expand more on:
   the PF cluster calibration.
-  how it was done perviously, and now in this thesis. 
-  
-computational details.. 
+  how it was done perviously, and now in this thesis.
+
+computational details..
  3.1 Boosted Decision Tree (BDT)
   based semi-parametric regression.
 
- 3.2 BDT training details  
+ 3.2 BDT training details
   samples being used. for training and validation.
   Calibration procedure. Input and target variables to BDT.
 
- 3.3 fitting function 
+ 3.3 fitting function
  Crystal Ball (CB) double function
- 
-Results and Discussion (might be moved to its chapter before conclusion) 
- compare old vs new corrections
- check the response, resolution in each regions EE. EB. add comments if the results has improved or stayed the same. 
 
-%plots : showing (EB , EE regions) 
+Results and Discussion (might be moved to its chapter before conclusion)
+ compare old vs new corrections
+ check the response, resolution in each regions EE. EB. add comments if the results has improved or stayed the same.
+
+%plots : showing (EB , EE regions)
 %-  mu vs pt (covering 3 ranges of pt gen particle) (EB , EE regions)
 %-  mu vs eta (for each range of pt) (EB region)
 
 
-%\frame{                                                                                                          
-\begin{figure}                                                                                                   
+%\frame{
+\begin{figure}
 %\begin{verbatim}
 %\end{verbatim}
 \includegraphics[width=0.495\textwidth]{./ECAL_plots/plotsPU/EB/FULL/pdf/EBFULL_GENETA_0005_0020_MuOverBins.pdf}
 \includegraphics[width=0.495\textwidth]{./ECAL_plots/plotsPU/EB/FULL/pdf/EBFULL_GENPT_0005_0020_EffSigmaOverBins.pdf}
 \caption{EB - Full Readout : mu vs eta}
 \end{figure}
-%} 
+%}
 
 
 
 
 
-Include some set of stamp plots. (where we get mu & std from after fitting)
+Include some set of stamp plots. (where we get mu \& std from after fitting)
 
 Now, for ZS set vs pt.
 
@@ -54,17 +54,25 @@ HLT vs offline PF ECAL cluster
 %- (PF cluster offline E / PFC online E) vs pt
 %- (PF cluster offline E / PFC online E) vs eta
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
 \caption{(PF cluster offline E / PFC online E) vs pt}
+\end{figure}
+\begin{figure}
 \caption{(PF cluster offline E / PFC online E) vs eta}
+\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%plots : 
+%plots :
 %- (PF cluster offline corrected E / PFC online corrected  E) vs pt
-%- (PF cluster offline corrected E / PFC online corrected  E) vs eta 
+%- (PF cluster offline corrected E / PFC online corrected  E) vs eta
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
 \caption{(PF cluster offline corrected E / PFC online corrected E) vs pt}
+\end{figure}
+\begin{figure}
 \caption{(PF cluster offline corrected E / PFC online corrected E) vs eta}
+\end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Footnotes}
