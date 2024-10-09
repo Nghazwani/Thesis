@@ -5,23 +5,34 @@ write a simple introduction to explain how BDT works in ML and how it helps in P
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{ECAL Cluster Calibration}
 
+As mentioned in the previous chapter the main goal of PF Cluster algorithm is to detect and measure the energy and direction of stable neutral particles such as photons and neutral hadrons. Also, separate these neutral particles from charged hadron energy deposits. In the ECAL this algorithm reconstructs and identify electrons and photons.  
+
+Usually, the PF the clustering is performed separately in each region of the ECAL: ECAL Barrel (EB), ECAL Endcaps (EE). The clustering algorithm applies several thresholds to the ECAL cell energies. It is expected that the energy measured in PF ECAL clusters is to somewhat smaller than of the incoming photons, and the superclusters used for the absolute ECAL calibration. 
+
+The PF ECAL cluster calibration supposed to account for the effects of these thresholds and it could be determined from simulated diphoton gun sample.  
+
+Here PF Cluster regression is used to correct PF cluster energies lost due to tracker material, gaps, dead channels etc. The ML method implemented is a Boosted Decision Tree (BDT) based semi-parametric regression. To estimate the correction to the PF ECAL Cluster, we consider the case where a one photon has deposited all its energy in one PF cluster in the ECAL. This will allow us to calculate the correction factor = E “gen photon” / E “raw pf cluster”.  
+
+Steps of the PF cluster regression is done intro two steps: 1) Training (from where we will get trained regression model). Training is done on no PU Zero material double photon particle gun. During training we are going to adopt the same variables used in Run 2 calibration for Run 3 (2024). 2) The validation of the training is done on NOPU and PU Zero material double photon samples.   
+
+Details of the training, We are adopting the same variables used previously in Run 2 & Run 3 (2023). The training input variables include independent variables or features used in the training:  
+clusrawE , ieta, iphi (EB) , ix, iy (EE), ietamod20, iphimod20 (EB only), (clusPS1+clusPS2)/clusrawE (EE only), number of hits in the cluster (which takes values 1, 2 and 3 - it takes 3 if nhits >= 3). The used Target: log(Egen/Eraw).  
+
+The validation is done through few steps. First from the training model we get the value of the correction factor, then calculated:  the corrected cluster energy = E “raw pf cluster” * correction factor Plot: the response: E “corrected PF cluster” / E “gen photon” Fit the plot with: double CB function. From the fitted curve we find: mean, effective sigma. We can also get the mean, effective sigma for raw PF cluster energy “with no correction” to compare. 
+
+Overview of the results: we checked the 2024 double photon calibration samples for PF ECAL clusters. In general, the existing calibration derived from 2022 samples seems to continue to be working well. 
+
+  
 %why do we need to calibrate the PF ECAL clusters
-PF cluster regression is needed to count for the PF cluster energy lost due to tracker material, gaps, dead channels etc.
-
-ML method used to the correction factor is BDT based on a semi-parameteric regression.
-
-To estimate the correction, it is helpful to take that PF cluster is where a photon has deposited all its energy in one PF cluster. Then we can say that the correction for that PFcluster = Energy of gen photon / Energy of raw pf cluster.
-
+%PF cluster regression is needed to count for the PF cluster energy lost due to tracker material, gaps, dead channels etc.
+%ML method used to the correction factor is BDT based on a semi-parameteric regression.
+%To estimate the correction, it is helpful to take that PF cluster is where a photon has deposited all its energy in one PF cluster. Then we can say that the correction for that PFcluster = Energy of gen photon / Energy of raw pf cluster.
 %the sample of the used data
-The 2024 calibration is done on Double Photon with No Material dataset sample produced centrally under CMSSW 13.3 %this is Run3 Winter24 miniAOD%
-The calibration is done separately in barrel and encaps regions of the ECAL for  Full and ZS readout categories.   
-
-The training  is done on NOPU sample. However the validation of the training was tested for both NOPU and PU cases.
-
+%The 2024 calibration is done on Double Photon with No Material dataset sample produced centrally under CMSSW 13.3 %this is Run3 Winter24 miniAOD%
+%The calibration is done separately in barrel and encaps regions of the ECAL for  Full and ZS readout categories.   
+%The training  is done on NOPU sample. However the validation of the training was tested for both NOPU and PU cases.
 %steps of the PF regression%
-
 %steps of validing the training%
-
 %details of the training%
 
 
