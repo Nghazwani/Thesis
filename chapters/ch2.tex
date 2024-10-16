@@ -1,10 +1,15 @@
+The PF algorithm is used in event reconstruction to produce low level physics objects, this includes: electrons, muons, photons, charged hadrons and neutral hadrons. These objects could be used later to reconstruct higher-level objects like jets and MET.  
+ 
+This section describes briefly the Particle Flow algorithm, especially the reconstruction and the calibration of calorimeterclusters in the ECAL and the HCAL are presented.  
+
+
 \section{Particle Flow Reconstruction}
 
 The next step after obtaining collision data or simulated data is to reconstruct and identify all final particles in the event. Particle flow is the dedicated algorithm to achieve this task by producing a list of reconstructed particles candidates and determining their energy, direction, type. The PF candidates include: electrons, muons, photons, charged hadrons and neutral hadrons. Then this list of PF candidates could be used to build high level objects like: jets and MET.  
 
 PF uses info from all the subdetectors, this is: tracks form inner tracker systems, ECAL energy deposits, HCAL energy deposits, muon chamber tracks. Then do the following steps: first, energy deposits in each calorimeter are connected into clusters. Then all the tracks and clusters are linked together based on their spatial proximity. Finally, blocks are formed to group all the connected elements from tracks and clusters to get the list PF candidates
 
-\subsection{Clustering}
+\subsection{Calorimeter Clustering}
 Clustering in done each calorimeter following three steps. First, we need to Identify topological clusters and their seeds. After that we can compute cluster positions and energies.  
 
 We can identify topological clusters by looking for a group of calorimeter cells, each has energy deposit above a certain threshold, that share at least one neighbor. Then we identify any calorimeter cell whose energy is a local maximum, with respect to its immediate neighbors, this is a seed. Topological clusters must have one seed or multiple. 
@@ -13,7 +18,7 @@ When Computing cluster positions and energies we have two kinds of topological c
 
 For Multiple-seed case, each seed is assumed to represent a unique energy cluster, but the energy deposited in non-seed cells will be shared between the various clusters within the topological cluster.  An iterative procedure is used to converge on cluster energies and positions based on energy-weighted averages of fractional cell energies.
 
-\subsection{Links and Blocks}
+%\subsection{Links and Blocks}
 Linking is done by connecting together tracks and clusters based on their spatial proximity. These possible links are: tracks linked to ECAL cluster, tracks linked to HCAL cluster, muon segments track linked to inner track, ECAL cluster linked to HCAL cluster. inner tracks and muon tracks, muon tracks and ECAL clusters, and muon tracks and HCAL clusters. 
 
 After all the links are established, “blocks” are formed from all groups of linked tracks and clusters. Blocks are also constructed from any “alone” elements, such as single tracks or single clusters. 
@@ -38,6 +43,14 @@ The track momentum sum is larger than the calibrated cluster energy sum. This in
 
 The final step in candidate formation is to assign “lone” tracks as charged hadrons carrying the track’s momentum and direction. 
 
+\section{Cluster Calibration}
+\subsection{ECAL cluster calibration}
+\subsection{HCAL cluster Calibration}
+
+
+
+
+
 %Particle Flow is an advance algorithm that combines all the information gathered using all the detectors in the CMS to reconstruct and identify final state particles. These initial  reconstructed particles are known as PF candidates are electrons, photons, charged and neutral hadrons, and muons.
 
 %The PF uses the basic elements: first element is the tracks information coming from the inner tracker, and muon chamber tracks. The other element is energy deposits information from ECAL and the HCAL. In this way the PF could give a better description for the collision event.
@@ -48,7 +61,7 @@ The final step in candidate formation is to assign “lone” tracks as charged 
 
 
 %\section{Particle Flow Reconstruction}
-\section{Calorimeter Cluster Calibration}
+%\section{Calorimeter Cluster Calibration}
 %This is another section.
 %There is likewise triple space between the preceding text and this section's title.
 %The observant reader will notice that there is a double space between the section's title and this text.

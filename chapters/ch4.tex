@@ -1,165 +1,198 @@
-%ch4 outline
+%% Ch4:Hadronic Cluster Calibration Using Graph Neural Network%% 
 
-Intro PF hadron cluster calibration using: chi squar method.
+\section{Introduction to Graph Neural Network}
+GNN is a type of NN that is used to process data that can be represented as graphs.
+% https://en.wikipedia.org/wiki/Graph_neural_network
 
-GNN intro 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\section{HCAL Cluster Calibration using GNN}
 
-PF hadron cluster calibration usin: Dynamic Reduction Network (DRN)
+Hadronic showers in the CMS detector have both electromagnetic and hadronic components.
 
-Taining deatails for DRN 
+These showers are not dully contained in the ECAL but extend to HCAL.
 
+The detector response is different for EM and HAD componenets which lead to non linear energy response.
 
-%plots: for EH , H hadrons.
-%1- response vs trueE (covering 3 ranges of eta) 
-%2- resolution vs trueE (covering 3 ranges of eta) 
+The reconstructed energy of hadrons is the sum if all reconstructed hits (offline, PF reconstruct the RAW data) from the ECAL and HCAL.
 
-for EH hadrons
+For a given bin of ture energy (PF also reconstruct generated data or MC data):
 
-\begin{figure}[ht]
-%\centering
-%\includegraphics[width=1in]{baylor}
-\caption{EH - response vs trueE }
-%\label{figure_example1}
-\end{figure}
+by fitting the distribution of total RAW energy with Gaussian we obtain mu and std deviation then use them to get:
 
-\begin{figure}[ht]
-%\centering  
-%\includegraphics[width=1in]{baylor}
-\caption{EH - resolution vs trueE }
-%\label{figure_example1}
-\end{figure}
+Resolution (std/mu) : which is a measure of accuracy
+
+and Response [(mu/E true) -1] : which is measurement of precision. (we can see that is not linear)
+
+Energy Reconstruction using conventional method (chi square) vs DRN (based on GNN).
+
+The work in this thesis is done for Run3 data. 
 
 
-for H hadrons 
+\subsection{Strategy}
 
-\begin{figure}[ht]
-%\centering                                                                                                                                                                                                                                                                     
-%\includegraphics[width=1in]{baylor}
-\caption{EH - response vs trueE }
-%\label{figure_example1}                                                                                                                                                                                                                                                        
-\end{figure}
 
-\begin{figure}[ht]
-%\centering  
-%\includegraphics[width=1in]{baylor}
-\caption{E - resolution vs trueE }
-%\label{figure_example1}
-\end{figure}~
+\subsection{Samples used and Training Details}
+
+Include DRN architecture overview here. We could include the Training target.  
+
+DRN training parameters. this include: Inpute layers (3) .. etc.
+
+Sample details: centrally produced GEN-SIM-RAW (two momentum range) and privately reconstructed in CMSSW.
+
+Rechits used as input. (we could expand more on this detail)
+
+\subsection{Validation}
+
+80\% of the dataset used for taining and 20\% for validation.  
+
+% source: Chirayu talk 26/2 % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\section{Results and Discussion}
+
+we present the results of response and resolution (from DRN vs Chi2) in  both Barrel region and endcap region.  
+  \subsection{EH Hadrons}
+  \subsection{H hadrons} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Captions}
-Figures are funny. They are notably different from tables and therefore requires some explanation. Here are the rules:
-\begin{enumerate}
-\item The caption is below the image
-\item The caption is centered if it's short, ie one line. 
-\item But if the text spans multiple lines, then it's left-justified. 
-\end{enumerate}
+%\section{Captions}
+%Figures are funny. They are notably different from tables and therefore requires some explanation. Here are the rules:
+%\begin{enumerate}
+%\item The caption is below the image
+%\item The caption is centered if it's short, ie one line. 
+%\item But if the text spans multiple lines, then it's left-justified. 
+%\end{enumerate}
 
-Figure~\ref{figure_example1} has a short caption, and
-Figure~\ref{figure_example2} has a longer caption, demonstrating the required
-single-spacing.
+%Figure~\ref{figure_example1} has a short caption, and
+%Figure~\ref{figure_example2} has a longer caption, demonstrating the required
+%single-spacing.
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=1in]{baylor}
-\caption{This is a caption for this figure}
-\label{figure_example1}
-\end{figure}
+%\begin{figure}[ht]
+%\centering
+%\includegraphics[width=1in]{baylor}
+%\caption{This is a caption for this figure}
+%\label{figure_example1}
+%\end{figure}
 
-Figures like tables are floats and can be positioned anywhere. 
-This author favors placing images at the top. 
-But to illustrate, figure~\ref{figure_example2} is placed at the bottom. 
+%Figures like tables are floats and can be positioned anywhere. 
+%This author favors placing images at the top. 
+%But to illustrate, figure~\ref{figure_example2} is placed at the bottom. 
 
-\begin{figure}[b]
-\centering
-\includegraphics[width=0.2\textwidth]{baylor}
-\caption[The short table of contents version]{An example of a longer figure
-caption that spans multiple lines and has a corresponding short version for the
-table of contents.}
-\label{figure_example2}
-\end{figure}
+%\begin{figure}[b]
+%\centering
+%\includegraphics[width=0.2\textwidth]{baylor}
+%\caption[The short table of contents version]{An example of a longer figure
+%caption that spans multiple lines and has a corresponding short version for the
+%table of contents.}
+%\label{figure_example2}
+%\end{figure}
 
-\section{Tables}
+%\section{Tables}
 
-Table~\ref{table_fruit} and Table~\ref{table_silly} demonstrate tables. Table
-captions differ slightly from figure captions, in that they are \textit{always}
-supposed to be centered, even if they use multiple lines.
+%Table~\ref{table_fruit} and Table~\ref{table_silly} demonstrate tables. Table
+%captions differ slightly from figure captions, in that they are \textit{always}
+%supposed to be centered, even if they use multiple lines.
 
-\begin{table}[h]
-\centering
-\caption[Fruits by color]{\centering Fruits listed by their color. Note that
-captions differ from figure captions in that they are \textit{always} supposed
-to be centered, even if they use multiple lines.}
-\label{table_fruit}
-\begin{tabular}{rl}
-    \hline
-    Fruit & Color  \\  \hline
-    Orange & Orange \\
-    Blue & Blueberry \\
-    Red & Cherry \\
-    Green & Apple \\
-    Yellow & Banana \\
-    Purple & Eggplant \\
-    \hline
-\end{tabular}
-\end{table}
+%\begin{table}[h]
+%\centering
+%\caption[Fruits by color]{\centering Fruits listed by their color. Note that
+%captions differ from figure captions in that they are \textit{always} supposed
+%to be centered, even if they use multiple lines.}
+%\label{table_fruit}
+%\begin{tabular}{rl}
+%    \hline
+%    Fruit & Color  \\  \hline
+%    Orange & Orange \\
+%    Blue & Blueberry \\
+%    Red & Cherry \\
+%    Green & Apple \\
+%    Yellow & Banana \\
+%    Purple & Eggplant \\
+%    \hline
+%\end{tabular}
+%\end{table}
 
-Tables can be anywhere in the text. They should be referred to \textbf{before} they make an appearance. 
-Tables can be placed between text, top of page, or bottom of page. This author personally prefers bottom of page. 
-There has to be triple space before the table captions, double space between caption and table, and triple space after the table. 
+%Tables can be anywhere in the text. They should be referred to \textbf{before} they make an appearance. 
+%Tables can be placed between text, top of page, or bottom of page. This author personally prefers bottom of page. 
+%There has to be triple space before the table captions, double space between caption and table, and triple space after the table. 
 
-The intext table (table~\ref{table_silly}) might look like it has more space after the table and before the text
-But that's just because the last item on the table is a horizontal line. 
+%The intext table (table~\ref{table_silly}) might look like it has more space after the table and before the text
+%But that's just because the last item on the table is a horizontal line. 
 
-At the bottom of this page, is an example of a table set to [b]. This demonstrates the prettiness available to us by using tables at the bottom. 
-Bottom tables rock. As do top tables. 
-\begin{table}[b]
-\centering
-\caption[A bottom table]{A botom table illustrated}
-\label{table_silly}
-\begin{tabular}{ccc}
-    \hline
-    A & B & C \\  \hline
-    1 & 2 & 3 \\
-    4 & 5 & 6 \\
-    7 & 8 & 9 \\
-    \hline
-\end{tabular}
-\end{table}
+%At the bottom of this page, is an example of a table set to [b]. This demonstrates the prettiness available to us by using tables at the bottom. 
+%Bottom tables rock. As do top tables. 
+%\begin{table}[b]
+%\centering
+%\caption[A bottom table]{A botom table illustrated}
+%\label{table_silly}
+%\begin{tabular}{ccc}
+%    \hline
+%    A & B & C \\  \hline
+%    1 & 2 & 3 \\
+%    4 & 5 & 6 \\
+%    7 & 8 & 9 \\
+%    \hline
+%\end{tabular}
+%\end{table}
 
-Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi. Morbi auc-
-tor lorem non justo. Nam lacus libero, pretium at, lobortis vitae, ultricies et, tellus.
-Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna, vitae ornare
-odio metus a mi. Morbi ac orci et nisl hendrerit mollis. Suspendisse ut massa. Cras
-nec ante. Pellentesque a nulla. Cum sociis natoque penatibus et magnis dis par-
-turient montes, nascetur ridiculus mus. Aliquam tincidunt urna. Nulla ullamcorper
-vestibulum turpis. Pellentesque cursus luctus mauris.
+%Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi. Morbi auc-
+%tor lorem non justo. Nam lacus libero, pretium at, lobortis vitae, ultricies et, tellus.
+%Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna, vitae ornare
+%odio metus a mi. Morbi ac orci et nisl hendrerit mollis. Suspendisse ut massa. Cras
+%nec ante. Pellentesque a nulla. Cum sociis natoque penatibus et magnis dis par-
+%turient montes, nascetur ridiculus mus. Aliquam tincidunt urna. Nulla ullamcorper
+%vestibulum turpis. Pellentesque cursus luctus mauris.
 
-\begin{table}[!t]
-  \centering
-  \caption{This is a Top Positioned Table}
-  \begin{tabular}{ l c c c c }
-    \hline
-    \multirow{2}{*}{Interface} &
-    \multicolumn{2}{c}{Completion Time} &
-    \multicolumn{2}{c}{Throughput} \\
+%\begin{table}[!t]
+%  \centering
+%  \caption{This is a Top Positioned Table}
+%  \begin{tabular}{ l c c c c }
+%    \hline
+%    \multirow{2}{*}{Interface} &
+%    \multicolumn{2}{c}{Completion Time} &
+%    \multicolumn{2}{c}{Throughput} \\
     
-    {} & Mean & Stdev & Mean & Stdev \\ 
-    \hline
-    Mouse only & 74s & 5.19 & 4.33bps & 0.35 \\
-    Mouse \& speech & 114s & 9.74 & 4.58bps & 0.46 \\
-    Gestures only & 116s & 14.76 & 2.66bps & 0.40\\
-    Gestures \& Speech & 136s & 14.82 & 2.83bps & 0.49\\
-    \hline
-  \end{tabular}
-  \label{tab:ranking}
-\end{table}
+%    {} & Mean & Stdev & Mean & Stdev \\ 
+%    \hline
+%    Mouse only & 74s & 5.19 & 4.33bps & 0.35 \\
+%    Mouse \& speech & 114s & 9.74 & 4.58bps & 0.46 \\
+%    Gestures only & 116s & 14.76 & 2.66bps & 0.40\\
+%    Gestures \& Speech & 136s & 14.82 & 2.83bps & 0.49\\
+%    \hline
+%  \end{tabular}
+%  \label{tab:ranking}
+%\end{table}
 
 
-Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi. Morbi auc-
-tor lorem non justo. Nam lacus libero, pretium at, lobortis vitae, ultricies et, tellus.
-Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna, vitae ornare
-odio metus a mi. Morbi ac orci et nisl hendrerit mollis. Suspendisse ut massa. Cras
-nec ante. Pellentesque a nulla. Cum sociis natoque penatibus et magnis dis par-
-turient montes, nascetur ridiculus mus. Aliquam tincidunt urna. Nulla ullamcorper
-vestibulum turpis. Pellentesque cursus luctus mauris.
+%Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi. Morbi auc-
+%tor lorem non justo. Nam lacus libero, pretium at, lobortis vitae, ultricies et, tellus.
+%Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna, vitae ornare
+%odio metus a mi. Morbi ac orci et nisl hendrerit mollis. Suspendisse ut massa. Cras
+%nec ante. Pellentesque a nulla. Cum sociis natoque penatibus et magnis dis par-
+%turient montes, nascetur ridiculus mus. Aliquam tincidunt urna. Nulla ullamcorper
+%vestibulum turpis. Pellentesque cursus luctus mauris.

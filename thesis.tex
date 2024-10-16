@@ -1,4 +1,4 @@
-% Baylor University Thesis LaTeX template
+%  Baylor University Thesis LaTeX template
 % - Template created by Jonathan Drake (2013)
 % - Template updated by Kenneth Call, Kenichi Hatakeyama (2019)
 % - Template updated by Chris Madrid, Caleb Smith (2020)
@@ -39,7 +39,7 @@
 \usepackage{rotating}
 \usepackage{tabu}
 
-%KC: Graduate school asks that references to chapters use words for the numbers. the fmtcount package translates number to words. This is really rather hacky. If the formated label is an integer according to xstring, then we set the hackyCounter to have that label's value, then print it using \Numberstring
+%%KC: Graduate school asks that references to chapters use words for the numbers. the fmtcount package translates number to words. This is really rather hacky. If the formated label is an integer according to xstring, then we set the hackyCounter to have that label's value, then print it using \Numberstring
 \usepackage{fmtcount, xstring}
 
 \newcount\hackyCounter
@@ -51,7 +51,7 @@
 % https://tex.stackexchange.com/questions/119513/cleveref-and-appendix-packages-appendix-referenced-as-section
 \AtBeginEnvironment{appendices}{\crefalias{chapter}{appendix}}
 
-%special commands
+%%special commands
 %\setlength{\marginparwidth}{4cm}
 \newcommand{\tinytodo}[2][]
 {\todo[caption={#2}, #1]{\renewcommand{\baselinestretch}{0.8}\selectfont#2\par}}
@@ -62,8 +62,9 @@
 \renewcommand{\sectionautorefname}{\mbox{Section}}
 \renewcommand{\subsectionautorefname}{\mbox{Section}}
 
-% Thesis parameters
-\title{Electromagnetic and Hadronic Cluster Calibration For CMS Experiment Particle Flow Reconstruction Using machine Learning Methods}
+%%Thesis parameters
+\title{Electromagnetic and Hadronic Cluster Calibration for the CMS Particle Flow Algorithm Using Machine Learning Methods}    
+%\title{Electromagnetic and Hadronic Cluster Calibration For CMS Experiment Particle Flow Reconstruction Using machine Learning Methods}
 \author{Noorah Asaad Ghazwani}
 \holding{B.S.}
 \seeking{M.S.}
@@ -71,17 +72,17 @@
 \project{A Thesis}
 \date{July 2024}
 
-% Administration
+%% Administration
 \graduateDean{J.~Larry Lyon, Ph.D.}
 \department{Department of Physics}
 \departmentChair{Lorin Swint Matthews, Ph.D.}
 \departmentChairTitle{Chairperson}
 
-% Supervisor (advisor / mentor)
+%% Supervisor (advisor / mentor)
 \supervisor{Kenichi Hatakeyam, Ph.D.}
 \supervisorRole{Advisor}
 
-%  Readers (committee members)
+%% Readers (committee members)
 \committee{Dissertation Committee}
 \readerOne{Kenichi Hatakeyama Ph.D., Chairperson}
 \readerTwo{Jay R. Dittmann, Ph.D.}
@@ -89,7 +90,7 @@
 \readerFour{not decided yet.}
 
 
-% CMS specific commands
+%% CMS specific commands
 \input{ptdr-definitions}
 \newcommand{\nbjets}{\ensuremath{N_{\PQb}}\xspace}
 \newcommand{\njets}{\ensuremath{N_{\text{j}}}\xspace}
@@ -113,31 +114,31 @@
 \newcommand{\RecoMET}{\ensuremath{\mbox{reco-}\ptmiss}\xspace}
 \newcommand{\orderof}{\ensuremath{\mathcal{O}}}
 
-% Abstract
+%% Abstract
 \abstract{\input{abstract}}
 
-% Acknowledgments (optional)
+%% Acknowledgments (optional)
 \acknowledgements{\input{acknowledgements}}
 
-% Dedication (optional)
+%% Dedication (optional)
 \dedication{\it Pour la rose qui fait important le temps qu'on perd.}
 
-% List of Acronyms (optional)
+%% List of Acronyms (optional)
 % To alphabetize acronyms, use "NSIO method": abbreviations should be alphabetized exactly as written, NOT as spelled out.
 % See https://english.stackexchange.com/questions/103348/alphabetizing-list-of-mixed-words-and-acronyms
 \makeListOfAcronyms
 
-% List of figures (optional)
+%% List of figures (optional)
 \makeListOfFigures
 
-% List of tables (optional)
+%% List of tables (optional)
 \makeListOfTables
 
-% Document body
+%% Document body
 \begin{document}
 \pdfbookmark[-1]{CONTENT}{bookmark:Content}  % Top level bookmark to hold all chapters
 
-% Help format to graduate school requirements.
+%% Help format to graduate school requirements.
 \setlength{\belowdisplayskip}{1ex} \setlength{\belowdisplayshortskip}{1ex}
 \setlength{\abovedisplayskip}{1ex} \setlength{\abovedisplayshortskip}{1ex}
 
@@ -146,24 +147,24 @@
 % https://tex.stackexchange.com/questions/246/when-should-i-use-input-vs-include
 
 % Chapters
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Introduction}
 \label{chapter:ch1}
 \input{chapters/ch1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Particle Flow Reconstruction and Calorimeter Cluster Calibration}
+\chapter{Particle Flow Algorithm and Calorimeter Cluster Calibration} 
+%\chapter{Particle Flow Reconstruction and Calorimeter Cluster Calibration}
 \label{chapter:ch2}
 \input{chapters/ch2}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{ECAL Cluster Calibration using Boosted Decision Tree}
+\chapter{Electromagnetic Cluster Calibration Using Boosted Decision Tree}
 \label{chapter:ch3}
 \input{chapters/ch3}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Hadronic Cluster Calibration using Graph Neural Network}
+\chapter{Hadronic Cluster Calibration Using Graph Neural Network}
 \label{chapter:ch4}
 \input{chapters/ch4}
 
@@ -178,23 +179,23 @@
 %\input{chapters/ch6}
 
 % Appendices (optional)
-\multipleappendices % Change to \oneappendix if you have only one appendix!
+%\multipleappendices % Change to \oneappendix if you have only one appendix!
 
-\begin{appendices}
+%\begin{appendices}
 
-\chapter{Tables}
-\label{appendix:appendixA}
-\input{appendices/appendixA}
+%\chapter{Tables}
+%\label{appendix:appendixA}
+%\input{appendices/appendixA}
 
-\chapter{Diagrams}
-\label{appendix:appendixB}
-\input{appendices/appendixB}
+%\chapter{Diagrams}
+%\label{appendix:appendixB}
+%\input{appendices/appendixB}
 
-\chapter{Plots}
-\label{appendix:appendixC}
-\input{appendices/appendixC}
+%\chapter{Plots}
+%\label{appendix:appendixC}
+%\input{appendices/appendixC}
 
-\end{appendices}
+%\end{appendices}
 
 % Bibliography
 % Use IEEEtranBaylorPhys; based on IEEEtran, modified by Kenichi Hatakeyama
@@ -202,3 +203,4 @@
 \bibliography{thesis}
 
 \end{document}
+OB
