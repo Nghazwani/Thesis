@@ -1,15 +1,72 @@
-The PF algorithm is used in event reconstruction to produce low level physics objects, this includes: electrons, muons, photons, charged hadrons and neutral hadrons. These objects could be used later to reconstruct higher-level objects like jets and MET.  
- 
-This section describes briefly the Particle Flow algorithm, especially the reconstruction and the calibration of calorimeterclusters in the ECAL and the HCAL are presented.  
+% notes
+% => sources:
+% workshop PF https://cms-opendata-workshop.github.io/workshop2023-lesson-advobjects/02-particleflow/index.html
+% workshop physics objects https://cms-opendata-workshop.github.io/workshop2023-lesson-physics-objects/aio/index.html 
+% paper https://arxiv.org/pdf/1706.04965
+% => colors in resources
+% yellow: key phrases, green: key concepts, red line: key definitions.  
+
+
+% intro paragraph %
+% still go over the grammar, sentence structure later % 
+
+To analyze the signals coming out from the CMS detector, we need to convert them to physics objects. Meaning using the information gathered by the subdetectors to infer the final stable particles produced in a proton proton collision.  
+
+For this purpose we can use a dedicated algorithm called Particle Flow.The output of this algorithm contains a list of particle candidates which are: Muons, electrons, photons, neutral hadrons, charged hadrons.
+
+These PF candidates are used later to derive Physics objects like: Muons, electrons, jets, photons, taus,  missing transverse energy. 
+which are stored in ROOT files (miniAOD) for further analysis in the future.  
+
+(insert here what the chapter will cover) 
+
+% previous draft %
+%The PF algorithm is used in event reconstruction to produce low level physics objects, this includes: electrons, muons, photons, charged hadrons and neutral hadrons. These objects could be used later to reconstruct higher-level objects like jets and MET.  
+%This section describes briefly the Particle Flow algorithm, especially the reconstruction and the calibration of calorimeterclusters in the ECAL and the HCAL are presented.  
 
 
 \section{Particle Flow Reconstruction}
 
-The next step after obtaining collision data or simulated data is to reconstruct and identify all final particles in the event. Particle flow is the dedicated algorithm to achieve this task by producing a list of reconstructed particles candidates and determining their energy, direction, type. The PF candidates include: electrons, muons, photons, charged hadrons and neutral hadrons. Then this list of PF candidates could be used to build high level objects like: jets and MET.  
+% note PF paper pg 8 %
+% advance algorithms to reconstruct the PF elements: tracks, clusters %
+% these algorithms: first reconstruct the trajectories of charged particles in the inner tracker, this include electron/muon track reconstruction %
+% then reconstruct & calibrate the calorimeter clusters in: preshower, ECAL, HCAL.
 
-PF uses info from all the subdetectors, this is: tracks form inner tracker systems, ECAL energy deposits, HCAL energy deposits, muon chamber tracks. Then do the following steps: first, energy deposits in each calorimeter are connected into clusters. Then all the tracks and clusters are linked together based on their spatial proximity. Finally, blocks are formed to group all the connected elements from tracks and clusters to get the list PF candidates
+The PF algorithm aims to reconstruct and identify all final particles produce in the event.
+This is achieved  by utilizing the fact that different particles leave different signatues in the CMS subdetectors.
+
+
+The PF algrithm is done in a few steps.
+it starts with reconstructing the basic elements of the PF: tracks, energy clusters which are using advanced algorithm.
+
+The details of the clustering algorithm and the calibration of the clusters will be discussed in the next sections.  
+
+the next step in the PF: linking these elements to each other based on their spatial proximity.
+where Each group of linked tracks and clusters can form what is know as a PF Block.
+
+Then following a specific order these blocks are used to form the list of particle candidates.
+Which can be used in any event interpretation algorithms in CMS, such as jet clusterin, neural network jet taggers, and many more.
+
+
+% previous draft %   
+%The next step after obtaining collision data or simulated data is to reconstruct and identify all final particles in the event. Particle flow is the dedicated algorithm to achieve this task by producing a list of reconstructed particles candidates and determining their energy, direction, type. The PF candidates include: electrons, muons, photons, charged hadrons and neutral hadrons. Then this list of PF candidates could be used to build high level objects like: jets and MET.  
+
+%PF uses info from all the subdetectors, this is: tracks form inner tracker systems, ECAL energy deposits, HCAL energy deposits, muon chamber tracks. Then do the following steps: first, energy deposits in each calorimeter are connected into clusters. Then all the tracks and clusters are linked together based on their spatial proximity. Finally, blocks are formed to group all the connected elements from tracks and clusters to get the list PF candidates
 
 \subsection{Calorimeter Clustering}
+
+% note: clustering not really the focus of the thesis but it helps me understanding how the calibration process is done. %
+% notes PF paper pg 16 %
+
+% clustering is done separately in each subdetector: ECAL barrel and endcaps, HCAL barrel and endcaps, two preshower layers %
+% no clustering done in HF %
+% mention of clustering parameters of ECAL,HCAL, preshower are in table 2 %
+% these parameters: cell energy threshold (MeV), seed number closest cells, seed energy (transverse) threshold (MeV), Gaussian width %
+% these values are results of optimization based on simulation of single photons, pi0 .. etc %
+% the reconstruct the clusters within a topological cluster we can use a ML method based on Gaussian mixture model %
+
+% in easier terms, the clustering process described below are summrized from source: https://cms-opendata-workshop.github.io/workshop2023-lesson-advobjects/02-particleflow/index.html %
+% this section need to be summrized to the main points no need for details % 
+
 Clustering in done each calorimeter following three steps. First, we need to Identify topological clusters and their seeds. After that we can compute cluster positions and energies.  
 
 We can identify topological clusters by looking for a group of calorimeter cells, each has energy deposit above a certain threshold, that share at least one neighbor. Then we identify any calorimeter cell whose energy is a local maximum, with respect to its immediate neighbors, this is a seed. Topological clusters must have one seed or multiple. 
@@ -23,7 +80,7 @@ Linking is done by connecting together tracks and clusters based on their spatia
 
 After all the links are established, “blocks” are formed from all groups of linked tracks and clusters. Blocks are also constructed from any “alone” elements, such as single tracks or single clusters. 
 
-For candidate formation, blocks are redivided into particle candidates, following a strict order of decision making. After checking, in order, for each type of particle. the tracks/clusters associated with each newly formed candidate are removed from their blocks.
+For candidate formation, blocks are redivided into particle candidates, following a strict order of decision making. After checking, in order, for each type of particle. the tracks/clusters associated with each newly formed candidate are removed from PF blocks.
 
 The first object that is made into a particle candidate is the muon since it is the easiest one to be identified. Inner tracks linked to muon tracks are called “Global Muons”. If there is little calorimeter energy nearby, all linked ECAL and HCAL clusters are assigned to the muon. In regions with significant calorimeter activity, clusters linked directly to the muon tracks as assigned to the muon if it passes the “tight” identification working point. Inner track momentum and angles are assigned for muon with pT < 200 GeV. Very high pT muons need more care.  
 
@@ -44,13 +101,22 @@ The track momentum sum is larger than the calibrated cluster energy sum. This in
 The final step in candidate formation is to assign “lone” tracks as charged hadrons carrying the track’s momentum and direction. 
 
 \section{Cluster Calibration}
+
+% notes PF paper %
+% clusters that have no tracks linked to it are clear signal for neutral particles: photons, neutral hadrons %
+% in other cases we might have an energy deposit of neural particle overlapping with charged particle cluster, which can be only detected as an energy excesses when the sum of the cluster energy is larger than associated track momenta %  
+
 \subsection{ECAL cluster calibration}
+
+
+
+
 \subsection{HCAL cluster Calibration}
 
 
 
 
-
+% older draft % 
 %Particle Flow is an advance algorithm that combines all the information gathered using all the detectors in the CMS to reconstruct and identify final state particles. These initial  reconstructed particles are known as PF candidates are electrons, photons, charged and neutral hadrons, and muons.
 
 %The PF uses the basic elements: first element is the tracks information coming from the inner tracker, and muon chamber tracks. The other element is energy deposits information from ECAL and the HCAL. In this way the PF could give a better description for the collision event.
