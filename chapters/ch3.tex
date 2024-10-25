@@ -18,6 +18,14 @@
 %write a simple introduction to explain how BDT works and how it helps in PF cluster regression to  correct the PF cluster energies. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{ECAL Cluster Calibration Using BDT}
+% notes slide 24 source: https://www.desy.de/~garutti/LECTURES/ParticleDetectorSS12/L10_Calorimetry.pdf %
+% To make a statement about the energy of a particle we need to calcluate two things %
+% 1) Detector response: relationship between measured signal and deposited energy
+% 2) Detector resolution: precision with which the unknown energy can be measured
+%% slide 25 Response and linearity %%
+% “response = average signal per unit of deposited energy”
+% A linear calorimeter has a constant response, Electromagnetic calorimeters are linear %
+% Hadronic calorimeters are not linear % 
 
 PF Cluster regression is used to correct PF cluster energies lost due to tracker material, gaps, dead channels etc. The ML method implemented is a Boosted Decision Tree (BDT) based semi-parametric regression. To estimate the correction to the PF ECAL Cluster, we consider the case where a one photon has deposited all its energy in one PF cluster in the ECAL. This will allow us to calculate the correction factor = E “gen photon” / E “raw pf cluster”. 
 
