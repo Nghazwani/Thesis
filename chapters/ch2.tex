@@ -106,9 +106,51 @@ The final step in candidate formation is to assign “lone” tracks as charged 
 % clusters that have no tracks linked to it are clear signal for neutral particles: photons, neutral hadrons %
 % in other cases we might have an energy deposit of neural particle overlapping with charged particle cluster, which can be only detected as an energy excesses when the sum of the cluster energy is larger than associated track momenta %  
 
+% notes source https://cds.cern.ch/record/692252/files/ep-2003-075.pdf pg 47 %
+% purpose of calorimeter calibration %
+% 1) equalize the cell to cell output signals, meaning obtaining a uniform response.
+% 2) set the absolute energy scale for electrons, phtotons, single hadrons, jets.
+% 3) monitor variations in the detector response with time. 
+%================================================================================
+%% An "absolute energy scale" is a system of measurement that starts at a minimum point and increases in one direction.
+%% "absolute energy" refers to the total energy of a particle, including both its kinetic energy (from motion) and its rest mass energy, measured in a specific reference frame, usually considered to be the particle's "rest frame" where it appears stationary. %%
+%% "Absolute calibration" is a process that compares an instrument's reading to a known reference value. It's also known as direct calibration. %% 
+%================================================================================
+% there are 3 main tooks used to calibrate a calorimeter %
+% 1) hadrware calibration: used to equalize and monitor the cell-to-cell response of the detector and of the associated electronics %
+% 2) Test beam calibration: some calorimeter modules are exposed to test beams before being installed in the final detector. the main aims of this step is to set a preliminary absolute energy scale for electrons and pions,given that the incident beam energy is well known. %
+% 3) In situ calibration with physics samples. *this what the thesis is concerned about*
+%% further calibration step is needed after installation in the experiment. This is because the experiment environment %%
+%% for example the presence of material in front of the calorimeter due to tracking devices, is not the same as at the test beam and is not seen by the hardware calibration. %%
+%% the calorimeter response to jets and the missing transverse energy cannot be measured at the test beam where only single particles are used  %%
+%% The in situ calibration allows to correct residual non-uniformities, to understand the impact of the upstream material and of the environment, to follow the detector response variations with time, and to set the final absolute energy scale under experimental conditions. %%
+%% This is achieved by using well-known control physics samples %% 
+% => The electromagnetic absolute energy scale at hadronic colliders like LHC is set mainly by using well-known resonances such as π0 → γγ and in the low-energy range and Z → ee at higher energies.
+% => in pg 49 example of a calorimeter energy scale calibration using Z-> ee events, we can calcuate the parameters needed ,to correct the maeaured energy and make it agree with E true, by changing these values until the reconstructed Z mass peak agree with the right value.
+%================================================================================ 
+
+% note source https://agenda.linearcollider.org/event/522/contributions/22277/attachments/18303/29409/Calor2006_v4.pdf %
+% slide 4 %
+% we have calibration done before data takig, and during data taking %
+% for In-situ: π0→γγ check slide 13 %
+% it can be used for : absolute energy scale, ECAL inter calibration, Tue algorithmic cluster corrections 
+
 \subsection{ECAL cluster calibration}
 
+% notes source : https://indico.cern.ch/event/1034469/contributions/4434644/attachments/2281338/3876248/Reconstructing%20Electrons%20and%20Photons%20in%20the%20CMS%20ECAL%20using%20Graph%20Neural%20Networks.pdf
 
+% per crystal energy deposits are calibrated and recorded as "RecHits" %
+% individual particles are built by clustering nearby Rechits %
+% clusters ocrresponsing to a single EM shower are grouped into superclusters %
+% supercluster energies are subject to lost energy because %
+%% unclustered energy, finite thresholds to suppress noise, energy lost in gaps and in upstream material. %%  
+%% these losses are accounted for by energy corrections, currently *in this thesis* we are using bossted decision tree based regression.
+
+% notes source : https://indico.cern.ch/event/1034469/contributions/4431722/attachments/2280512/3874642/ECAL_calibration_and_performance_Run2_JMijuskovic.pdf %
+% intercalibration: correction factor to equalize the ECAL response for different crystals at the same eta corrdiate %
+
+% note sourse: https://agenda.linearcollider.org/event/522/contributions/22277/attachments/18303/29409/Calor2006_v4.pdf %
+% the goal of the calibration: to profit from the intrinsic ECAL performance (which has been measured w/ testbeam data) %
 
 
 \subsection{HCAL cluster Calibration}

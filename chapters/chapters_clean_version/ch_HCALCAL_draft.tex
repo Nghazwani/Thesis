@@ -1,0 +1,48 @@
+% intro % 
+
+\section{intro}
+
+% check reading notes to introduce the subject.
+
+The last type of PF particle candidates to be reconstructed are hadrons. Hadronic showers are more complicated than EM showers.These showers could have EM componentes and hadronic. To accurately reconstuct these candidates, a correction for HCAL cluster energy needs to be applied after ECAL cluster calibration.
+
+This chapter similarly to the previous one presents the used ML method and datasets in performaing the PF HCAL cluster regression.
+
+%.................................
+
+\section{data sets description}
+(check reading notes)
+
+\section{PF cluster regression  using GNN}
+Hadronic showers in the CMS detector have both electromagnetic and hadronic components.
+These showers are not dully contained in the ECAL but extend to HCAL.
+The detector response is different for EM and HAD componenets which lead to non linear energy response.
+The reconstructed energy of hadrons is the sum if all reconstructed hits (offline, PF reconstruct the RAW data) from th\
+e ECAL and HCAL.
+For a given bin of ture energy (PF also reconstruct generated data or MC data):
+by fitting the distribution of total RAW energy with Gaussian we obtain mu and std deviation then use them to get:
+Resolution (std/mu) : which is a measure of accuracy
+and Response [(mu/E true) -1] : which is measurement of precision. (we can see that is not linear)
+Energy Reconstruction using conventional method (chi square) vs DRN (based on GNN).
+The work in this thesis is done for Run3 data.
+
+\subsection{GNN}
+GNN is a type of NN that is used to process data that can be represented as graphs.
+(explain how GNN works in a relation to the work done her)
+
+\subsection{input features}
+(check reading notes)
+
+\subsection{training}
+Include DRN architecture overview here. We could include the Training target.
+DRN training parameters. this include: Inpute layers (3) .. etc.
+Sample details: centrally produced GEN-SIM-RAW (two momentum range) and privately reconstructed in CMSSW.
+Rechits used as input. (we could expand more on this detail)
+
+\subsection{performance and validation}
+80\% of the dataset used for taining and 20\% for validation.
+
+\section{results}
+we present the results of response and resolution (from DRN vs Chi2) in  both Barrel region and endcap region.
+\subsection{EH Hadrons}
+\subsection{H hadrons}
