@@ -1,0 +1,60 @@
+% intro %
+
+\section{intro}
+
+%.................................        
+\section{data sets description}
+
+\section{PF cluster calibration using BDT}
+PF Cluster regression is used to correct PF cluster energies lost due to tracker material, gaps, dead channels etc. The ML method implemented is a Boosted Decision Tree (BDT) based semi-parametric regression. To estimate the correction to  the PF ECAL Cluster, we consider the case where a one photon has deposited all its energy in one PF cluster in the ECAL. This will allow us to calculate thecorrection factor = E “gen photon” / E “raw pf cluster”.
+
+We are adopting the same variables used previously in Run 2 & Run 3 (2023). The PF cluster regression is done intro two steps:
+1) Training (from where we will get trained regression model).
+2) The validation of the training is done on NOPU and PU Zero material double photon samples.
+
+\subsection{BDT}
+(explain how BDT work in general)
+
+\subsection{input features}
+The training input variables include independent variables or features used in the training:
+clusrawE , ieta, iphi (EB) , ix, iy (EE), ietamod20, iphimod20 (EB only), (clusPS1+clusPS2)/clusrawE (EE only),number of hits in the cluster (which takes values 1, 2 and 3 - it takes 3 if nhits >= 3). The used
+
+Target: log(Egen/Eraw).
+
+\subsection{training}
+Training is done on no PU Zero material double photon particle gun. During training we are going to adopt the same vari\
+ables used in Run 2 calibration for Run 3 (2024).
+
+\subsection{performance and validation}
+The validation is done through few steps. First from the training model we get the value of the correction factor, then  calculated:  the corrected cluster energy = E “raw pf cluster” * correction factor Plot: the response: E “corrected PF cluster” / E “gen photon” Fit the plot with: double CB function. From the fitted curve we find: mean, effective sigma.We can also get the mean, effective sigma for raw PF cluster energy “with no correction” to compare.
+ 
+\section{results}
+
+we can validate the training by comparing the results of the new corrected ECAL cluster in 133X (blue line), to the current  correction in 126X (green) and  raw PF ECAL cluster (red).
+generally we see that the new  correction very close to the current used calibration
+
+Usually, the since the PF clustering is performed separately in each region of the ECAL: ECAL Barrel (EB), ECAL Endcaps (EE).
+Presenting the results in a similar way.
+
+Overview of the results: we checked the 2024 double photon calibration samples for PF ECAL clusters. In general, the existing calibration derived from 2022 samples seems to continue to be working well.
+
+\subsection{ECAL Barrel}
+first starting with the NOPU sample then the PU case.
+plots show response (resolution) vs Pt gen in GeV and in their corresponding eta range.
+\include{PU_EB_FULL_plots}
+\include{PU_EB_ZS_plots}
+\include{NOPU_EB_FULL_plots}
+\include{NOPU_EB_ZS_plots}
+
+\subsection{ECAL Endcap}
+in EE region:
+\include{NOPU_EE_FULL_plots}
+\include{NOPU_EE_ZS_plots}
+\include{PU_EE_FULL_plots}
+\include{PU_EE_ZS_plots}
+
+HLT vs offline PF ECAL cluster
+first for NoPU samples
+\include{NoPU_HLT_offline_plots}
+Second for PUU samples
+\include{PU_HLT_offline_plots}
