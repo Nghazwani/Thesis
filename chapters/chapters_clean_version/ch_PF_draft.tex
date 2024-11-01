@@ -1,0 +1,66 @@
+% intro %
+
+To analyze the signals coming out from the CMS detector, we need to convert them to physics objects. Meaning using the information gathered by the subdetectors to infer the final stable particles produced in a proton proton collision.
+
+For this purpose we can use a dedicated algorithm called Particle Flow.The output of this algorithm contains a list of particle candidates which are: Muons, electrons, photons, neutral hadrons, charged hadrons.
+
+These PF candidates are used later to derive Physics objects like: Muons, electrons, jets, photons, taus,  missing transverse energy.which are stored in ROOT files (miniAOD) for further analysis in the future.
+
+%...........................
+
+\section{Particle Flow Reconstruction}
+
+The PF algorithm aims to reconstruct and identify all final particles produce in the event.
+This is achieved  by utilizing the fact that different particles leave different signatues in the CMS subdetectors.
+
+The PF algrithm is done in a few steps.
+it starts with reconstructing the basic elements of the PF: tracks, energy clusters which are using advanced algorithm.
+
+The details of the clustering algorithm and the calibration of the clusters will be discussed in the next sections.
+
+the next step in the PF: linking these elements to each other based on their spatial proximity.
+where Each group of linked tracks and clusters can form what is know as a PF Block.
+
+Then following a specific order these blocks are used to form the list of particle candidates.
+Which can be used in any event interpretation algorithms in CMS, such as jet clusterin, neural network jet taggers, and  many more.
+
+\subsection{Calorimeter Clustering}
+% this could be included to PF
+
+Clustering in done each calorimeter following three steps. First, we need to Identify topological clusters and their seeds. After that we can compute cluster positions and energies.
+
+We can identify topological clusters by looking for a group of calorimeter cells, each has energy deposit above a certain threshold, that share at least one neighbor. Then we identify any calorimeter cell whose energy is a local maximum, with respect to its immediate neighbors, this is a seed. Topological clusters must have one seed or multiple.
+
+When Computing cluster positions and energies we have two kinds of topological clusters. One with Single-seed and the other type has Multiple-seed. In the Single-seed case the cluster energy will be the sum of all the individual cell energies within the cluster and its position is going to be the energy-weighted average of the individual cell positions.
+
+For Multiple-seed case, each seed is assumed to represent a unique energy cluster, but the energy deposited in non-seed cells will be shared between the various clusters within the topological cluster.  An iterative procedure is used to converge on cluster energies and positions based on energy-weighted averages of fractional cell energies.
+
+Linking is done by connecting together tracks and clusters based on their spatial proximity. These possible links are: tracks linked to ECAL cluster, tracks linked to HCAL cluster, muon segments track linked to inner track, ECAL cluster linked to HCAL cluster. inner tracks and muon tracks, muon tracks and ECAL clusters, and muon tracks and HCAL clusters.
+
+After all the links are established, “blocks” are formed from all groups of linked tracks and clusters. Blocks are also constructed from any “alone” elements, such as single tracks or single clusters.
+
+For candidate formation, blocks are redivided into particle candidates, following a strict order of decision making. After checking, in order, for each type of particle. the tracks/clusters associated with each newly formed candidate are removed from PF blocks.
+
+
+The first object that is made into a particle candidate is the muon since it is the easiest one to be identified. Inner tracks linked to muon tracks are called “Global Muons”. If there is little calorimeter energy nearby, all linked ECAL and HCAL clusters are assigned to the muon. In regions with significant calorimeter activity, clusters linked directly to the muon tracks as assigned to the muon if it passes the “tight” identification working point. Inner track momentum and angles are assigned for muon with pT < 200 GeV. Very high pT muons need more care.
+
+Then after that we check Isolated electrons and photon. ECAL clusters that are not linked to HCAL clusters are considered isolated electrons or photons.  A photon candidate is formed if there are no track links and the ECAL cluster has at least 10 GeV of energy.An electron candidate is formed if a 2+ GeV track is linked to the ECAL cluster, and its momentum is very similar to the ECAL cluster’s energy.
+
+The algorithm accounts for bremsstrahlung radiation and pair production within the tracker when assigning block elements to electrons. Photons: calibrate the ECAL cluster’s energy, and assign the cluster’s energy and direction to the photon. Electrons: calibrate the ECAL cluster’s energy and assign that energy to the electron, but assign the track’s direction.
+
+Next, we can check the Neutral hadrons and photons. particle flow considers all other clusters without track links. Any such ECAL cluster is assigned as a photon candidate, and any such HCAL cluster is assigned as a neutral hadron candida te. Calibrate the ECAL or HCAL energy and assign the cluster’s energy and direction to the photon or neutral hadron.
+
+ After that we look at charged hadron which is that’s left. At this point, all the tracks and clusters related to muons, electrons, photons, and neutral hadrons have been removed from the PF blocks.  But how many charged hadrons need to be assigned in each block, and what their properties. First, the energy must be calibrated: the sum of cluster energy is compared to the sum of track momenta and the larger of those two values is used to calibrate the energy of the cluster group.
+
+Then, we have three cases can be considered: The track momentum sum is smaller than the calibrated cluster energy sum. In this case, each track is assigned as a charged hadron candidate carrying the track’s momentum and direction. The excess energy from clusters links to each track is assigned as photon candidates and neutral hadron candidates, depending on the type of clusters that are found.
+
+The track momentum sum agrees with the calibrated cluster energy sum, within the energy resolution.  In this case, each track is assigned as a charged hadron candidate carrying the track’s momentum and direction.
+
+The track momentum sum is larger than the calibrated cluster energy sum. This indicates that either a muon or a track has been significantly mismeasured! The algorithm walks through several checks of track uncertainties and other featuresto try and remedy the error.
+
+The final step in candidate formation is to assign “lone” tracks as charged hadrons carrying the track’s momentum and direction.
+
+\section{Cluster Calibration}
+% check reading notes % 
+
+
