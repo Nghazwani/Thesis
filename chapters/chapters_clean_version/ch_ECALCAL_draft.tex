@@ -2,11 +2,18 @@
 
 \section{intro}
 
+% check reading notes to introduce the subject.
+
+The reconstructed PF cluster energy is expected to be smaller than the energy of the incoming particle. This lost of energy could be due to tracker material, gaps, dead channels etc. Therefore, a clibration of the calorimeter cluster energy is needed. 
+
+This chapter presents the used ML method and datasets in performaing the PF ECAL cluster calibration.  
+
 %.................................        
 \section{data sets description}
 
-\section{PF cluster calibration using BDT}
-PF Cluster regression is used to correct PF cluster energies lost due to tracker material, gaps, dead channels etc. The ML method implemented is a Boosted Decision Tree (BDT) based semi-parametric regression. To estimate the correction to  the PF ECAL Cluster, we consider the case where a one photon has deposited all its energy in one PF cluster in the ECAL. This will allow us to calculate thecorrection factor = E “gen photon” / E “raw pf cluster”.
+
+\section{PF cluster regression using BDT}
+The ML method implemented for PF ECAL cluster calibration is a Boosted Decision Tree (BDT) based semi-parametric regression. To estimate the correction to  the PF ECAL Cluster, we consider the case where a one photon has deposited all its energy in one PF cluster in the ECAL. This will allow us to calculate thecorrection factor = E “gen photon” / E “raw pf cluster”.
 
 We are adopting the same variables used previously in Run 2 & Run 3 (2023). The PF cluster regression is done intro two steps:
 1) Training (from where we will get trained regression model).
