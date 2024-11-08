@@ -23,10 +23,12 @@ clusters are extended in phi direction to form "superclusters" to recover energy
 
 to get the correct energy for a photon we generally include corrections that was done perfore data taking and other in situ.
 (include equation) 
-These corrections include: intercalibration (equalize signal response for the same eta
+
+These corrections include: intercalibration (equalize signal response for the same eta)
 %(check pg 4 skitch for one supermodel https://indico.tlabs.ac.za/event/112/contributions/3216/attachments/1138/1538/TIPP2023-Dimova_v1.pdf)  
 Also laser corrections for signal transparency loss (or photocathode aging) (this calibration is done every 40 mins),
 cluster correction obtained from a regression method. (this is what this thesis is focused on)
+
 
 the material in front of the ECAL and dead material in ECLA effect the deposited energy so we apply the following corrections:
 corrections applied to reconstruct the original deposited energy of the particle (our focus)
@@ -41,18 +43,20 @@ This lost of energy could be due to tracker material, gaps, dead channels etc. T
 % The PF ECAL cluster calibration, which is supposed to account for the effects of these thresholds,is determined from simulated diphoton gun samples
 % ^ source: PF paper 
 
+(this into need to be connected with PF cluster calibration, do quick mention to it)
+(fix intro after finishing this chapter) 
 
 This chapter presents the used ML method and datasets in performaing the PF ECAL cluster calibration.  
 % check https://par.nsf.gov/servlets/purl/10421786 for intro / source about EM calibration. 
 %.................................        
 
 \section{data sets description}
-(check reading notes)
+%(check reading notes)
 
-% dataset=/DoublePhoton*FlatPT*13p6TeV/Run3Winter24MiniAOD*NoMaterial*/MINIAODSIM
-% 15 dataset pt ranges: 1-10 (3  datasets) , 1000-1500 (3 datasets), 10-500 (3 datasets), 500-1000 (3 datasets)
-% each group of dataset has: PU 0-120, 0-80, No PU
-% each dataset (of specific pt range, PU type)  has multiple root files that contains number of events. 
+%dataset=/DoublePhoton*FlatPT*13p6TeV/Run3Winter24MiniAOD*NoMaterial*/MINIAODSIM
+%15 dataset pt ranges: 1-10 (3  datasets) , 1000-1500 (3 datasets), 10-500 (3 datasets), 500-1000 (3 datasets)
+%each group of dataset has: PU 0-120, 0-80, No PU
+%each dataset (of specific pt range, PU type)  has multiple root files that contains number of events. 
 
 % instructions for calibration ntuple production https://codimd.web.cern.ch/IwKw1T6VQw6Q8mHpvK3Mzw
 % updated the list of the input files
@@ -82,6 +86,7 @@ after preparing the appropriate date sets. Training is done only on no PU sample
 The testing is done on both no PU and PU80. 
 
 (note: check ths statistics used for each case Full pT1/ Full pT2/ Full pT3/ ZS for both EE, EB)
+
 % Ntuples are simple data tables generally containing simple float quantities. Very compact, these are the files that we usually use in the interactive analysis.
 % ^ source: https://oer.uclouvain.be/jspui/bitstream/20.500.12279/398/1/LPHY2131_Documentation.pdf
 
@@ -117,7 +122,7 @@ We are adopting the same variables used previously in Run 2 & Run 3 (2023). The 
 %.................................    
 
 \subsection{BDT}
-(explain how BDT work in general)
+%(explain how BDT work in general)
 
 (Decision tree): is a tool that could be used to divide the data into simple regions in order to classify or regress the inputs.
 
@@ -127,8 +132,9 @@ ML method based on decision trees uses a loarge number of these trees to classif
 
 boosted decision trees (BDTs) : when the outputs of the trees in the method are dependent on one another.
 
-types of boosting available to BDTs: adative boosting (adaBoost), ((gradient boosting)), extreme gradient boosting (XGBoost) which is what is implemented here. 
+types of boosting available to BDTs: adative boosting (adaBoost), gradient boosting, extreme gradient boosting (XGBoost) which is what is implemented here. 
 (quickly methioned the difference between them. 
+% finished DT, adaboost tutorial 
 
 Gradient boosting (GB): based on popular optimization technique called gradient descent algorithm.
 same concept but instead of minimizing the output function, it minimize the error function/ loss in the direction of the process.
@@ -224,6 +230,9 @@ in EE region:
 \include{PU_EE_ZS_plots}
 
 HLT vs offline PF ECAL cluster
+
+(connet to PF chapter where where we mentioned offline PF)
+
 first for NoPU samples
 \include{NoPU_HLT_offline_plots}
 Second for PUU samples
