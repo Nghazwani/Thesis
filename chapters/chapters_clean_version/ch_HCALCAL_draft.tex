@@ -50,7 +50,33 @@ and Response [(mu/E true) -1] : (which is measurement of precision) (we can see 
 %The work in this thesis is done for Run3 data.
 
 \subsection{GNN}
+
+%intro about NN - source https://indico.cern.ch/event/847884/contributions/4833236/attachments/2447578/4194107/ML_techniques_CALOR_2022.pdf
+NN are one of the most used ML algorithms.
+The simplist NN contains an input, output, one hidden layer.
+if the NN has more one hidden layer is called Deep NN. 
+(insert picture of NN) 
+
+(explain how basic network training is done generally)
+(mention forward propagation, backpropagation)
+
 GNN is a type of NN that is used to process data that can be represented as graphs.
+comparing to some kinds of NN,  GNN can be applied on sparse datat.
+graph consisits of nodes (features of the objects, meaning in our case will be represented by rechits)
+and edges (reflect the relationship between the rechit, in our case seeing how rechits are connected, in clusters that represent one particle)
+
+information in GNN can be shared between neighbors.
+the vector feature of each node are transformed into messages (using dense layers) that will be sent to the neighbors (message passing)
+in this way each node will learn about its neighbors and itself.
+
+(add picture that shows massage passing)
+
+%Message passing layers are a type of layer in graph neural networks (GNNs) that update graph nodes by aggregating messages from their neighbors
+
+(next move on to talk about energy corrections using DRN)
+
+
+
 %(explain how GNN works in a relation to the work done her)
 
 \subsection{input features}
@@ -111,6 +137,12 @@ we present the results of response and resolution (from DRN vs Chi2) in  both Ba
 \subsection{EH Hadrons}
 the presented results are for the training target ratioflip
 \include{target_ratioflip_EH_plots}
-
+\include{target_logratioflip_EH_plots}
+\include{target_ratio_EH_plots}
+\include{target_trueE_EH_plots}
 
 \subsection{H hadrons}
+\include{target_ratioflip_H_plots}
+\include{target_logratioflip_H_plots}
+\include{target_ratio_H_plots}
+\include{target_trueE_H_plots}
