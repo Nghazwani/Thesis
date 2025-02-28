@@ -1,19 +1,21 @@
 % intro %
 
-To analyze the signals coming out from the CMS detector, we need to convert them to physics objects. Meaning using the information gathered by the subdetectors to infer the final stable particles produced in a proton proton collision.
+To analyze the signals coming out from the CMS detector, we need to convert them to physics objects.
+Meaning using the raw information gathered by the subdetectors to infer the final stable particles produced in a proton proton collision.
+For this purpose CMS uses a dedicated algorithm called Particle Flow to reconstruct a pp event.
+The output of this algorithm contains a list of particle candidates which include: Muons, electrons, photons, neutral hadrons, charged hadrons.
+These PF candidates are used later to derive more useful Physics objects for analysis like:
+%Muons, electrons,photons
+jets, taus,  missing transverse energy.which are stored in ROOT files (miniAOD) for further analysis in the future.
 
-For this purpose we can use a dedicated algorithm called Particle Flow.The output of this algorithm contains a list of particle candidates which are: Muons, electrons, photons, neutral hadrons, charged hadrons.
-
-These PF candidates are used later to derive Physics objects like: Muons, electrons, jets, photons, taus,  missing transverse energy.which are stored in ROOT files (miniAOD) for further analysis in the future.
-
-This chapter will provide a description of the PF algorithm utilized by the CMS detector to reconstruct collision events. Additionally, the traditional method used in calorimeter cluster calibration.   
+This chapter will provide a description of the PF algorithm, and its elements. Additionally, the used method in calibrating the PF elements ,calorimeter clusters.   
 
 %...........................
 
 \section{Particle Flow Reconstruction}
 
 The PF algorithm aims to reconstruct and identify all final particles produce in the event.
-This is achieved  by utilizing the fact that different particles leave different signatues in the CMS subdetectors.
+This is achieved  by utilizing the fact that different particles leave different signatures in the CMS subdetectors.
 
 The PF algrithm is done in a few steps.
 it starts with reconstructing the basic elements of the PF: tracks, energy clusters which are using advanced algorithm.
@@ -21,10 +23,22 @@ it starts with reconstructing the basic elements of the PF: tracks, energy clust
 The details of the clustering algorithm and the calibration of the clusters will be discussed in the next sections.
 
 the next step in the PF: linking these elements to each other based on their spatial proximity.
-where Each group of linked tracks and clusters can form what is know as a PF Block.
+where Each group of linked elements ,tracks and clusters, can form what is know as a PF Block.
 
-Then following a specific order these blocks are used to form the list of particle candidates.
-Which can be used in any event interpretation algorithms in CMS, such as jet clusterin, neural network jet taggers, and  many more.
+Then following a specific order these blocks, will be removed from PF blocks and then to identitfy a particle candidates.
+This order starts with identifying muons, since they have the cleanest signture.
+Then isolated electrons and photons (ECAL clusters not linked to HCAL cluster) .
+Then neutral hadrons and photons (all left clusters without track link, Ecal cluster will be assigned to photon candidates and HCAl clusters will be assigned to a neural hadron.
+after that charged hadrons. 
+The list of PF particles  can be used in any event interpretation algorithms in CMS, such as jet clusterin, neural network jet taggers, and  many more.
+
+
+%... online vs offline reconstruction ...%
+
+online reconstruction: is done quickly in real time, meaning during data taking,  to select interesting events, it is not integrated in the PF framework.
+offline reconstruction: is done after data is collected. it takes more time to achieve higher precision. algorithms, for clustering and tracking, are integrated in the PF framework.
+
+
 
 \subsection{Calorimeter Clustering}
 % this could be included to PF

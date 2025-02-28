@@ -8,44 +8,44 @@ GNN is a type of NN that is used to process data that can be represented as grap
 % check: Epochs, Batch Size, Iterations https://www.sabrepc.com/blog/Deep-Learning-and-AI/Epochs-Batch-Size-Iterations
 %=================================================
 
-% Where GNN's are used in CMS?
-%% For Calorimetry, In both ECAL & HCAL.
+Where GNN's are used in CMS?
+- For Calorimetry, In both ECAL & HCAL.
 
 % what are NN?
 % what are GNN?
 
-% where GNN can be used in ECAL?
-%% for superclustering "Particle reconstruction", particle identification (identify the flavor of the particle), energy regression. 
+ where GNN can be used in ECAL?
+- for superclustering "Particle reconstruction", particle identification (identify the flavor of the particle), energy regression. 
 
-% when do we perform energy correction?
-%% after superclusters are formed, energy corrections are applied.
-%% this correction account for the energy lost in gaps and upstream material .. etc
-%% currently this calibration is done using BDT with semiparametric regression. (this work is covered in previous chapter)
-%% new ML algorithm developed DRN (to use low level inputs (rechits) instead of high level inputs (describe EM showers))
+when do we perform energy correction?
+- after superclusters are formed, energy corrections are applied.
+- this correction account for the energy lost in gaps and upstream material .. etc
+-  currently this calibration is done using BDT with semiparametric regression. (this work is covered in previous chapter)
+-  new ML algorithm developed DRN (to use low level inputs (rechits) instead of high level inputs (describe EM showers))
 
-% Energy corrections using Dynamic Reduction Network?
-%% input features (rechits) are transformed into high dimensional latent space.
-%% Then graphs are dynamically generated in the latent space.
-%% the graph convolution are performed (includes message passing)
-%% the info is aggregated over the graph using clustering and pooling.
-%% => input: Rechit features (E,x,y,z) => output: Predict probability density of energy correction value.
+Energy corrections using Dynamic Reduction Network?
+- input features (rechits) are transformed into high dimensional latent space.
+-  Then graphs are dynamically generated in the latent space.
+-  the graph convolution are performed (includes message passing)
+-  the info is aggregated over the graph using clustering and pooling.
+ => input: Rechit features (E,x,y,z) => output: Predict probability density of energy correction value.
 %% slide 16 has resolution plot that compare BDT to DRN calibration. (using photon gun simulation with ideal detector calibration)
 
 % source: ML for calorimetry by Polina simkina
 
 %================================================
 
-% DRN architecture overview:
+DRN architecture overview:
 %..........................
 %% 1. input: Rechits => inputNet (FCNN) *Fully Convolutional Network?*
 %% 2. => Graph Generation (KNN) => EdgeConv => calculate edge weights => graph clustering (Graclus) => graph pooling (add)
 %% 3. Global pool (max)
 %% 4. outputNet => output (E pred)
 
-% Training target?
+Training target?
 %% minimize loss - [(E true- E pre)^/E true]
 
-% DRN training parapmeters?
+ DRN training parapmeters?
 %% Input layers: 3
 %% aggregation layers: 2
 %=> *An aggregation layer is a crucial part of network architecture that connects the access layer to the core layer.
