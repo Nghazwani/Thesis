@@ -121,7 +121,7 @@ The PF cluster regression is done intro two steps:
 % check source for ML and BDT for ECAL  : https://cds.cern.ch/record/2702355/files/1911.02501.pdf 
 %.................................    
 
-\subsection{BDT}
+%\subsection{BDT}
 %(explain how BDT work in general)
 
 (Decision tree): is a tool that could be used to divide the data into simple regions in order to classify or regress the inputs.
@@ -151,7 +151,7 @@ New prediction (XGB) = old prediction (GB) + penalty * residual(branch) = mean/m
 
 
 
-\subsection{input features}
+%\subsection{input features}
 The training input variables include independent variables (features) used in the training:
 
 clusrawE,
@@ -170,7 +170,7 @@ number of hits in the cluster (which takes values 1, 2 and 3 - it takes 3 if nhi
 
 Also  used Target: log(Egen/Eraw).
 
-\subsection{training}
+%\subsection{training}
 Training is done on no PU Zero material double photon particle gun. During training we are going to adopt the same variables used in Run 2 calibration for Run 3 (2024).
 
 The ML method implemented for PF ECAL cluster calibration is a Boosted Decision Tree (BDT) based semi-parametric regression.
@@ -187,7 +187,7 @@ Trained for zero-suppressed and full readout regions separately.
 (For full readout, three regressions are trained:raw pt [5, 20], [20, 100], and [100, 300] GeV)
 Total of 8 regressions were trained.
 
-\subsection{performance and validation}
+%\subsection{performance and validation}
 The validation is done through few steps.
 First from the training model we get the value of the correction factor, then  calculated:  the corrected cluster energy = E “raw pf cluster” * correction factor
 
