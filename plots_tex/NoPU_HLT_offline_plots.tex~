@@ -1,0 +1,20 @@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                                                                                                                                     
+\begin{figure}
+\includegraphics[width=0.495\textwidth]{./ECAL_plots/Prod6/NoPU/H_GenPi_Pt_vs_RespE.pdf}
+%\caption{(PF cluster offline E / PFC online E) vs pt}
+\includegraphics[width=0.495\textwidth]{./ECAL_plots/Prod6/NoPU/H_GenPi_Eta_vs_RespE.pdf}
+\caption{(PF cluster offline E / PFC online E)}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=0.495\textwidth]{./ECAL_plots/Prod6/NoPU/H_GenPi_Pt_vs_RespCE.pdf}
+%\caption{(PF cluster offline E corrected / PFC online E corrected) vs pt}
+\includegraphics[width=0.495\textwidth]{./ECAL_plots/Prod6/NoPU/H_GenPi_Eta_vs_RespCE.pdf}
+\caption{(PF cluster offline E corrected / PFC online E corrected)}
+\end{figure}                                                                                                                                                                       
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                                                                                                                                    
+
