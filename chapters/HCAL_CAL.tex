@@ -1,0 +1,149 @@
+\section{intro}
+
+% check reading notes to introduce the subject.
+
+The last type of PF particle candidates to be reconstructed are hadrons.
+
+%hadrons could start showering in the ECAL, then fully deposit their energies in HCAL.
+
+as mentioned in previous chapter that ECAL is well calibrated for EM particles, but not for hadrons. (explain why, describe hadronic showeres brifly)
+
+To accurately reconstuct these candidates, a correction for HCAL cluster energy needs to be applied after ECAL cluster calibration.
+
+This chapter similarly to the previous one presents the used ML method and datasets in performaing the PF HCAL cluster energy regression.
+
+%.................................
+
+\section{datasets description}
+
+we privately generate single pions samples: with  E range 2-200 GeV,200-500 GeV and under 126X conditions.
+% Run3 Winter23 Digi (signle pion gun)
+% since this sample is not not zero material we count the pions going throrugh the tracker ?
+
+in this study, eta and phi of the pions are the position at the ECAL enetrance propagating through the tracker.  
+
+we categorize particles to: (depending on where the pion will start showering)  
+particles that do not start a nuclear interaction in ECAL (hadronic shower) as H-hadrons.
+particles that start showeing in ECAL are categorized as EH-hadrons.  
+(add more details releated hadronic showers)
+
+\section{PF cluster regression  using GNN}
+
+Hadronic showers in the CMS detector have both electromagnetic and hadronic components.
+These showers are not fully contained in the ECAL but extend to HCAL.
+
+%The detector response is different for EM and HAD componenets which lead to non linear energy response.
+%% calorimeter response: the measurable signal produced by a calorimeter when a particle is completely absorbed within it.
+%% The response of a calorimeter depends on the type of particle that is absorbed. For example, homogeneous calorimeters (like ECAL)
+%% ^ are inherently nonlinear for jets and hadrons.
+%% especailly for EH hadrons
+
+The reconstructed energy of hadrons is the sum of all reconstructed hits (offline, PF reconstruct the RAW data) from the ECAL and HCAL.
+
+Energy Reconstruction using classical  method (chi square) vs DRN (based on GNN).
+
+Then For a given bin of ture energy
+%(PF also reconstruct generated data or MC data):
+by fitting the distribution of total RAW energy with Gaussian we obtain: mu and std deviation then use them to get:
+Resolution (std/mu) : (which is a measure of accuracy)
+and Response [(mu/E true) -1] : (which is measurement of precision) (we can see that is not linear)
+
+%The work in this thesis is done for Run3 data.
+
+\subsection{GNN}
+
+%intro about NN - source https://indico.cern.ch/event/847884/contributions/4833236/attachments/2447578/4194107/ML_techniques_CALOR_2022.pdf
+NN are one of the most used ML algorithms.
+The simplist NN contains an input, output, one hidden layer.
+if the NN has more one hidden layer is called Deep NN. 
+(insert picture of NN) 
+
+(explain how basic network training is done generally)
+(mention forward propagation, backpropagation)
+
+GNN is a type of NN that is used to process data that can be represented as graphs.
+comparing to some kinds of NN,  GNN can be applied on sparse datat.
+graph consisits of nodes (features of the objects, meaning in our case will be represented by rechits)
+and edges (reflect the relationship between the rechit, in our case seeing how rechits are connected, in clusters that represent one particle)
+
+information in GNN can be shared between neighbors.
+the vector feature of each node are transformed into messages (using dense layers) that will be sent to the neighbors (message passing)
+in this way each node will learn about its neighbors and itself.
+
+(add picture that shows massage passing)
+
+%Message passing layers are a type of layer in graph neural networks (GNNs) that update graph nodes by aggregating messages from their neighbors
+
+(next move on to talk about energy corrections using DRN)
+
+
+
+%(explain how GNN works in a relation to the work done her)
+
+\subsection{input features}
+%(check reading notes)
+
+
+loss function:  [(E true- E pre)^2/E true] %response 
+
+
+\subsection{training}
+
+%We could include the Training target.
+%DRN training parameters. this include: Inpute layers (3) .. etc.
+%Sample details: centrally produced GEN-SIM-RAW (two momentum range) and privately reconstructed in CMSSW.
+%Rechits used as input. (we could expand more on this detail)
+
+DRN architecture overview:
+1. input: Rechits => inputNet (FCNN) *Fully Connected Network*
+2. => Graph Generation (KNN) => EdgeConv => calculate edge weights => graph clustering (Graclus) => graph pooling (add)
+3. Global pool (max)
+4. outputNet => output (E pred)
+% source: PF hadron cluster calibration 26/2/2024                                                                                                                                  
+%% A fully convolution network (FCN) is a neural network that only performs convolution                                                                                            
+%% ^ (and subsampling or upsampling) operations. Equivalently, an FCN is a CNN without fully connected layers.                                                                      
+%% ^ source: https://ai.stackexchange.com/questions/21810/what-is-a-fully-convolution-network                                                                                       
+%% KNN is K-Nearest Neighbors source: https://neo4j.com/docs/graph-data-science/current/algorithms/knn/                                                                             
+%% source: to understand pooling in CNN https://medium.com/@abhishekjainindore24/pooling-and-their-types-in-cnn-4a4b8a7a4611#:~:text=Global%20pooling%20reduces%20each%20channel,po\oling%20or%20global%20average%20pooling.
+%% ^ in GNN https://arxiv.org/pdf/2110.05292                                                                                                                                       
+%% source for node embedding https://towardsdatascience.com/node-embeddings-for-beginners-554ab1625d98    
+
+layers:
+- input 3
+- aggregation 2
+- output 2
+- message passing2 
+
+input:
+- rechit positions
+- E rechit energy corresponding to each rechit
+- rechits are selected after dR matching %slide 11
+
+batch size: 400
+number of epochs trained 100
+constant learning reate of 0.0001
+
+training target:
+ratio
+ratioflip
+log (ratioflip)
+trueE
+
+\subsection{performance and validation}
+80\% of the dataset used for taining and 20\% for validation.
+
+\section{results}
+we present the results of response and resolution (from DRN vs Chi2) in  both Barrel region and endcap region.
+
+\subsection{EH Hadrons}
+the presented results are for the training target ratioflip
+\include{./plots_tex/target_ratioflip_EH_plots}
+\include{./plots_tex/target_logratioflip_EH_plots}
+\include{./plots_tex/target_ratio_EH_plots}
+\include{./plots_tex/target_trueE_EH_plots}
+
+\subsection{H hadrons}
+\include{./plots_tex/target_ratioflip_H_plots}
+\include{./plots_tex/target_logratioflip_H_plots}
+\include{./plots_tex/target_ratio_H_plots}
+\include{./plots_tex/target_trueE_H_plots}

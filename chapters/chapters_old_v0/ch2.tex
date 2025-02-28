@@ -1,0 +1,225 @@
+% notes
+% => sources:
+% workshop PF https://cms-opendata-workshop.github.io/workshop2023-lesson-advobjects/02-particleflow/index.html
+% workshop physics objects https://cms-opendata-workshop.github.io/workshop2023-lesson-physics-objects/aio/index.html 
+% paper https://arxiv.org/pdf/1706.04965
+% => colors in resources
+% yellow: key phrases, green: key concepts, red line: key definitions.  
+
+
+% intro paragraph %
+% still go over the grammar, sentence structure later % 
+
+To analyze the signals coming out from the CMS detector, we need to convert them to physics objects. Meaning using the information gathered by the subdetectors to infer the final stable particles produced in a proton proton collision.  
+
+For this purpose we can use a dedicated algorithm called Particle Flow.The output of this algorithm contains a list of particle candidates which are: Muons, electrons, photons, neutral hadrons, charged hadrons.
+
+These PF candidates are used later to derive Physics objects like: Muons, electrons, jets, photons, taus,  missing transverse energy. 
+which are stored in ROOT files (miniAOD) for further analysis in the future.  
+
+(insert here what the chapter will cover) 
+
+% previous draft %
+%The PF algorithm is used in event reconstruction to produce low level physics objects, this includes: electrons, muons, photons, charged hadrons and neutral hadrons. These objects could be used later to reconstruct higher-level objects like jets and MET.  
+%This section describes briefly the Particle Flow algorithm, especially the reconstruction and the calibration of calorimeterclusters in the ECAL and the HCAL are presented.  
+
+
+\section{Particle Flow Reconstruction}
+
+% note PF paper pg 8 %
+% advance algorithms to reconstruct the PF elements: tracks, clusters %
+% these algorithms: first reconstruct the trajectories of charged particles in the inner tracker, this include electron/muon track reconstruction %
+% then reconstruct & calibrate the calorimeter clusters in: preshower, ECAL, HCAL.
+
+The PF algorithm aims to reconstruct and identify all final particles produce in the event.
+This is achieved  by utilizing the fact that different particles leave different signatues in the CMS subdetectors.
+
+
+The PF algrithm is done in a few steps.
+it starts with reconstructing the basic elements of the PF: tracks, energy clusters which are using advanced algorithm.
+
+The details of the clustering algorithm and the calibration of the clusters will be discussed in the next sections.  
+
+the next step in the PF: linking these elements to each other based on their spatial proximity.
+where Each group of linked tracks and clusters can form what is know as a PF Block.
+
+Then following a specific order these blocks are used to form the list of particle candidates.
+Which can be used in any event interpretation algorithms in CMS, such as jet clusterin, neural network jet taggers, and many more.
+
+
+% previous draft %   
+%The next step after obtaining collision data or simulated data is to reconstruct and identify all final particles in the event. Particle flow is the dedicated algorithm to achieve this task by producing a list of reconstructed particles candidates and determining their energy, direction, type. The PF candidates include: electrons, muons, photons, charged hadrons and neutral hadrons. Then this list of PF candidates could be used to build high level objects like: jets and MET.  
+
+%PF uses info from all the subdetectors, this is: tracks form inner tracker systems, ECAL energy deposits, HCAL energy deposits, muon chamber tracks. Then do the following steps: first, energy deposits in each calorimeter are connected into clusters. Then all the tracks and clusters are linked together based on their spatial proximity. Finally, blocks are formed to group all the connected elements from tracks and clusters to get the list PF candidates
+
+\subsection{Calorimeter Clustering}
+
+% note: clustering not really the focus of the thesis but it helps me understanding how the calibration process is done. %
+% notes PF paper pg 16 %
+
+% clustering is done separately in each subdetector: ECAL barrel and endcaps, HCAL barrel and endcaps, two preshower layers %
+% no clustering done in HF %
+% mention of clustering parameters of ECAL,HCAL, preshower are in table 2 %
+% these parameters: cell energy threshold (MeV), seed number closest cells, seed energy (transverse) threshold (MeV), Gaussian width %
+% these values are results of optimization based on simulation of single photons, pi0 .. etc %
+% the reconstruct the clusters within a topological cluster we can use a ML method based on Gaussian mixture model %
+
+% in easier terms, the clustering process described below are summrized from source: https://cms-opendata-workshop.github.io/workshop2023-lesson-advobjects/02-particleflow/index.html %
+% this section need to be summrized to the main points no need for details % 
+
+Clustering in done each calorimeter following three steps. First, we need to Identify topological clusters and their seeds. After that we can compute cluster positions and energies.  
+
+We can identify topological clusters by looking for a group of calorimeter cells, each has energy deposit above a certain threshold, that share at least one neighbor. Then we identify any calorimeter cell whose energy is a local maximum, with respect to its immediate neighbors, this is a seed. Topological clusters must have one seed or multiple. 
+
+When Computing cluster positions and energies we have two kinds of topological clusters. One with Single-seed and the other type has Multiple-seed. In the Single-seed case the cluster energy will be the sum of all the individual cell energies within the cluster and its position is going to be the energy-weighted average of the individual cell positions. 
+
+For Multiple-seed case, each seed is assumed to represent a unique energy cluster, but the energy deposited in non-seed cells will be shared between the various clusters within the topological cluster.  An iterative procedure is used to converge on cluster energies and positions based on energy-weighted averages of fractional cell energies.
+
+%\subsection{Links and Blocks}
+Linking is done by connecting together tracks and clusters based on their spatial proximity. These possible links are: tracks linked to ECAL cluster, tracks linked to HCAL cluster, muon segments track linked to inner track, ECAL cluster linked to HCAL cluster. inner tracks and muon tracks, muon tracks and ECAL clusters, and muon tracks and HCAL clusters. 
+
+After all the links are established, “blocks” are formed from all groups of linked tracks and clusters. Blocks are also constructed from any “alone” elements, such as single tracks or single clusters. 
+
+For candidate formation, blocks are redivided into particle candidates, following a strict order of decision making. After checking, in order, for each type of particle. the tracks/clusters associated with each newly formed candidate are removed from PF blocks.
+
+The first object that is made into a particle candidate is the muon since it is the easiest one to be identified. Inner tracks linked to muon tracks are called “Global Muons”. If there is little calorimeter energy nearby, all linked ECAL and HCAL clusters are assigned to the muon. In regions with significant calorimeter activity, clusters linked directly to the muon tracks as assigned to the muon if it passes the “tight” identification working point. Inner track momentum and angles are assigned for muon with pT < 200 GeV. Very high pT muons need more care.  
+
+Then after that we check Isolated electrons and photon. ECAL clusters that are not linked to HCAL clusters are considered isolated electrons or photons.  A photon candidate is formed if there are no track links and the ECAL cluster has at least 10 GeV of energy.  An electron candidate is formed if a 2+ GeV track is linked to the ECAL cluster, and its momentum is very similar to the ECAL cluster’s energy.   
+
+The algorithm accounts for bremsstrahlung radiation and pair production within the tracker when assigning block elements to electrons. Photons: calibrate the ECAL cluster’s energy, and assign the cluster’s energy and direction to the photon. Electrons: calibrate the ECAL cluster’s energy and assign that energy to the electron, but assign the track’s direction. 
+
+Next, we can check the Neutral hadrons and photons. particle flow considers all other clusters without track links. Any such ECAL cluster is assigned as a photon candidate, and any such HCAL cluster is assigned as a neutral hadron candidate. Calibrate the ECAL or HCAL energy and assign the cluster’s energy and direction to the photon or neutral hadron. 
+
+After that we look at charged hadron which is that’s left. At this point, all the tracks and clusters related to muons, electrons, photons, and neutral hadrons have been removed from the PF blocks.  But how many charged hadrons need to be assigned in each block, and what their properties. First, the energy must be calibrated: the sum of cluster energy is compared to the sum of track momenta and the larger of those two values is used to calibrate the energy of the cluster group.   
+
+Then, we have three cases can be considered: The track momentum sum is smaller than the calibrated cluster energy sum. In this case, each track is assigned as a charged hadron candidate carrying the track’s momentum and direction. The excess energy from clusters links to each track is assigned as photon candidates and neutral hadron candidates, depending on the type of clusters that are found.  
+
+The track momentum sum agrees with the calibrated cluster energy sum, within the energy resolution.  In this case, each track is assigned as a charged hadron candidate carrying the track’s momentum and direction.  
+
+The track momentum sum is larger than the calibrated cluster energy sum. This indicates that either a muon or a track has been significantly mismeasured! The algorithm walks through several checks of track uncertainties and other features to try and remedy the error. 
+
+The final step in candidate formation is to assign “lone” tracks as charged hadrons carrying the track’s momentum and direction. 
+
+\section{Cluster Calibration}
+
+% notes PF paper %
+% clusters that have no tracks linked to it are clear signal for neutral particles: photons, neutral hadrons %
+% in other cases we might have an energy deposit of neural particle overlapping with charged particle cluster, which can be only detected as an energy excesses when the sum of the cluster energy is larger than associated track momenta %  
+
+% notes source https://cds.cern.ch/record/692252/files/ep-2003-075.pdf pg 47 %
+% purpose of calorimeter calibration %
+% 1) equalize the cell to cell output signals, meaning obtaining a uniform response.
+% 2) set the absolute energy scale for electrons, phtotons, single hadrons, jets.
+% 3) monitor variations in the detector response with time. 
+%================================================================================
+%% An "absolute energy scale" is a system of measurement that starts at a minimum point and increases in one direction.
+%% "absolute energy" refers to the total energy of a particle, including both its kinetic energy (from motion) and its rest mass energy, measured in a specific reference frame, usually considered to be the particle's "rest frame" where it appears stationary. %%
+%% "Absolute calibration" is a process that compares an instrument's reading to a known reference value. It's also known as direct calibration. %% 
+%================================================================================
+% there are 3 main tooks used to calibrate a calorimeter %
+% 1) hadrware calibration: used to equalize and monitor the cell-to-cell response of the detector and of the associated electronics %
+% 2) Test beam calibration: some calorimeter modules are exposed to test beams before being installed in the final detector. the main aims of this step is to set a preliminary absolute energy scale for electrons and pions,given that the incident beam energy is well known. %
+% 3) In situ calibration with physics samples. *this what the thesis is concerned about*
+%% further calibration step is needed after installation in the experiment. This is because the experiment environment %%
+%% for example the presence of material in front of the calorimeter due to tracking devices, is not the same as at the test beam and is not seen by the hardware calibration. %%
+%% the calorimeter response to jets and the missing transverse energy cannot be measured at the test beam where only single particles are used  %%
+%% The in situ calibration allows to correct residual non-uniformities, to understand the impact of the upstream material and of the environment, to follow the detector response variations with time, and to set the final absolute energy scale under experimental conditions. %%
+%% This is achieved by using well-known control physics samples %% 
+% => The electromagnetic absolute energy scale at hadronic colliders like LHC is set mainly by using well-known resonances such as π0 → γγ and in the low-energy range and Z → ee at higher energies.
+% => in pg 49 example of a calorimeter energy scale calibration using Z-> ee events, we can calcuate the parameters needed ,to correct the maeaured energy and make it agree with E true, by changing these values until the reconstructed Z mass peak agree with the right value.
+%================================================================================ 
+
+% note source https://agenda.linearcollider.org/event/522/contributions/22277/attachments/18303/29409/Calor2006_v4.pdf %
+% slide 4 %
+% we have calibration done before data takig, and during data taking %
+% for In-situ: π0→γγ check slide 13 %
+% it can be used for : absolute energy scale, ECAL inter calibration, Tue algorithmic cluster corrections 
+
+\subsection{ECAL cluster calibration}
+
+% notes source : https://indico.cern.ch/event/1034469/contributions/4434644/attachments/2281338/3876248/Reconstructing%20Electrons%20and%20Photons%20in%20the%20CMS%20ECAL%20using%20Graph%20Neural%20Networks.pdf
+
+% per crystal energy deposits are calibrated and recorded as "RecHits" %
+% individual particles are built by clustering nearby Rechits %
+% clusters ocrresponsing to a single EM shower are grouped into superclusters %
+% supercluster energies are subject to lost energy because %
+%% unclustered energy, finite thresholds to suppress noise, energy lost in gaps and in upstream material. %%  
+%% these losses are accounted for by energy corrections, currently *in this thesis* we are using bossted decision tree based regression.
+
+% notes source : https://indico.cern.ch/event/1034469/contributions/4431722/attachments/2280512/3874642/ECAL_calibration_and_performance_Run2_JMijuskovic.pdf %
+% intercalibration: correction factor to equalize the ECAL response for different crystals at the same eta corrdiate %
+
+% note sourse: https://agenda.linearcollider.org/event/522/contributions/22277/attachments/18303/29409/Calor2006_v4.pdf %
+% the goal of the calibration: to profit from the intrinsic ECAL performance (which has been measured w/ testbeam data) %
+
+
+\subsection{HCAL cluster Calibration}
+
+
+
+
+% older draft % 
+%Particle Flow is an advance algorithm that combines all the information gathered using all the detectors in the CMS to reconstruct and identify final state particles. These initial  reconstructed particles are known as PF candidates are electrons, photons, charged and neutral hadrons, and muons.
+
+%The PF uses the basic elements: first element is the tracks information coming from the inner tracker, and muon chamber tracks. The other element is energy deposits information from ECAL and the HCAL. In this way the PF could give a better description for the collision event.
+
+%The particle flow is done in stages : first stage Clustering calorimeter energy deposits, then Linking all the tracks and clusters based on spatial a proximity (cells are neighboring each other in eta -phi view). Where Links can form between : Tracks \& ECAL clusters, Tracks \& HCAL clusters, ECAL \& HCAL clusters, Inner tracks and muon tracks, Muon tracks \& ECAL clusters, Muon tracks \& HCAL clusters.
+
+%(Explain PF blocks and how to get  form that PF candidates)
+
+%..........................................................
+%\section{Particle Flow Reconstruction}
+%\section{Calorimeter Cluster Calibration}
+%This is another section.
+%There is likewise triple space between the preceding text and this section's title.
+%The observant reader will notice that there is a double space between the section's title and this text.
+
+%\subsection{Calorimeter Cluster Calibration}
+%This is a subsection.
+%Just like the section, there is a triple space between the preceding text and the subsection's title.
+%And just like the section, there is a double space between the subsection's title and the subsection's text.
+
+%\subsection{More Subsections}
+%Same concept. Triple Space before title and double space after.
+%Just To show a demonstration, some garbage text will follow this in a new paragraph.
+
+%\lipsum[1]
+
+%\subsubsection{Subsubsections}
+%Subsubsections can be used. Maps to Level 5 on the graduate school requirements.
+%And just like section and subsection, there is a triple space before the title.
+%But then everything changes.
+%There is a period after the title followed by 2 spaces.
+%But fear not, this behavior is defined in the template.
+
+%\subsubsection{Capitalization is not the same}
+%The grad school asked to use sentence cases instead of header cases in the title of the subsubsection.
+%Alvin believes this will change eventually.
+
+%\section{Stacked Headings}
+
+% \stack % DO NOT USE THIS COMMAND
+
+%\subsection{This is a Stacked Heading}
+%In other words there is no text in the section, and we immediately introduce a subsection.
+%To get spacing right when sections are adjacent to subsections (when headings are stacked),
+%we once needed to use the \texttt{$\backslash$stack} command in between.
+%But this is now handled correctly byt the teplate (.cls) file. So do not use the stack command.
+%It is marked obsolete in the template.
+
+%In other words: there has to always be a triple space between the text preceding the subsection title and the subsection title.
+%In this particular case the text preceding the subsection title is the section title.
+%But the same rule applies: triple space.
+%Assuming this changes, adjust accordingly in the template.
+
+%\subsection{Deeper Stacks}
+
+% \stack % DO NOT USE THIS COMMAND
+
+%\subsubsection{This is a Stacked Deep Heading}
+%Same as before, there is no text between the subsection above and the subsubsection here.
+%But fear not. 'Tis taken care of by the template.
+%Unless the requirements change, in which case I'm adjusting the 1em vspace in the template should be fine.
+
+%\subsubsection{But This is Not}
+%But it's fine. It's just another Level 5. Or if you prefer -- a subsubsection. Whichever you choose to call it.
