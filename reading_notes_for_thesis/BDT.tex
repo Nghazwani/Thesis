@@ -1,0 +1,76 @@
+% source: H.
+
+% learned what a decision tree is. 
+(Decision tree): is a tool that could be used to divide the data into simple regions in order to classify or regress the inputs.
+
+In (regression tasks): the model predicts the numerical value of the target.
+
+ML method based on decision trees uses a loarge number of these trees to classify or regress to a true output.
+
+boosted decision trees (BDTs) : when the outputs of the trees in the method are dependent on one another.
+
+types of boosting available to BDTs: adative boosting (adaBoost), ((gradient boosting)), extreme gradient boosting (XGBoost)
+
+% check source 29, 30,31 %
+  
+Gradient boosting (GB): based on popular optimization technique called gradient descent algorithm.
+same concept but instead of minimizing the output function, it minimize the error function/ loss in the direction of the process.
+
+learning rate: the size of the steps of the gradient descent.
+error/residual of the decision making: true output - prediction made by the model.
+
+New prediction (GB)  = old prediction + learning rate * residual. <= this shows that the total predictive model is just a collection of all trees in the model.
+
+
+Extreme Gradient boosting (XGB): is an advance version of the GB. to avoid the overfitting penalty terms are added to the residual of GB.
+
+New prediction (XGB) = old prediction (GB) + penalty * residual(branch) = mean/median of the error of the current branch.
+
+% reviewing the method in my note % 
+
+% check BDT training details %
+
+Our focus here is on the training of the energy calibration BDTs.
+
+we did use 1 BDT for energy calibration. with few input variables, also checked multiple targets.
+
+we also computed the energy calibration scale factors as ratio of BDT output energy/ BDT input energy.
+
+% details inclue %
+
+learning rate (0.01), maximum depth in all BDTs was set at which number ??, nymber of trees in each depth was 1000 ??.
+
+% check H. plots %
+% ----------------
+% "Dataset" for BDT1 continue 15 jet variable (features), # jets of all energy ranges
+% used 50% for "training", 50% for "testing"
+% For training using 12 varaibles "features", "output" was regressed to PFJetEtCorr = transverse energy of particle flow offline jets.
+%% ?? how the feature ranking was performed ?? .. this important for L1T jet algorithm
+
+%% ^^^ the feature ranking plots of the BDT1
+% Phi-RingEnergy -> using the phi-ring algorithm (used to reconstructing/detecting jets)
+% L1JetBDT -> chunky donut algorithm
+
+% Energy scale (response) , ratio of the square root of the variance and energy scale (resolution)
+%-------------------------------------------------------------------------------------------------
+%% 12-variable BDT - energy scale plots (4.1,4.2) - Resolution plots (4.3, 4.4)
+
+%% energy scale plots (4.1) vs iEta ~ expected to be closer to 1  
+%% those plots shows energy scale (reponse) for two cases: high PU (top), low PU (bottom)
+%% also each case we show all PF jet Pts (left) PF jet with Pt from 60-90 GeV (right)
+%% we are comparing 3 BDT results
+%% (green as expected is low) ( blue is better than orange ) 
+%% iEta 1-16 in barrel, 17-28 endcap 30-41 gorward these are the numbers of the trigger tower of ECAL / HCAL .. check figure 2.4
+
+%% energy scale plots (4.2) vs iEta ~ expected to be closer to 1
+%% here we are taking energy scale ratio (high PU response / low PU response)
+%% blue is closer to 1 specially at high iEta
+
+% ratio of the square root of the variance and energy scale (resolution)  vs iEta ~ expected to be closer to 0
+%% still blue is better
+
+% ranking plots of the BDT variables figure (4.5, 4.6, 4.7) 
+%----------------------------------------------------------
+
+% next check conclusion section.
+

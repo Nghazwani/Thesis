@@ -1,0 +1,107 @@
+
+% this method used in reconstructing the energy of charged pions
+% source: https://cds.cern.ch/record/2815404/files/DP2022_022.pdf
+% notes about this source:
+
+% pg 6 energy reconstruction using classical method (chi squre minimization method) 
+weight factors minimize a chi square.
+
+%% In particle physics "fluctuations of showers" refers to: the unpredictable variations in the development of a particle shower,
+%% which is a cascade of secondary particles created when a high-energy primary particle interacts with matter
+%% causing the number of particles within the shower to fluctuate significantly due to the probabilistic nature of the underlying interaction processes involved.
+
+% pg 7 DRN
+based on dynamic graph neural network
+the model maps the input features onto a higher dimensional latent space, and adds clustering and pooling steps to aggregate information.
+
+input features:
+energies E
+coordinates of individual cells (rechits) (x,y,z) 
+
+model traget: E true/E fix 
+model output: E pred/E fix
+E (true): true energy of particle. 
+E (fix): reconstructed energy using detector level calibration. (??)
+%% ^ is that related to HLT correction? 
+E (pred): energy reconstruction using DRN weights.
+
+loss function: (target-prediction)^2/target
+%% ^ review loss/cost function from ML notes.
+
+the model is trained using:
+flat energy sample of 10-350 GeV
+4.1M simulated events
+
+AdamW optimizer with a constant learning of 0.0010
+about ~63K parameters for the model to learn
+
+% pg 10
+The distribution of the reconstructed energy is fitted with gaussian function to obtain (mean) sigma (std div)
+relative resolution sigma/mean, response mean/ E(true).
+
+the procedure done independently in data, simulation. 
+
+% pg 13
+adding spatial coordinates gives DRN info about the spatial development of the shower which helps DRN to better compensate the fluctuations and leakage.
+%% ^ review shower fluctions from the instrumentation for high energy phsyics. 
+
+% pg 14
+comparing the energy reconstructed to the true energy: 300 GeV
+DRN(4 inputs)= 296 GeV
+chi squre= 372 GeV
+
+% pg 15
+the energy deposition patterns of hadrons are knonw to have a high degree of fluctuations, and complexity in terms of particle multiplicity and evolution of showers.
+this could be more complicated by potential leakage if energy if the detector is not sufficiently instrumented.
+
+the algorithms are based on GNNs called dynamic reduction network architecture. 
+this method improves the energy resolution when compared to chi square method.
+
+% DRN architecture (my talk)
+Rechits -> NN mapping into latent space -> graph generation -> graph convolutions -> graph clustering & pooling -> output NN -> network output
+%% ^ reviewing the GNN paper
+%.....................................................................................
+
+% source: https://arxiv.org/pdf/2003.08013
+% notes about this source:
+
+%intro
+Pooling is essential for modern ML.
+- The shape of the pooling operation is usually determined by hand. (setting the size of a convolution filter, and number of pooling steps before the an output layer)
+- this process is difficult to optimize for GNN. (cuz the neighborhoods of nodes may vary in size depending on the problem)
+for message passing NN (advancement in learned pooling techniques on gaphs)
+- using pooling to alter input graph structure.
+this paper forcus on: describing new pooling architechture using:
+- "dynamic graph convolution'' and clustering algorithms to learn an optimized corresponsing graph for pooling.
+- the model is implemented in pytorch Geometric.
+%% Pooling is a technique in machine learning that reduces the spatial dimensions of input data while retaining important features.
+%% ^ It's a fundamental operation in convolutional neural networks (CNNs) and is also known as downsampling or subsampling
+%% source (video) for CNN: https://www.youtube.com/watch?v=O9Jx93DAyw4&list=PLCC34OHNcOtpcgR9LEYSdi9r7XIbpkpK1&index=10
+%% ^ CNN are good at classifying images. popular dataset to use: MNIST (wirtten numbers)
+%% source (paper) for CNN: https://www.ibm.com/topics/convolutional-neural-networks
+%% ^ explains difference between convolution layer vs pooling layer.
+%% pytorch Geometric: is a library built upon PyTorch to easily write and train Graph Neural Networks (GNNs). 
+%% ^ PyTorch is an open-source machine learning library.
+
+This architecture is derived in the context of "hadron energy regression in HEP".
+- where GNN are used to solve difficult clustering problems.
+the objective of this problem (and in genergal for energy regression work)
+- to determine the original energy of a particle incident upon a "sampling calorimeter"
+
+within the sampling calorimeter: (made of lead or steel interspersed with lighter material)
+- incident particles above a threshold energy will produce pairs of particle bu numclear interaction creating a shower of particles.
+- at a number of fixed depths in calorimeter, (the lighter material) records scintillation or ionization signals at fixed depths as a proxy for the number of produced particles.
+- this estimates of multiplicity can be used to infer the originating particle energy.
+%% nuclear interactions are variety of interactions that occur between nucleons (hadron) and nuclei (of the calorimeter material).
+
+The energy deposition patterns of hadrons are known to have high degree of local fluctuations in particle multiplicity during a shower's evolution.
+- this means throught a shower there are randomly located regions that required different treatment from more homogeneous one.
+- there exists an optimal "dynamic cluster" for each hadron shower's data to be estimate the energy. 
+%% "dynamic clustering algorithm" in particle physics refers to a method that adapts its clustering criteria based on the local characteristics of the data,
+%% ^ particularly in the analysis of particle jets where the clustering radius can change dynamically depending on the particle distribution within a potential jet, allowing for better identification of complex jet structures in high-energy collisions.
+
+the advantages of the "Dynamic Reduction" architecture are:
+%% source: to Understanding Latent Space https://samanemami.medium.com/a-comprehensive-guide-to-latent-space-9ae7f72bdb2f
+%% source: Difference between representation vs. latent vs. embedding space https://www.reddit.com/r/MachineLearning/comments/ofivs2/d_difference_between_representation_vs_latent_vs/
+%% are useing unservised clustering algorithm here?? check J.source for unsupervised ML
+%% source (video): for A Greedy Algorithm, https://www.youtube.com/watch?v=gQkQ4U157YE also https://www.youtube.com/watch?v=1tGxU-c6RxA
