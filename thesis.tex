@@ -1,4 +1,4 @@
-%  Baylor University Thesis LaTeX template
+% Baylor University Thesis LaTeX template
 % - Template created by Jonathan Drake (2013)
 % - Template updated by Kenneth Call, Kenichi Hatakeyama (2019)
 % - Template updated by Chris Madrid, Caleb Smith (2020)
@@ -63,13 +63,14 @@
 \renewcommand{\subsectionautorefname}{\mbox{Section}}
 
 %%Thesis parameters
-\title{Electromagnetic and Hadronic Cluster Calibration for the CMS Particle Flow Algorithm Using Machine Learning Methods}    
+\title{Machine Learning Techniques for Calorimeter Cluster Calibration of the CMS Particle Flow algorithm}
+%\title{Electromagnetic and Hadronic Cluster Calibration for the CMS Particle Flow Algorithm Using Machine Learning Methods}    
 \author{Noorah Asaad Ghazwani}
 \holding{B.S.}
 \seeking{M.S.}
 \degree{Master of Science}
 \project{A Thesis}
-\date{00 2024}
+\date{00 2025}
 
 %% Administration
 \graduateDean{J.~Larry Lyon, Ph.D.}
@@ -85,8 +86,8 @@
 \committee{Dissertation Committee}
 \readerOne{Kenichi Hatakeyama Ph.D., Chairperson}
 \readerTwo{Jay R. Dittmann, Ph.D.}
-\readerThree{Andrew Brinkerhoff, Ph.D.}
-\readerFour{not decided yet.}
+\readerThree{David Ryden, Ph.D.}
+%\readerFour{not decided yet.}
 
 
 %% CMS specific commands
@@ -120,7 +121,9 @@
 \acknowledgements{\input{acknowledgements}}
 
 %% Dedication (optional)
-\dedication{\it Pour la rose qui fait important le temps qu'on perd.}
+%\dedication{\it Pour la rose qui fait important le temps qu'on perd.}
+\dedication{\it To the people who believed in me.}
+
 
 %% List of Acronyms (optional)
 % To alphabetize acronyms, use "NSIO method": abbreviations should be alphabetized exactly as written, NOT as spelled out.
@@ -148,46 +151,44 @@
 % Chapters
 %.........
 \chapter{Introduction}
-\label{chapter:ch0}
-\input{chapters/ch0}
-%=====================================
-\chapter{The Standrad Model}
 %\label{chapter:ch1}
-%\input{chapters/ch1}
-\label{chapter:ch1}                                                                                                  
-\input{chapters/chapters_clean_version/ch_SM_draft.tex} 
-%=====================================    
-\chapter{The LHC and the CMS experiment}
-%\chapter{Introduction}
-%\label{chapter:ch3}
-%\input{chapters/ch3}
-\label{chapter:ch2}
-\input{chapters/chapters_clean_version/ch_LHC_draft.tex}
-% this section still included with ch2.tex
+\input{chapters/intro.tex}
 %=====================================
-\chapter{Particle Flow Algorithm and Calorimeter Cluster Calibration} 
-%\chapter{Particle Flow Reconstruction and Calorimeter Cluster Calibration}
+\chapter{Theoretical Background} 
 %\label{chapter:ch2}
-%\input{chapters/ch2}
-\label{chapter:ch3}
-%\input{chapters/chapters_clean_version/ch_PF_draft.tex}
-\input{chapters/chapters_clean_version/ch_PF_draft_v2.tex}
+
+\section{The Standrad model}
+%\label{chapter:ch2.1}
+\input{chapters/SM.tex}
+
+\section{The large hadron collide}
+%\label{chapter:ch2.2} 
+\input{chapters/LHC.tex}
+
+\section{The CMS experiment}
+%\label{chapter:ch2.3}
+\input{chapters/CMS.tex}
+
+\section{Particle Flow Algorithm}
+%\label{chapter:ch2.4}
+\input{chapters/PF_CALCLU.tex} 
+
 %=====================================
-\chapter{Electromagnetic Cluster Calibration Using Boosted Decision Tree}
+\chapter{Machine Learning Algorithms}
 %\label{chapter:ch3}
-%\input{chapters/ch3}
-\label{chapter:ch4}
-\input{chapters/chapters_clean_version/ch_ECALCAL_draft.tex}
+\input{chapters/ML.tex}   
 %=====================================
-\chapter{Hadronic Cluster Calibration Using Graph Neural Network}
+\chapter{Electromagnetic Cluster Calibration}
 %\label{chapter:ch4}
-%\input{chapters/ch4}
-\label{chapter:ch5}
-\input{chapters/chapters_clean_version/ch_HCALCAL_draft.tex}
+\input{chapters/ECAL_CAL.tex}
 %=====================================
-\chapter{Summary and Conclusion}
-\label{chapter:ch6}
-\input{chapters/ch5}
+\chapter{Hadronic Cluster Calibration} 
+%\label{chapter:ch5}
+\input{chapters/HCAL_CAL.tex}
+%=====================================
+\chapter{Summary}
+%\label{chapter:ch6}
+\input{chapters/summary.tex}
 
 % Appendices (optional)
 %\multipleappendices % Change to \oneappendix if you have only one appendix!
@@ -214,5 +215,3 @@
 \bibliography{thesis}
 
 \end{document}
-OB
-B
