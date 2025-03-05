@@ -1,54 +1,42 @@
-A% how to would explain PF to someone who doesnot know anything about HEP %
+% intro %
+\subsection{introduction}
+When we collide particles at high energies inside a particle detector, the collision products will either decay quickly into more stable particles that can be detected or simply it would not interact with the detector.
 
-When we collide particles at high energies inside a particle detector, the collision products either will decay into a final stable particle that can be detected or
-it  would not interact with the detector. 
+The decay products could be a heavy particle that decays into a stable particle like tau, or jet of long-lived particles that is produced via a quark/gluon hadronization) (charged hadrons, photons from neutral Pions, neutral hadrons or particles that don't interact with the detector like neutrinos.
 
-(collision products could be: a heavy particle that decays into a stable particle like tau,
-or jet of long lived particles (charged hadrons, photons from neutral pions, neutral hadrons) produced when a quark/gluon hadronizes,
-or particles that don't intereact with the detector like neutrinos) (source?) 
+To able to know the products originated from collision, we need a way to reconstruct them from information gathered from the detector signals. as shown in Fig.~\ref{fig:Particles_in_CMS}
 
-To able to see the products orginated from collision, we need a way to reconstruct them from the stable particles captured by the detector.
-CMS experiments is able to do that using a reconstruction alogrithm called particle flow (PF).
+CMS experiments is able to achieve that using a Holistic approach that was first developed by the ALEPH experiment at LEP. This approach is a reconstruction algorithm called particle flow (PF).
 
-This alogorithm uses the various signals captured by the CMS subdetectors to derive physics objects originated from the collision (like:Muons, electrons, photons, jets, taus, missing transverse energy)
-which will be stored for further analysis in the future.
+This algorithm uses the various signals captured by the CMS subdetectors to derive physics objects originated from the collision (like: Muons, electrons, photons, jets, taus, missing transverse energy) for each event.
 
-This chapter will proivde a breif description of PF algortihm, calorimeter clusters. Additionally, calibration cluster calibration which is related to work done in this thesis.  
+This chapter will provide a brief description of PF algorithm, calorimeter clusters. Additionally, next chapter will cover calibration cluster calibration which is related to work done in this thesis. 
 
-%\section{Particle Flow Reconstruction}
+\subsection{Particle Flow algorithm}
 
-as mentioned previously, The PF algorithm aims to reconstruct and identify all final particles produce in the event (what do mean by an event?).
-This is achieved by utilizing the fact that different particles leave different signatures in the CMS subdetectors.
+as mentioned previously, The PF algorithm aims to reconstruct and identify all final particles produce in the event (expand more on what do we mean by an event at LHC)
 
-we have two types of PF reconstruction. Online whichs is required to be done quickly during data taking to select interesting events (what kind of events we are looking for?) , it is not integrated in the PF framework (clear this point, what is the PF framework? ) .
-and offline which tht is done after data is collected. it takes more time to achieve higher precision. algorithms, for clustering and tracking, are integrated in the PF framework.
+This is achieved by utilizing the fact that different particles leave different signatures in the CMS subdetectors. As shown in Fig.~\ref{fig:PF_diagram}
 
-(in ECAL chapter we cover HLT PF cluster claibraton)
+we have two types of PF algorithms: Online (in ECAL chapter we cover HLT PF cluster calibration), required to be done quickly during data taking to select interesting events and it is not integrated in the PF framework, and offline which that is done after data is collected and it takes more time to achieve higher precision.
 
-The PF algrithm is done in multiple steps.
-it starts with reconstructing the basic elements of the PF: tracks, energy clusters which are using advanced algorithm.
-The details of the clustering algorithm and the calibration of the clusters will be discussed in the next sections.
+advanced algorithm used to reconstruct for energy clusters and charge particles tracks, are integrated in the PF framework.
 
-Then forming links between the PF elements based on their spatial proximity.
-(the linking rule is to cannect a small thing a big one where they must be touching in the eta-phi space)
-(the order of the size from small to big track<Ecal<Hcal)
-(links could be formed between tracks and ECAL cluster, tracks and HCAL clusters, ECAL and HCAL clusters, inner tracks and muon tracks, muon tracks and ECAL clusters, muon tracks and HCAL clusters)
+The PF algorithm is done in multiple steps.
 
-after all the links are established, PF blocks are formed from all groups of linked tracks and clusters.  
-(note we could have blocks from the an alone elemet like a single track or a cluster) 
-(insert skitch of the blocks) 
-% source intro to PF workshop
+First: it starts with reconstructing the basic elements of the PF algo: tracks, energy clusters. The details of the clustering algorithm and the calibration of the clusters will be discussed in the next sections. 
 
-the final step in the PF is to derive the list of PF particle candidate from the PF blocks.
-this decison is done by following a stric order. after checking the tracks and clusters associated to a PF cadidate, they will be removed from their blocks.
+Second: forming links between the PF elements based on their spatial proximity. the linking rule is to Cannect a small thing a big one where they must be touching in the eta-phi space, the order of the size from small to big track<Ecal<Hcal.
 
-this order starts with the cleanest signture in the CMS muons. Then, isolated electrons and photons (ECAL clusters not linked to HCAL cluster).
-Then neutral hadrons and photons (all left clusters without track link) (Ecal cluster will be assigned to photon candidates and HCAl clusters will be assigned to a neural hadron)
-after that everything left are charged hadrons.
+Types of links that could be formed between tracks and ECAL cluster, tracks and HCAL clusters, ECAL and HCAL clusters, inner tracks and muon tracks, muon tracks and ECAL clusters, muon tracks and HCAL clusters).  
 
-for charged hadrons, the energy must be calibrated. this could be done by comparing the sum of cluster energy to the sum of the track momenta.
-(expand more on the calibration done here, in case overlap of charged and neutral hadron)
-(also any alone tracks will be assigned as charge hadrons)
+after all the links are established, PF blocks are formed from all groups of linked tracks and clusters. Note: we could have blocks from the an alone element like a single track or a cluster (insert skitch of the blocks)
+
+final step in the PF is to:  derive the list of PF particle candidate from the PF blocks. this decision is done by following a strict order. after checking the tracks and clusters associated to a PF candidate, they will be removed from their blocks.  
+
+this order starts with the cleanest signature in the CMS muons. Then, isolated electrons and photons (this is ECAL clusters not linked to HCAL cluster). after those neutral hadrons and photon (all left clusters without track link) where Ecal cluster will be assigned to photon candidates and HCAl clusters will be assigned to a neural hadron. Lastly everything left are charged hadrons.
+
+for charged hadrons, the energy must be calibrated. this could be done by comparing the sum of cluster energy to the sum of the track momenta. (Expand more on the calibration done here, and in case overlap of charged and neutral hadron). also, any alone tracks will be assigned as charge hadrons.
 
 \subsection{Calorimeter Clustering}
 
@@ -68,25 +56,65 @@ For Multiple-seed case, each seed is assumed to represent a unique energy cluste
 An iterative procedure is used to converge on cluster energies and positions based on energy-weighted averages of fractional cell energies.
 (we could include eq that shows how the energy is shared between the seeds or add a skitch)
 
-\section{Cluster Calibration}
+%\section{Cluster Calibration}
 
-as seen in PF section, photons and neutral hadrons are reconstructed only from calorimeter clusters.
-and charged hadrons can be calibrated by check the track momenta.
+%as seen in PF section, photons and neutral hadrons are reconstructed only from calorimeter clusters.
+%and charged hadrons can be calibrated by check the track momenta.
 
-an accurate calibration of the calorimeter response to photons and hadrons is important to maximize the probability to identify the neutral particles and
-also to minimize the rate of misreconstructed energy excesses.
+%an accurate calibration of the calorimeter response to photons and hadrons is important to maximize the probability to identify the neutral particles and
+% also to minimize the rate of misreconstructed energy excesses.
 % source: PF paper pg 16 
 
-\subsection{ECAL Cluster Calibration}
+%\subsection{ECAL Cluster Calibration}
 
-(mention calibration done before data taking breif) 
-(here correction is mostly due to thresholds) 
+%(mention calibration done before data taking breif) 
+%(here correction is mostly due to thresholds) 
 
-(will add soon)	
+%(will add soon)	
 
-\subsection{HCAL Cluster Calibration}
+%\subsection{HCAL Cluster Calibration}
 
-(hadrons could start showering in the ECAL)
-(from previous section, ECAL is calibrated well for EM components but not for hadrons)
+%(hadrons could start showering in the ECAL)
+%(from previous section, ECAL is calibrated well for EM components but not for hadrons)
 
-(will add soon)	
+%(will add soon)
+
+%------------ figures ------------%
+% PF % 
+\begin{figure}[t!]
+\centering
+\includegraphics[width=0.99\textwidth]{figures/particles_signture_in_detector.png}
+\caption[particles_signture_in_detector]{}. Figure source~\cite{SMtable}.                                                                        
+\label{fig:Particles_in_CMS}}                                                                                                               
+\end{figure}
+
+\begin{figure}[t!]
+\centering
+\includegraphics[width=0.99\textwidth]{figures/PF.png}
+\caption[how PF translate detector info]{}. Figure source~\cite{SMtable}.                                                                        
+\label{fig:PF_diagram}}                                                                                                               
+\end{figure}
+
+% clusering %
+%\begin{figure}[t!]
+%\centering
+%\includegraphics[width=0.99\textwidth]{figures/seed_4neighbours.png}
+%\includegraphics[width=0.99\textwidth]{figures/seed_8neighbours.png}
+%\caption[location of the LHC]{}. %Figure source~\cite{SMtable}.                                                                        
+%\label{fig:SMParticles}}                                                                                                               
+%\end{figure}
+
+%\begin{figure}[t!]
+%\centering
+%\includegraphics[width=0.99\textwidth]{figures/topological_cluster_oneseed.png}
+%\includegraphics[width=0.99\textwidth]{figures/topological_cluster_many_Seeds.png}
+%\caption[location of the LHC]{}. %Figure source~\cite{SMtable}.                                                                        
+%\label{fig:SMParticles}}                                                                                                               
+%\end{figure}
+
+%\begin{figure}[t!]
+%\centering
+%\includegraphics[width=0.99\textwidth]{figures/energy_sharing.png}
+%\caption[location of the LHC]{}. %Figure source~\cite{SMtable}.                                                                        
+%\label{fig:SMParticles}}                                                                                                               
+%\end{figure}
