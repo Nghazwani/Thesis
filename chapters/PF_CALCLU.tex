@@ -40,44 +40,20 @@ for charged hadrons, the energy must be calibrated. this could be done by compar
 
 \subsection{Calorimeter Clustering}
 
-Clustering in done in each calorimeter following three steps.
-First, we need to identify topological clusters and their seeds. After that we can compute cluster positions and energies.
+Clustering in done in each calorimeter following three steps. we need to identify topological clusters and their seeds. After thatwe can compute cluster positions and energies.
 
-We can identify topological clusters by looking for a group of calorimeter cells, each has energy deposit above a certain threshold, that share at least one neighbor.
-Then we identify any calorimeter cell whose energy is a local maximum, with respect to its immediate neighbors, this is a seed.
-Topological clusters must have one seed or multiple.
+First, we can identify topological clusters by looking for a group of calorimeter cells, each has energy deposit above a certain threshold, that share at least one neighbor. (include table of the threshold values in CMS calorimeter)
 
-When Computing cluster positions and energies we have two kinds of topological clusters.
-One with Single-seed and the other type has Multiple-seed.
+Then, we identify any calorimeter cell whose energy is a local maximum, with respect to its immediate neighbors, this is a seed. Topological clusters must have one seed or multiple.
 
-In the Single-seed case the cluster energy will be the sum of all the individual cell energies within the cluster and its position is going to be the energy-weighted average of the individual cell positions.
+Lastly, we compute the cluster positions and energies. we have two kinds of topological clusters. One with Single-seed and the other type has Multiple-seed.
 
-For Multiple-seed case, each seed is assumed to represent a unique energy cluster,but the energy deposited in non-seed cells will be shared between the various clusters within the topological cluster.
-An iterative procedure is used to converge on cluster energies and positions based on energy-weighted averages of fractional cell energies.
-(we could include eq that shows how the energy is shared between the seeds or add a skitch)
+In the Single-seed case the cluster energy will be the sum of all the individual cell energies within the cluster and its position is going to be the energy-weighted average of the individual cellpositions.
 
-%\section{Cluster Calibration}
+For Multiple-seed case, each seed is assumed to represent a unique energy cluster, but the energy deposited in non-seed cells will be shared between the various clusters within the topological cluster. An iterative procedure is used to converge on cluster energies and positions based on energy-weighted averages of fractional cell energies. 
 
-%as seen in PF section, photons and neutral hadrons are reconstructed only from calorimeter clusters.
-%and charged hadrons can be calibrated by check the track momenta.
+(include figures that shows topological clusters and their seeds Fig.~\ref{fig:clustering}) 
 
-%an accurate calibration of the calorimeter response to photons and hadrons is important to maximize the probability to identify the neutral particles and
-% also to minimize the rate of misreconstructed energy excesses.
-% source: PF paper pg 16 
-
-%\subsection{ECAL Cluster Calibration}
-
-%(mention calibration done before data taking breif) 
-%(here correction is mostly due to thresholds) 
-
-%(will add soon)	
-
-%\subsection{HCAL Cluster Calibration}
-
-%(hadrons could start showering in the ECAL)
-%(from previous section, ECAL is calibrated well for EM components but not for hadrons)
-
-%(will add soon)
 
 %------------ figures ------------%
 % PF % 
@@ -85,36 +61,36 @@ An iterative procedure is used to converge on cluster energies and positions bas
 \centering
 \includegraphics[width=0.99\textwidth]{figures/particles_signture_in_detector.png}
 \caption[particles_signture_in_detector]{}. Figure source~\cite{SMtable}.                                                                        
-\label{fig:Particles_in_CMS}}                                                                                                               
+\label{fig:Particles_in_CMS}                                                                                                               
 \end{figure}
 
 \begin{figure}[t!]
 \centering
 \includegraphics[width=0.99\textwidth]{figures/PF.png}
 \caption[how PF translate detector info]{}. Figure source~\cite{SMtable}.                                                                        
-\label{fig:PF_diagram}}                                                                                                               
+\label{fig:PF_diagram}                                                                                                               
 \end{figure}
 
 % clusering %
-%\begin{figure}[t!]
-%\centering
-%\includegraphics[width=0.99\textwidth]{figures/seed_4neighbours.png}
-%\includegraphics[width=0.99\textwidth]{figures/seed_8neighbours.png}
-%\caption[location of the LHC]{}. %Figure source~\cite{SMtable}.                                                                        
-%\label{fig:SMParticles}}                                                                                                               
+\begin{figure}[t!]
+\centering
+\includegraphics[width=0.25\textwidth]{figures/seed_4neighbours.png}
+\includegraphics[width=0.25\textwidth]{figures/seed_8neighbours.png}
+%\caption{different types of seeds}. Figure source~\cite{SMtable}.                                                                        
+%\label{fig:seeds}}                                                                                                               
 %\end{figure}
 
 %\begin{figure}[t!]
-%\centering
-%\includegraphics[width=0.99\textwidth]{figures/topological_cluster_oneseed.png}
-%\includegraphics[width=0.99\textwidth]{figures/topological_cluster_many_Seeds.png}
-%\caption[location of the LHC]{}. %Figure source~\cite{SMtable}.                                                                        
-%\label{fig:SMParticles}}                                                                                                               
+\centering
+\includegraphics[width=0.25\textwidth]{figures/topological_cluster_oneseed.png}
+\includegraphics[width=0.25\textwidth]{figures/topological_cluster_many_Seeds.png}
+%\caption{types of topological_cluster}. Figure source~\cite{SMtable}.                                                                        
+%\label{fig:topo_cluster}}                                                                                                               
 %\end{figure}
 
 %\begin{figure}[t!]
-%\centering
-%\includegraphics[width=0.99\textwidth]{figures/energy_sharing.png}
-%\caption[location of the LHC]{}. %Figure source~\cite{SMtable}.                                                                        
-%\label{fig:SMParticles}}                                                                                                               
-%\end{figure}
+\centering
+\includegraphics[width=0.50\textwidth]{figures/energy_sharing.png}
+%\caption{how energy shared between clusters}. Figure source~\cite{SMtable}.                                                                        
+\label{fig:clustering}                                                                                                               
+\end{figure}
