@@ -37,5 +37,27 @@ Where learning rate: the size of the steps of the gradient descent. And error/re
 
 \subsection{NN} 
 
+Neural Networks are one of the most used ML algorithms. The simplest NN contains an input, output, one hidden layer. if the NN has more one hidden layer is called Deep NN. (insert picture of NN) (check written notes for more details on how basic network training is done generally, forward propagation, backpropagation)  
 
+% GNN
+GNN is a type of NN that is used to process data that can be represented as graphs. comparing to some kinds of NN, GNN can be applied on sparse data. 
 
+graph consists of nodes (features of the objects, meaning in our case will be represented by rechits) and edges (reflect the relationship between the rechit, in our case seeing how rechits are connected, in clusters that represent one particle). information in GNN can be shared between neighbors. 
+
+the vector feature of each node is transformed into messages (using dense layers) that will be sent to the neighbors (message passing) in this way each node will learn about its neighbors and itself. (add picture that shows massage passing)
+
+% DNN
+
+DRN architecture overview: 1. input: Rechits => inputNet (FCNN) *Fully Connected Network* 2. => Graph Generation (KNN) => EdgeConv => calculate edge weights => graph clustering (Graclus) => graph pooling (add) 3. Global pool (max) 4. outputNet => output (E pred).  
+
+layers: input 3, aggregation 2, output 2, message passing2.  
+
+input: rechit positions, E rechit energy corresponding to each rechit (rechits are selected after dR matching)                                                                                                                        
+
+Different training target used: ratio, ratio flip, log (ratio flip), trueE 
+
+Other variable used in the training: batch size: 400, number of epochs trained 100, constant learning rate of 0.0001.  
+
+(next move on to talk about energy corrections using DRN) loss function:  [(E true- E pre)^2/E true] 
+
+80\% of the dataset used for training and 20\% for validation. 
