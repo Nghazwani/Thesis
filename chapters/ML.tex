@@ -22,46 +22,20 @@ Various python-based libraries such as schitkit-learn, TensorFlow, keras are use
 \label{fig:ML_diagram}}                                                                                                                                                                                        
 \end{figure}
   
-%% .....  previous draft .....  % 
-%machine learning is a collection of tools and techniques that transforms data.
+\subsection{BDT}
 
-%ML could be use to classify things (this known as classification)
-%or make quantitative predictions (regression).
+Decision tree: is a tool that could be used to divide the data into simple regions in order to classify or regress the inputs. In (regression tasks): the model predicts the numerical value of the target. ML method based on decision trees uses a large number of these trees to classify or regress to a true output.
 
-%(in this thesis ML are used for regression)
+boosted decision trees (BDTs) : when the outputs of the trees in the method are dependent on one another.  types of boosting available to BDTs: adaptive boosting (adaBoost), gradient boosting, extreme gradient boosting (XGBoost) which is what is implemented here. (Quickly mention the difference between them)
 
-%(note: there are a lot of ML methods to choose from. how can we pick the best one for our problem?)
+Gradient boosting (GB): based on popular optimization technique called gradient descent algorithm. same concept but instead of minimizing the output function, it minimizes the error function/ loss in the direction of the process. So here New prediction (GB) = old prediction + learning rate * residual. <= this shows that the total predictive model is just a collection of all trees in the model. (Check written notes for a better way to explain GB)
 
-%In general to choose the best ML method that fit our problem,
-%we can compare the prediction of each method with the true value to see how well each method performs.
+Extreme Gradient boosting (XGB): is an advance version of the GB. to avoid the overfitting penalty terms are added to the residual of GB. So here new prediction (XGB) = old prediction (GB) + penalty * residual(branch) = mean/median of the error of the current branch.
 
-%In ML we could split out data into two group:
-%training data (where the ML method will learn to make prediction. in other words fit the data),
-%testing data (used to compare predictions made by different ML methods. in other words used to evaluate the ML method) )
+Where learning rate: the size of the steps of the gradient descent. And error/residual of the decision making: true output - prediction made by the model. 
 
-%In testing we can measure the error (distance between the prediction and observed (true) value).
-%meaning we are going to compare the sum of the errors.
-%the shorter the error the better the model at making predictions. 
 
-%Types of vaiables:
-%the independent varaible (feature) is used by the ML method in making predictions.
-%dependent variable (target) is the varaible predicted by ML method.
-
-%Very comman to use multiple features to make predictions.
-
-% source ch1.
-
-%models (probability distrubtion, approximate a historgram) or equations (approximate a relationship between varaibles)
-
-%usually approximate relatiy to let us explore relationships and make predictions.
-
-%In ML we build models by training ML algorithms with training data.
-
-%we use statistics to determine of a model is useful or believable. 
-
-%% The goal of ML method here is to learn from "training data" to make predictions.  
-%% source: statequest
-%................................................................................
+\subsection{NN} 
 
 
 
