@@ -28,22 +28,28 @@ also, we split each region into two categories: Full readout (3 groups), zero su
 
 after preparing the appropriate date sets. Training is done only on no PU samples (explain why). The testing is done on both no PU and PU80. (check details of the statistics used for each case Full pT1/ Full pT2/ Full pT3/ ZS for both EE, EB) 
 
-\section{PF cluster regression}
+\section{PF ECAL cluster regression}
 
-(details of the used ML method could be mentioned in ML section) The ML method implemented for PF ECAL cluster calibration is a Boosted Decision Tree (BDT) based semi-parametric regression. (explain next how BDT works, also the features of XGBOOST).
+The ML method implemented for PF ECAL cluster calibration is a Boosted Decision Tree (BDT) based semi-parametric regression. (technical details of XGBOOST is mentioned in ML section).
 
 To estimate the correction to the PF ECAL Cluster, we consider the case where a one photon has deposited all its energy in one PF cluster in the ECAL. (Clusters are mentioned in PF section). This will allow us to calculate: the correction factor = E “gen photon” / E “raw pf cluster”.
 
+% generally how the energy cluster regression is done 
 The PF cluster regression is done intro two steps:  
-1) Training (from where we will get trained regression model). 
-2) The validation of the training is done on NOPU and PU (80) samples.
+1) Training (from where we will get trained regression model). % what ML model is mentioned in ML section.  
+2) The testing of the training is done on NOPU and PU (80) samples. % mention testing of ML model in ML section. % Also PU when in dataset section.  
 
+% specific details of the training related to the anaylsis 
 Training details:Training is done on no PU Zero material double photon particle gun. During training we are going to adopt the same variables used in Run 2 calibration for Run 3 (2024). 
-The training input variables include independent variables (features) used in the training:  clusrawE, ieta,iphi (EB), ix, iy (EE), ietamod20, iphimod20 (EB only), (clusPS1+clusPS2)/clusrawE (EE only) number of hits in the cluster (which takes values 1, 2 and 3 - it takes 3 if nhits >= 3). used Target: log (Egen/Eraw). 
-Training conditions (Sample): Trained for zero-suppressed and full readout regions separately. (For full readout, three regressions are trained:raw pt [5, 20], [20, 100], and [100, 300] GeV) 
-Total of 8 regressions were trained. (Check the different types of regression model used).
 
-The validation is done through few steps:First from the training model we get the value of the correction factor,then calculate:  the corrected cluster energy = E “raw pf cluster” * correction factor 
+The training input variables include independent variables (features) used in the training:  clusrawE, ieta,iphi (EB), ix, iy (EE), ietamod20, iphimod20 (EB only), (clusPS1+clusPS2)/clusrawE (EE only) number of hits in the cluster (which takes values 1, 2 and 3 - it takes 3 if nhits >= 3).
+used Target: log (Egen/Eraw). % refer to  features & target details in ML  
+
+Training conditions (Sample): Trained for zero-suppressed and full readout regions separately.
+(For full readout, three regressions are trained:raw pt [5, 20], [20, 100], and [100, 300] GeV) 
+%Total of 8 regressions were trained. (Check the different types of regression model used).
+
+The validation is done through few steps:First from the training model we get the value of the correction factor,then calculate: the corrected cluster energy = E “raw pf cluster” * correction factor 
 Plot: the response: E “corrected PF cluster”/E “gen photon”. Fit the plot with: double CB function.(for pt< 6 GeV we use Gaus function for fitting since it will be difficult to do the with double CB- in other words low pt (zero suppressed))From the fitted curve we find: mean, effective sigma. We can also get the mean, effective sigma for raw PF cluster energy “with no correction” to compare. 
 
 \section{results}
@@ -76,7 +82,8 @@ in EE region:
 
 \subsection{HLT vs offline PF ECAL cluster}
 
-(connet to PF chapter where where we mentioned offline PF)
+(connect to PF chapter where where we mentioned offline PF)
+(also mention the procution of a new ntuple that containes HLT information) 
 
 first for NoPU samples
 \include{./plots_tex/NoPU_HLT_offline_plots}
