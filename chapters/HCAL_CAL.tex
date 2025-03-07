@@ -15,12 +15,32 @@ we categorize particles depending on where the pion will start showering: H-hadr
 
 Hadronic showers in the CMS detector have both electromagnetic and hadronic components. These showers are not fully contained in the ECAL but extend to HCAL. The reconstructed energy of hadrons is the sum of all reconstructed hits (offline, PF reconstruct the RAW data) from the ECAL and HCAL. 
 
+% move the details of the DRN here. 
+
 Cluster Energy is reconstructed using both classical method (chi square) and DRN (based on GNN). 
 Then for a given bin of true energy we fit the distribution of total RAW energy with Gaussian then we obtain: mu (mean energy) and std deviation.
 
 Finally, we calculate: Resolution: (std/mu) which represent a measure of accuracy HCAL 
 and Response of HCAL:  [(mu/E true) -1] : which is measurement of precision of HCAL 
 (we can see that is not linear, another reason why the calibration of HCAL is not easy).
+
+% DRN details 
+DRN architecture overview:
+1. input: Rechits => inputNet (FCNN) *Fully Connected Network*
+2. => Graph Generation (KNN) => EdgeConv => calculate edge weights => graph clustering (Graclus) => graph pooling (add)
+3. Global pool (max) 4. outputNet => output (E pred).
+
+layers: input 3, aggregation 2, output 2, message passing2.
+
+input: rechit positions, E rechit energy corresponding to each rechit (rechits are selected after dR matching)
+
+Different training target used: ratio, ratio flip, log (ratio flip), trueE
+
+Other variable used in the training: batch size: 400, number of epochs trained 100, constant learning rate of 0.0001.
+
+(next move on to talk about energy corrections using DRN) loss function:  [(E true- E pre)^2/E true]
+
+80\% of the dataset used for training and 20\% for validation.
 
 \section{results}
 we present the results of response and resolution (from DRN vs Chi2) in  both Barrel region and endcap region.
