@@ -9,11 +9,19 @@ To accurately reconstruct hadron candidates, a correction for HCAL cluster energ
 
 This chapter similarly to the previous one presents the used ML method and datasets in performing the PF HCAL cluster energy regression.
 
+\section{GNN}
+(will be updated soon) 
+
 \section{datasets description}
 
-the sample used is centrally produced generate single Pions samples: with E range 2-200 GeV,200-500 GeV and reconstucted under 126X conditions.
+The second part of the thesis focuses on the calibration charged hadrons pf clusters.
+The data samples used for this calibration are single Pion gun.
+They are centrally produced (reconstructed) MC samples, under 126X %CMSSW_12_6_4
+, Run3 winter23, conditions. These samples are also available through DAS web page and they cover two ranges of E 2-200 GeV,200-500 GeV.  
 
-we categorize particles depending on where the pion will start showering: H-hadrons where are particles that do not start a nuclear interaction in ECAL (hadronic shower) and EH-hadrons are particles that start showering in ECAL. the eta and phi of the Pions are the position at the ECAL entrance propagating through the tracker. (Maybe add more details related hadronic showers)
+Before using the data in training ML model, we need to prepare it according to the types of hadronic showers.
+We have where H-hadrons are when the pion start showering in HCAL meaning the particles do not start a nuclear interaction in ECAL hadronic shower) and EH-hadrons are particles that start showering in ECAL. 
+
 
 \section{PF cluster regression using DRN}
 
@@ -27,7 +35,7 @@ Finally, we calculate: Resolution: (std/mu) which represent a measure of accurac
 and Response of HCAL:  [(mu/E true) -1] : which is measurement of precision of HCAL 
 (we can see that is not linear, another reason why the calibration of HCAL is not easy).
 
-\subsection{DRN}
+%\subsection{DRN}
 % DRN details 
 DRN architecture overview:
 1. input: Rechits => inputNet (FCNN) *Fully Connected Network*
