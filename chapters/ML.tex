@@ -1,19 +1,26 @@
+% intro
 
+ML have many applications in experimental particle physics like event identification and reconstruction which is the main focus of this thesis work.
+Before going into detail of using ML in calorimeter cluster calibration we are going to introduce some background information related to the used ML methods in this work.%(Check this source for more info and source).
 
-Machine learning (ML) is part of artificial intelligence (AI). as shown in Fig.~\ref{fig:ML_diagram}
-AI is the process of computers being trained to mimic the human brain in how it learns and solves problems.
-There are two types of learning: ML learning where it needs human intervene, and deep learning (DL) which is a subset of ML where computers learn from its own errors.  
+Before talking about ML, we need to introduce Artificial intelligence (AI).
+AI is the process of computers being trained to imitate how the human brain learns and solves problems. An AI computer program,
+software, could be simple as a chess game or complex as one that can predict the RNA structure of a virus to help develop vaccinee% source1.
+There are different types of AI, as shown in the related figure, ML is a subsection of AI and DL is a subsection of ML.
+To understand the difference between ML and DL, ML is of AI where it needs a human intervene to improve its learning and DL where computers learn from its own past mistakes.
+%(Source for more info about deep learning.)  
 
-ML is algorithms, collection of tools and techniques, with the ability to learn without being explicitly programmed, more data better decisions.
+When talking about ML there are few concepts want need to be explained. Starting with AI algorithm which means the programming,
+a set of instructions, that tells the computer how to learn to operate on its own source2 to solve a problem or do a task.
+ML models are computer programs used to recognize patterns in data (classification) or make predictions (regression) in other words they are the output of the training the ML algorithm using training data.
+To summarize this ML models are created using ML algorithms that undergo a training process with a data to modified the algorithm to be better at manage the specific task and becomes a ML model.  %Source3
 
-ML algor could be categorized into two main groups depending on the data used in training the machine learning model: supervised learning, using labeled data (target) and unsupervised learning.
+ML algo could be categorized into three main groups depending on type of data used in the training process: supervised learning, unsupervised learning, reinforcement learning.
+as seen (in figure related) data could be labeled, unlabeled. Labeled data is any data the has an attribute or category assigned to for example like the price of a product or the Hight or a human.
+For ML, Various python-based libraries such as schitkit-learn, TensorFlow, keras are used tools for ML algorithms and model implementation. 
 
-There are dozens of different ML methods (algorithms) that could be used depending on the problem we want to solve either to classify things (classification problem) or make quantitative predictions (regression problem).
-Both of these problems are supervised leaning.
+In this chapter will describe one of the most commonly used ML algorithms in HEP (source):  boosted Decision trees and Neural networks.  
 
-ML model is the result of running a ML algorithm on data. It contains the model data and prediction algorithm. 
-
-Various python-based libraries such as schitkit-learn, TensorFlow, keras are used tools for ML algorithms and model implementation.  
 
 \begin{figure}[t!]
 \centering
@@ -22,28 +29,41 @@ Various python-based libraries such as schitkit-learn, TensorFlow, keras are use
 \label{fig:ML_diagram}}                                                                                                                                                                                        
 \end{figure}
   
-\subsection{BDT}
+\section{BDT}
 
-Decision tree: is a tool that could be used to divide the data into simple regions in order to classify or regress the inputs. In (regression tasks): the model predicts the numerical value of the target. ML method based on decision trees uses a large number of these trees to classify or regress to a true output.
+A decision trees (DT) is a type of algorithm that looks like an upside-down tree that starts with a root and then branches out to leaves. A DT has different level of nodes: Root node: top most node and it represent the entire message of the decision.
+Decision node: a node where the prior node branches into two or more. leaf node: it is the last node in DT and there furthers from the root node. DTs are supervised learning algorithms where they can be used to make classification and regression models (this thesis deal with regression problems,  
 
-boosted decision trees (BDTs) : when the outputs of the trees in the method are dependent on one another.  types of boosting available to BDTs: adaptive boosting (adaBoost), gradient boosting, extreme gradient boosting (XGBoost) which is what is implemented here. (Quickly mention the difference between them)
+In DT each node the split is chosen to maximalize the information gain (difference between in entropy before and after the potential split) in other words minimizing the entropy.
+Entropy is max for 50/50 split and mini for 1/0 split. The spilt is created reclusively (iteratively) and this process is repeated until some stop condition is met. (ex: depth of tree no more information gains etc).
 
-Gradient boosting (GB): based on popular optimization technique called gradient descent algorithm. same concept but instead of minimizing the output function, it minimizes the error function/ loss in the direction of the process. So here New prediction (GB) = old prediction + learning rate * residual. <= this shows that the total predictive model is just a collection of all trees in the model. (Check written notes for a better way to explain GB)
+DT boosting uses a boosting technique that iteratively works to improve the weak trees by combining more that will correct the error of the previous one.
+Meaning that the new tree will be trained on the samples that were misclassified by the previous model which gradually will refine the overall accuracy.
+in other words, the final prediction is the weighted average of all models with more weight given to those with higher accuracy.
+%(double check this sentence)  
 
-Extreme Gradient boosting (XGB): is an advance version of the GB. to avoid the overfitting penalty terms are added to the residual of GB. So here new prediction (XGB) = old prediction (GB) + penalty * residual(branch) = mean/median of the error of the current branch.
+There are different ways to iteratively adding learners to minimize a loss function most common ones for example are Adaboost (adaptive boosting), Gradient boosting, XGBoost (which will be used later for ECAL CAL).
 
-Where learning rate: the size of the steps of the gradient descent. And error/residual of the decision making: true output - prediction made by the model. 
+\section{NN} 
+
+Neural Networks (NN), also called artificial neural networks because of how they mimic the neurons in the brain sending signals to each other.
+They are one of the most used ML algorithms (in particle physics).
+The simplest NN contains an input, output, one hidden layer each containing number of neurons that are connected. NN are the backbone of deep learning algo if they have more one hidden layer. (insert picture of NN with multiple layers) 
+
+NN like other DL algorithms relay on training data to learn to improve its accuracy overtime without human intervention.
+They are many types of NN but most of them are feedforward (meaning they only flow in one direction from input to output, or called multiple layer perceptron's (MLP’s)).
+Am mentioned before each layer have multiple neurons and each one of those neurons could think of it as its one linear regression model (expand more here) that contain input data (features?), weights, bias (threshold?) and output.
+
+(insert here formula) weight help determine the importance of any given variable (features).
+All inputs then multiplied by their respective weights and then summed.
+Afterward the output is passed through the activation function (which determines the output) if the output exceeds a given threshold, it activates the node and passing data to the next layer in the network.
+This results in the output of one node becoming in the input of the next node.
+This process of passing data from one layer to the next layer defines this NN as feedback network.
+(we can get into depth of how the NN are trained).
+The goal is minimizing the cost/loss function.to insure the fitting of the model. As the model adjusts its weight and bias. Until reaches a local minimum. 
 
 
-\subsection{NN} 
 
-Neural Networks are one of the most used ML algorithms. The simplest NN contains an input, output, one hidden layer. if the NN has more one hidden layer is called Deep NN. (insert picture of NN) (check written notes for more details on how basic network training is done generally, forward propagation, backpropagation)  
 
-% GNN
-GNN is a type of NN that is used to process data that can be represented as graphs. comparing to some kinds of NN, GNN can be applied on sparse data. 
-
-graph consists of nodes (features of the objects, meaning in our case will be represented by rechits) and edges (reflect the relationship between the rechit, in our case seeing how rechits are connected, in clusters that represent one particle). information in GNN can be shared between neighbors. 
-
-the vector feature of each node is transformed into messages (using dense layers) that will be sent to the neighbors (message passing) in this way each node will learn about its neighbors and itself. (add picture that shows massage passing)
 
 
