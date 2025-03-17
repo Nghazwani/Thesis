@@ -15,18 +15,16 @@ The reconstructed PF cluster energy is expected to be smaller than the energy of
 This chapter presents the used ML method BDT and datasets in performing the PF ECAL cluster calibration (online/offline).  
 
 
+\section{XGBoost}
+
+(will be added soon)
+
 \section{Datasets description}
 
-The dataset samples used in this calibration are Double photon with no material produced centrally under CMSSW 13.3.0. (next talk about how the dataset is prepared for the training and testing the model) 
+The first part of the thesis focuses on the calibration of ECAL pf clusters.The dataset samples used in this calibration are double photon with no material samples that were available through Data Aggregation System (DAS) web page.   
+They are centrally produced with 133X %(CMSSW_13_3)
+conditions, Run3 Winter24 Monte Carlo (MC), and in format of a MiniAOD. They corresponding to center of mass energy 13.6 TeV with pt range up to 1500.  
 
-After producing the calibration ntuples (explain what ntuples is):
-
-we concatenate them into one file for each pt bin separately for NOPU and PU.  
-then we separate each dataset into two: one for training and another one for testing  
-after that we split the training dataset to different regions of the ECAL (barrel, endcap).  
-also, we split each region into two categories: Full readout (3 groups), zero suppression readout (1 group). (explain the difference between full, ZS).
-
-after preparing the appropriate date sets. Training is done only on no PU samples (explain why). The testing is done on both no PU and PU80. (check details of the statistics used for each case Full pT1/ Full pT2/ Full pT3/ ZS for both EE, EB) 
 
 \section{PF ECAL cluster regression}
 
