@@ -9,8 +9,13 @@ To accurately reconstruct hadron candidates, a correction for HCAL cluster energ
 
 This chapter similarly to the previous one presents the used ML method and datasets in performing the PF HCAL cluster energy regression.
 
-\section{GNN}
-(will be updated soon) 
+\section{GNN} %source
+
+GNN is a type of NN that is used to process data that can be represented as graphs. comparing to some kinds of NN, GNN can be applied on sparse data (thinly scattered like rechits). A graph consists of nodes which represent features of the objects, in our case will be represented by rechits and edges reflect the relationship between the rechit. information in GNN can be shared between neighbors. in our case seeing how rechits are connected, in clusters that represent one particle. (find related figure).
+
+the vector feature of each node is transformed into messages (using dense layers) that will be sent to the neighbors (message passing) in this way each node will learn about its neighbors and itself. (add picture that shows massage passing) 
+
+
 
 \section{datasets description}
 
