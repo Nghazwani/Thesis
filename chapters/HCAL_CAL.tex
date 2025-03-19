@@ -25,29 +25,19 @@ Before using the data in training ML model, we need to prepare it according to t
 
 \section{PF cluster regression using DRN}
 
-Hadronic showers in the CMS detector have both electromagnetic and hadronic components. These showers are not fully contained in the ECAL but extend to HCAL. The reconstructed energy of hadrons is the sum of all reconstructed hits (offline, PF reconstruct the RAW data) from the ECAL and HCAL. 
+The calibration here is done using a dynamic reduction network (DRN). DRN is a ML method based on GNN %(Paper source , talk source).  
+The DRN model maps the input features onto a higher dimensional latent space and adds clustering and pooling steps to aggregate information. The input features used are the energies (E) and (x,y,z) coordinates of individual cells (rechits - selected after dR matching).
 
-% DRN section. 
-
-Cluster Energy is reconstructed using dynamic reduction network (DRN) (based on Graph neural network which mentioned in ML ch, %(Paper source , talk source)).
-For a given bin of true energy we fit the distribution of total RAW energy with Gaussian then we obtain: mu (mean energy) and std deviation.
-
-The DRN model maps input features onto a higher dimensional latent space and adds clustering and pooling steps to aggregate information. Where the input features this is energies (E) and (x,y,z) coordinates of individual cells (rechits - elected after dR matching) are provided to the model for training to the target. (E true/ E raw reconstructed energy using detector level calibration) and the output of the model is E pred (the energy reconstructed using DRN weights).
-
-DRN architecture overview:  
+architecture overview: (insert here the relate figure) 
 step1: (Rechits) are the input for inputNet (FCNN - Fully Connected Network). 
-step2: Graph Generation (KNN), EdgeConv, calculate edge weights, graph clustering (Graclus), graph pooling (add). 
+step2:  Graph Generation (KNN), EdgeConv, calculate edge weights, graph clustering (Graclus), graph pooling (add). 
 Step3: Global pool (max).  
-step4: output of outputNet is(E pred).
+step 4: output of outputNet is (E pred, the energy reconstructed using DRN weights).
 
-Other details related to the training, number of layers where input 3, aggregation 2, output 2, message passing 2. Other variable used in the training: batch size: 400, number of epochs trained 100, constant learning rate of 0.0001. The Loss functions used during training is defined as: (target - prediction)^2 / target
+The target used for training the model is correction factor:  true energy of the generated / raw pf cluster energy that is reconstructed using detector level calibration. Other details related to the training are: the number of layers for: input 3, aggregation 2, output 2, message passing 2. batch size: 400, number of epochs trained 100, constant learning rate of 0.0001. The Loss functions used during training is defined as: (target-prediction) ^2 / target. We can check the performance of the DRN training by plotting: loss vs epoch.
 
-we checked different training target values: ratio, ratio flip, log (ratio flip), trueE.  
-we can check the performance of the DRN training by plotting: loss vs epoch.
-
-To test the DRN model results (applied on the testing data 20\% of the dataset) we calculate two quantities: first, average of calibrated E response = [ true energy (E true) - calibrated energy (E pre) ] / true energy in GeV for different true energy bins in specific eta range. The thinner the peak the better. 
-Second, Energy resolution = std of (calibrated E response)/ true energy. These quantities are calculated for different regions (with different eta range): Barrel region. Endcap within the tracker region. Endcap outside the tracker region. (pt range from 1-300 GeV)  
-
+To test the DRN model results, we apply the model on 20\% of the dataset. Then calculate two quantities: first, average of calibrated E response = [ true energy (E true) - calibrated energy (E pre)] / true energy in GeV for different true energy bins in specific eta range. The thinner the peak the better. 
+Second, Energy resolution = std of (calibrated E response) / true energy. These quantities are calculated for different regions (with different eta range): Barrel region. Endcap within the tracker region. Endcap outside the tracker region. (pt range from 1-300 GeV)
 
 \section{results}
 we present the results of response and resolution (from DRN vs Chi2) in  both Barrel region and endcap region.
