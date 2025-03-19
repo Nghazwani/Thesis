@@ -10,10 +10,11 @@ This chapter similarly to the previous one introduced the ML method and datasets
 
 \section{GNN} %source
 
-GNN is a type of NN that is used to process data that can be represented as graphs. comparing to some kinds of NN, GNN can be applied on sparse data (thinly scattered like rechits). A graph consists of nodes which represent features of the objects, in our case will be represented by rechits and edges reflect the relationship between the rechit. information in GNN can be shared between neighbors. in our case seeing how rechits are connected, in clusters that represent one particle. (find related figure).
+Graph neural network (GNN) is a type of NN that is used to process data that can be represented as graphs. Comparing to some other kinds of NN, GNN can be applied on thinly scattered data (sparse data).
 
-the vector feature of each node is transformed into messages (using dense layers) that will be sent to the neighbors (message passing) in this way each node will learn about its neighbors and itself. (add picture that shows massage passing) 
+A graph in general consists of nodes and edges. Nodes represent the objects; in our case this is the HCAL rechits and edges reflect the relationship between the rechits. Information in GNN can be shared between neighbors. in our case seeing how rechits are connected, in clusters that represent one particle.
 
+The features’ vector of each node is transformed into messages using dense layers that will be sent to the neighbors through message passing.  in this way each node will learn about its neighbors and itself. (insert here related figure source) 
 
 
 \section{datasets description}
