@@ -1,18 +1,15 @@
 
 \section{Introduction}
 
-ECAL performance is crucial for precision measurements that involve electrons and photons. 
-(Higgs decaying to two photons). Also, for the reconstruction of the jets and missing transverse energies (as mentioned PF section).
-
-(reminder from CMS section) ECAL is designed to measure the energy deposited by electrons and photons. These particles deposit their energy in ECAL by showering in the ECAL crystals. (next describe EM showers here briefly)
+ECAL is designed to measure the energy deposited by electrons and photons. These particles deposit their energy in ECAL by showering in the ECAL crystals.
 
 EM showers spread over multiple crystals. (small Molière radius 2.19 cm while crystal transverse size is close 2.6 cm). clusters are extended in phi direction to form "superclusters" to recover energy radiated via bremsstrahlung or conversion. (connect with PF section)
 
-To get the correct energy for a photon we generally include corrections that was done before data taking (Intercalibration: equalize signal response for the same eta, Laser corrections for signal transparency loss (or photocathode aging) this calibration is done every 40 mins) and other in situ. (include equation related to calibration) cluster correction obtained from a regression method. this is thesis is focused on. (this part could move to cluster calibration section).
+To get the correct energy for a photon we generally include different types of corrections like intercalibration which done before data taking to equalize signal response for the same eta. Also, Laser corrections, that is done every 40 mins for signal transparency loss (or photocathode aging). lastly in situ. The last type is the focus of this work. (here include equation related to calibration). PF cluster correction is obtained from a regression method.
 
 The reconstructed PF cluster energy is expected to be smaller than the energy of the incoming particle. This loss of energy could be due to tracker material, gaps, dead channels etc. Therefore, a calibration of the calorimeter cluster energy is needed.
 
-This chapter presents the used ML method BDT and datasets in performing the PF ECAL cluster calibration (online/offline).  
+This chapter presents the used ML method BDT and datasets in performing the PF ECAL cluster calibration (online/offline). 
 
 
 \section{XGBoost} %source1  source2 
