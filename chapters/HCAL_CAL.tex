@@ -34,9 +34,9 @@ step2:  Graph Generation (KNN), EdgeConv, calculate edge weights, graph clusteri
 Step3: Global pool (max).  
 step 4: output of outputNet is (E pred, the energy reconstructed using DRN weights).
 
-The target used for training the model is correction factor:  true energy of the generated / raw pf cluster energy that is reconstructed using detector level calibration. Other details related to the training are: the number of layers for: input 3, aggregation 2, output 2, message passing 2. batch size: 400, number of epochs trained 100, constant learning rate of 0.0001. The Loss functions used during training is defined as: (target-prediction) ^2 / target. We can check the performance of the DRN training by plotting: loss vs epoch.
+The target used for training the model is correction factor:  true energy of the generated / raw pf cluster energy that is reconstructed using detector level calibration. Other details related to the training are: the number of layers for: input 3, aggregation 2, output 2, message passing 2. batch size: 400, number of epochs trained 100, constant learning rate of 0.0001. The Loss functions used during training is defined as: (target-prediction) ^ 2 / target.
 
-To test the DRN model results, we apply the model on 20\% of the dataset. Then calculate two quantities: first, average of calibrated E response = [ true energy (E true) - calibrated energy (E pre)] / true energy in GeV for different true energy bins in specific eta range. The thinner the peak the better. 
+we can check the performance of the DRN training by plotting: loss vs epoch. To test the DRN model results, we apply the model on 20\% of the dataset. Then calculate two quantities: first, average of calibrated E response = [ true energy (E true) - calibrated energy (E pre)] / true energy in GeV for different true energy bins in specific eta range. The thinner the peak the better. 
 Second, Energy resolution = std of (calibrated E response) / true energy. These quantities are calculated for different regions (with different eta range): Barrel region. Endcap within the tracker region. Endcap outside the tracker region. (pt range from 1-300 GeV)
 
 \section{results}
