@@ -10,48 +10,34 @@ This chapter similarly to the previous one introduced the ML method and datasets
 
 \section{GNN} %source
 
-GNN is a type of NN that is used to process data that can be represented as graphs. comparing to some kinds of NN, GNN can be applied on sparse data (thinly scattered like rechits). A graph consists of nodes which represent features of the objects, in our case will be represented by rechits and edges reflect the relationship between the rechit. information in GNN can be shared between neighbors. in our case seeing how rechits are connected, in clusters that represent one particle. (find related figure).
+Graph neural network (GNN) is a type of NN that is used to process data that can be represented as graphs. Comparing to some other kinds of NN, GNN can be applied on thinly scattered data (sparse data).
 
-the vector feature of each node is transformed into messages (using dense layers) that will be sent to the neighbors (message passing) in this way each node will learn about its neighbors and itself. (add picture that shows massage passing) 
+A graph in general consists of nodes and edges. Nodes represent the objects; in our case this is the HCAL rechits and edges reflect the relationship between the rechits. Information in GNN can be shared between neighbors. in our case seeing how rechits are connected, in clusters that represent one particle.
 
+The features’ vector of each node is transformed into messages using dense layers that will be sent to the neighbors through message passing.  in this way each node will learn about its neighbors and itself. (insert here related figure source) 
 
 
 \section{datasets description}
 
-The second part of the thesis focuses on the calibration charged hadrons pf clusters.
-The data samples used for this calibration are single Pion gun.
-They are centrally produced (reconstructed) MC samples, under 126X %CMSSW_12_6_4
-, Run3 winter23, conditions. These samples are also available through DAS web page and they cover two ranges of E 2-200 GeV,200-500 GeV.  
+The second part of the thesis focuses on the correction of charged hadrons pf clusters for Run3 winter23. The data samples used for this calibration are single Pion gun. They are centrally produced MC samples, and reconstructed under 126X, CMSSW 12.6.4, conditions. These samples were also available through DAS web page and cover ranges of energy 2-200 GeV,200-500 GeV.
 
-Before using the data in training ML model, we need to prepare it according to the types of hadronic showers.
-We have where H-hadrons are when the pion start showering in HCAL meaning the particles do not start a nuclear interaction in ECAL hadronic shower) and EH-hadrons are particles that start showering in ECAL. 
-
+Before using the data in training ML model, we need to prepare it according to the types of hadronic showers. First type are H-hadrons where the pion starts showering in HCAL meaning the particles do not have a nuclear interaction in ECAL. Second type are EH-hadrons are Pions start showering in ECAL and continue to HCAL.  
 
 \section{PF cluster regression using DRN}
 
-Hadronic showers in the CMS detector have both electromagnetic and hadronic components. These showers are not fully contained in the ECAL but extend to HCAL. The reconstructed energy of hadrons is the sum of all reconstructed hits (offline, PF reconstruct the RAW data) from the ECAL and HCAL. 
+The calibration here is done using a dynamic reduction network (DRN). DRN is a ML method based on GNN %(Paper source , talk source).  
+The DRN model maps the input features onto a higher dimensional latent space and adds clustering and pooling steps to aggregate information. The input features used are the energies (E) and (x,y,z) coordinates of individual cells (rechits - selected after dR matching).
 
-% DRN section. 
-
-Cluster Energy is reconstructed using dynamic reduction network (DRN) (based on Graph neural network which mentioned in ML ch, %(Paper source , talk source)).
-For a given bin of true energy we fit the distribution of total RAW energy with Gaussian then we obtain: mu (mean energy) and std deviation.
-
-The DRN model maps input features onto a higher dimensional latent space and adds clustering and pooling steps to aggregate information. Where the input features this is energies (E) and (x,y,z) coordinates of individual cells (rechits - elected after dR matching) are provided to the model for training to the target. (E true/ E raw reconstructed energy using detector level calibration) and the output of the model is E pred (the energy reconstructed using DRN weights).
-
-DRN architecture overview:  
+architecture overview: (insert here the relate figure) 
 step1: (Rechits) are the input for inputNet (FCNN - Fully Connected Network). 
-step2: Graph Generation (KNN), EdgeConv, calculate edge weights, graph clustering (Graclus), graph pooling (add). 
+step2:  Graph Generation (KNN), EdgeConv, calculate edge weights, graph clustering (Graclus), graph pooling (add). 
 Step3: Global pool (max).  
-step4: output of outputNet is(E pred).
+step 4: output of outputNet is (E pred, the energy reconstructed using DRN weights).
 
-Other details related to the training, number of layers where input 3, aggregation 2, output 2, message passing 2. Other variable used in the training: batch size: 400, number of epochs trained 100, constant learning rate of 0.0001. The Loss functions used during training is defined as: (target - prediction)^2 / target
+The target used for training the model is correction factor:  true energy of the generated / raw pf cluster energy that is reconstructed using detector level calibration. Other details related to the training are: the number of layers for: input 3, aggregation 2, output 2, message passing 2. batch size: 400, number of epochs trained 100, constant learning rate of 0.0001. The Loss functions used during training is defined as: (target-prediction) ^2 / target. We can check the performance of the DRN training by plotting: loss vs epoch.
 
-we checked different training target values: ratio, ratio flip, log (ratio flip), trueE.  
-we can check the performance of the DRN training by plotting: loss vs epoch.
-
-To test the DRN model results (applied on the testing data 20\% of the dataset) we calculate two quantities: first, average of calibrated E response = [ true energy (E true) - calibrated energy (E pre) ] / true energy in GeV for different true energy bins in specific eta range. The thinner the peak the better. 
-Second, Energy resolution = std of (calibrated E response)/ true energy. These quantities are calculated for different regions (with different eta range): Barrel region. Endcap within the tracker region. Endcap outside the tracker region. (pt range from 1-300 GeV)  
-
+To test the DRN model results, we apply the model on 20\% of the dataset. Then calculate two quantities: first, average of calibrated E response = [ true energy (E true) - calibrated energy (E pre)] / true energy in GeV for different true energy bins in specific eta range. The thinner the peak the better. 
+Second, Energy resolution = std of (calibrated E response) / true energy. These quantities are calculated for different regions (with different eta range): Barrel region. Endcap within the tracker region. Endcap outside the tracker region. (pt range from 1-300 GeV)
 
 \section{results}
 we present the results of response and resolution (from DRN vs Chi2) in  both Barrel region and endcap region.
