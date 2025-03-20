@@ -23,11 +23,13 @@ XGBoost uses assign higher importance to the misclassified sample during the rec
 
 \section{Datasets description}
 
-The first part of the thesis focuses on the calibration of ECAL pf clusters for Run3 Winter24. The dataset samples used in this calibration are double photon with no material (meaning there is no material before the ECAL, so a single cluster will represent one photon). They are Monte Carlo (MC) samples centrally produced, and reconstructed under 133X (CMSSW 13.3) conditions. These samples are available through Data Aggregation System (DAS) web page and they correspond to center of mass energy 13.6 TeV with pt range up to 1500.
+The first part of this thesis work focuses on the calibration of ECAL PF clusters for Run3. The samples used for this calibration are double photon with zero material Monte Carlo (MC) samples. Double photon to increase the statistics, and zero material meaning there is no material in front of the calorimeter to eliminate dealing with bremsstrahlung and photon conversions.
 
-Before splitting the data into two groups for training and testing the ML model, the data need to be prepared to get better results from training. There are two types of data, one with 80 Pile up (meaning 80 collisions/events occur simultaneously within one proton-proton bunch crossing %source)  
-another with no pile. Since the No PU will be used in training the ML model it will be further divided into two different categories Full readout and Zero suppression (explain difference %source).   
-Each category (Full, ZS) will be split further as (shown in this table) depending on ECAL region and pt range. In the end will end up with 6 groups for Full readout and 2 groups for ZS readout meaning 8 ML models for each group.  
+The datasets are centrally produced, and reconstructed in CMSSW 13.3.0 (133X) under 2024 conditions. These samples can be found through Data Aggregation System (DAS) web page. There are two types of datasets used here, one with Pile up (PU) 80, meaning 80 collisions occurring simultaneously within one p-p bunch crossing, %source,  
+and another with no pile (NoPU). Both correspond to a center of mass energy 13.6 TeV with pt range up to 1500 GeV/c.
+
+Before splitting the data samples into two groups,80\% training and 20\% testing, the training samples need to be divided into smaller groups. This is done to get better models when training the ML algorithm. The NoPU training samples will be divided first into two categories Full readout and Zero suppression (ZS) (explain difference). %source  
+Then each category will be split further more depending on ECAL region and pt range. In the end we end up with 6 groups for Full readout and 2 groups for ZS readout. (add table summarize the samples description)  
 
 
 \section{PF ECAL cluster regression}
