@@ -14,15 +14,12 @@ This chapter presents the used ML method BDT and datasets in performing the PF E
 
 \section{XGBoost} %source1  source2 
 
-The ML algorithm used to calibrate the ECAL pf cluster is XGBoost algorithm. It is one of the most common ways to iteratively add learners (trees) to minimize a loss function. XGBoost stands for Extreme gradient boosting which is a type of gradient boosting. Gradient boosting Uses the gradient decent to create new learners where the loss function (Which define the distance between the truth and prediction) is differentiable. % (check statquest notes)
+The ML algorithm used to calibrate the ECAL pf cluster is called XGBoost algorithm. XGBoost stands for Extreme gradient boosting which is a type of gradient boosting. Gradient boosting uses the gradient decent (clarify better – how is calculated) to create new the learners where the loss function, which define the distance between the truth and prediction, is differentiable.  (find the related figure)
 
-this algorithm works by combining the boosting technique and many decision trees to get the final prediction to achieve higher accuracy.
-During training (meaning feeding/ providing the algorithm with training data to learn from) process: The algorithm starts with an initial prediction and compute the residuals (meaning the difference between the observed and predicted value, loss) Then it creates other decision trees using a similarity score for the residuals %(check statquest notes)
-which are then used to generate the output values for each leaf.  This process is repeated either until the residuals stop reducing or for a specific number of times. Meaning each subsequent tree learns from the previous ones.
+this algorithm works by combining the boosting technique and many decision trees to get the final prediction to achieve higher accuracy. During training process: The algorithm starts with an initial prediction and compute the residuals, loss. Then it creates other decision trees using a similarity score for the residuals (clarify better) which are then used to generate the output values for each leaf.  This process is repeated either until the residuals (error) stop reducing or for a specific number of times. In general, each subsequent tree learns from the previous ones.
 
-Different from random forest (??) algorithm, XGBoost uses the weighting to assign higher importance to specific samples during the reconstruction of the next tree. The misclassified samples from the previous iteration get more weight attribute to them so the next tree can focus on correcting those mistakes. By doing that the algorithm emphasizes on the samples that are hard to classify which improves its accuracy.  Also, the algorithm is made use of a regularization term to prevent overfitting.
+XGBoost uses assign higher importance to the misclassified sample during the reconstruction of the next tree. Meaning the next tree can focus on correcting those mistakes and by doing that the algorithm improves its accuracy. To prevent overfitting, the algorithm is uses of a regularization term.
 
-To summarize (XGB): is an advance version of the GB. to avoid the overfitting penalty terms are added to the residual of GB. So here new prediction (XGB) = old prediction (GB) + penalty * residual(branch) = mean/median of the error of the current branch. Common boosting parameters are loss function and learning rate Where learning rate: the size of the steps of the gradient descent. And error/residual of the decision making: true output - prediction made by the model. 
 
 \section{Datasets description}
 
