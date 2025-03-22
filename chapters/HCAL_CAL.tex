@@ -8,13 +8,11 @@ To accurately reconstruct hadron (for neutral is the only way) candidates, a cor
 This chapter similarly to the previous one introduced the ML method and datasets used in performing the PF HCAL cluster energy regression.
 
 \section{GNN} %source
+Graph neural network (GNN) is a type of NN that is used to process data that can be represented as graphs. Comparing to other kinds of NN, GNN can be applied on sparse data, thinly scattered data.
 
-Graph neural network (GNN) is a type of NN that is used to process data that can be represented as graphs. Comparing to some other kinds of NN, GNN can be applied on thinly scattered data (sparse data).
+A graph in general consists of nodes and edges. Nodes represent the objects in our case rechits. Edges reflect the relationship between the nodes, how rechits are connected in a cluster which represent one particle.
 
-A graph in general consists of nodes and edges. Nodes represent the objects; in our case this is the HCAL rechits and edges reflect the relationship between the rechits. Information in GNN can be shared between neighbors. in our case seeing how rechits are connected, in clusters that represent one particle.
-
-The features’ vector of each node is transformed into messages using dense layers that will be sent to the neighbors through message passing.  in this way each node will learn about its neighbors and itself. (insert here related figure source) 
-
+Information in GNN can be shared between neighbors (rechits). The features’ vector of each node can be transformed into messages using dense layers which are shared between the neighbors through message passing. In this way each node learns about its neighbors and itself. (Insert here related figure %source)
 
 \section{datasets description}
 The second part of this thesis focuses on the correction of charged hadrons PF clusters for Run3. The samples used for this calibration are single Pion gun Monte Carlo (MC) samples. The datasets are centrally produced, and reconstructed under in CMSSW 12.6.4 (126X) under 23 conditions. These samples are also available through DAS web page and cover ranges of energy 2-200 GeV,200-500 GeV.
