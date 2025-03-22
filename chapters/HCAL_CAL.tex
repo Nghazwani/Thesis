@@ -17,10 +17,9 @@ The features’ vector of each node is transformed into messages using dense lay
 
 
 \section{datasets description}
+The second part of this thesis focuses on the correction of charged hadrons PF clusters for Run3. The samples used for this calibration are single Pion gun Monte Carlo (MC) samples. The datasets are centrally produced, and reconstructed under in CMSSW 12.6.4 (126X) under 23 conditions. These samples are also available through DAS web page and cover ranges of energy 2-200 GeV,200-500 GeV.
 
-The second part of the thesis focuses on the correction of charged hadrons pf clusters for Run3 winter23. The data samples used for this calibration are single Pion gun. They are centrally produced MC samples, and reconstructed under 126X, CMSSW 12.6.4, conditions. These samples were also available through DAS web page and cover ranges of energy 2-200 GeV,200-500 GeV.
-
-Before using the data in training ML model, we need to prepare it according to the types of hadronic showers. First type are H-hadrons where the pion starts showering in HCAL meaning the particles do not have a nuclear interaction in ECAL. Second type are EH-hadrons are Pions start showering in ECAL and continue to HCAL.  
+Before training the ML model, the training need to divided according to the types of hadronic showers. EH-hadrons start showering in ECAL and continue to HCAL. H-hadrons starts showering in HCAL meaning the particles do not have a nuclear interaction in ECAL. (Add figure shows EH.H location in CMS)
 
 \section{PF cluster regression using DRN}
 
