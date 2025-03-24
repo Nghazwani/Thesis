@@ -30,19 +30,12 @@ In this chapter will describe one of the most commonly used ML algorithms in HEP
 \end{figure}
   
 \section{BDT}
+A decision trees (DT) ,as seen in the related figure, is a type of algorithm that looks like an upside-down tree that starts with a root at the top, and then branches out to leaves. A DT has different level of nodes: Root node is top most node and it represent the entire message of the decision. Decision node is a node where the prior node branches into two or more. Leaf node is the last node in DT and there furthers from the root node. DTs are supervised learning algorithms that can be used to make classification and regression models (this thesis deal with regression problems).
 
-A decision trees (DT) is a type of algorithm that looks like an upside-down tree that starts with a root and then branches out to leaves. A DT has different level of nodes: Root node: top most node and it represent the entire message of the decision.
-Decision node: a node where the prior node branches into two or more. leaf node: it is the last node in DT and there furthers from the root node. DTs are supervised learning algorithms where they can be used to make classification and regression models (this thesis deal with regression problems,  
+In DT each node the split is chosen to maximalize the information gain (difference between in entropy before and after the potential split), in other words minimizing the entropy. Entropy is max for 50/50 split and mini for 1/0 split. The spilt is created reclusively (iteratively) and this process is repeated until some stop condition is met, ex: depth of tree no more information gains etc.
 
-In DT each node the split is chosen to maximalize the information gain (difference between in entropy before and after the potential split) in other words minimizing the entropy.
-Entropy is max for 50/50 split and mini for 1/0 split. The spilt is created reclusively (iteratively) and this process is repeated until some stop condition is met. (ex: depth of tree no more information gains etc).
-
-DT boosting uses a boosting technique that iteratively works to improve the weak trees by combining more that will correct the error of the previous one.
-Meaning that the new tree will be trained on the samples that were misclassified by the previous model which gradually will refine the overall accuracy.
-in other words, the final prediction is the weighted average of all models with more weight given to those with higher accuracy.
-%(double check this sentence)  
-
-There are different ways to iteratively adding learners to minimize a loss function most common ones for example are Adaboost (adaptive boosting), Gradient boosting, XGBoost (which will be used later for ECAL CAL).
+In boosted decision trees (BDT), DT uses a boosting technique that iteratively works to improve the weak trees by combining more, tree, that will correct the error of the previous one. How this works, the new tree will be trained on the samples that were misclassified by the previous tree which gradually will refine the overall accuracy (fix me).  In BDT, the final prediction is the weighted average of all models (trees) with more weight given to those with higher accuracy.  There are different ways to iteratively adding learners %to minimize a loss function 
+most common ones for example are Adaboost (adaptive boosting), Gradient boosting, XGBoost which will be used later for ECAL CAL.
 
 \section{NN}
 Neural Networks (NN), also called artificial neural (ANN) networks because of how they mimic the neurons in the brain sending signals to each other. 
