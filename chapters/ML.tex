@@ -44,23 +44,18 @@ in other words, the final prediction is the weighted average of all models with 
 
 There are different ways to iteratively adding learners to minimize a loss function most common ones for example are Adaboost (adaptive boosting), Gradient boosting, XGBoost (which will be used later for ECAL CAL).
 
-\section{NN} 
+\section{NN}
+Neural Networks (NN), also called artificial neural (ANN) networks because of how they mimic the neurons in the brain sending signals to each other. 
+They are one of the most used ML algorithms (in particle physics). 
+The simplest NN contains an input layer, output layer, and one hidden layer each containing number of neurons that are connected. NN’s are the backbone of DL algorithms if they have more one hidden layer. %(insert picture of a simple NN vs DL with multiple layers)
 
-Neural Networks (NN), also called artificial neural networks because of how they mimic the neurons in the brain sending signals to each other.
-They are one of the most used ML algorithms (in particle physics).
-The simplest NN contains an input, output, one hidden layer each containing number of neurons that are connected. NN are the backbone of deep learning algo if they have more one hidden layer. (insert picture of NN with multiple layers) 
+NN like other DL algorithms relay on the training data to learn to improve its accuracy overtime without human intervention. As mentioned before each layer have multiple neurons and each one of those neurons (could think of it as its one linear regression model, activation function) contains input data, weights, bias, and output. (fix me)
 
-NN like other DL algorithms relay on training data to learn to improve its accuracy overtime without human intervention.
-They are many types of NN but most of them are feedforward (meaning they only flow in one direction from input to output, or called multiple layer perceptron's (MLP’s)).
-Am mentioned before each layer have multiple neurons and each one of those neurons could think of it as its one linear regression model (expand more here) that contain input data (features?), weights, bias (threshold?) and output.
+All inputs then multiplied by their respective weights (helps determine the importance of any given variable) and then summed. Afterward the output (with bias) is passed through the activation function (example of activation function?) if the output exceeds a given threshold, it activates the node and passing data to the next layer in the network. This results in the output of one node becoming in the input of the next node. This process of passing data from one layer to the next layer defines this NN as feedback network. The goal is minimizing errors (cost/loss function, example) to insure the fitting of the model. As the model adjusts its weight and bias. Until reaches a local minimum (mention gradient decent).
 
-(insert here formula) weight help determine the importance of any given variable (features).
-All inputs then multiplied by their respective weights and then summed.
-Afterward the output is passed through the activation function (which determines the output) if the output exceeds a given threshold, it activates the node and passing data to the next layer in the network.
-This results in the output of one node becoming in the input of the next node.
-This process of passing data from one layer to the next layer defines this NN as feedback network.
-(we can get into depth of how the NN are trained).
-The goal is minimizing the cost/loss function.to insure the fitting of the model. As the model adjusts its weight and bias. Until reaches a local minimum. 
+
+
+
 
 
 
