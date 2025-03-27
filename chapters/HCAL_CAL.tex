@@ -19,7 +19,7 @@ The second part of this thesis focuses on the correction of charged hadrons PF c
 
 Before training the ML model, the training need to divided according to the types of hadronic showers. EH-hadrons start showering in ECAL and continue to HCAL. H-hadrons starts showering in HCAL meaning the particles do not have a nuclear interaction in ECAL. (Add figure shows EH.H location in CMS)
 
-\section{PF cluster regression using DRN}
+\section{PF Cluster Regression Using DRN}
 The ML used for charged hadron is done using a dynamic reduction network (DRN) which is based on GNN. %(Paper source , talk source).
 
 The DRN model maps the input features onto a higher dimensional latent space and adds clustering, pooling steps to aggregate information. An overview architecture can be seen in this figure (insert here the relate figure). Summary of the steps taken during DRN training: 
