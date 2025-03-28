@@ -1,11 +1,11 @@
 % intro %
-\subsection{introduction}
+\subsection{Introduction}
 When particles are collided at high energies inside a particle detector, the collision products will either decay quickly into stable particles that can be detected or simply it would not interact with the detector. To able to know the products originated from collision, we need a way to reconstruct them from information gathered from the detector signals as shown in Fig.~\ref{fig:Particles_in_CMS}. 
 CMS experiments is able to achieve that using a Holistic approach that was first developed by the ALEPH experiment at LEP that is called particle flow (PF).
 
 This algorithm uses the various signals captured by the CMS subdetectors to derive physics objects originated from the collision, such as muons, electrons, photons, jets, taus, missing transverse energy, for each event.This section will provide a brief description of PF algorithm, and one of the PF elements calorimeter clusters. Additionally, calibration cluster calibration using the conventional method. %(might move to have his own section)
 
-\subsection{Particle Flow algorithm}
+\subsection{Particle Flow Algorithm}
 As mentioned previously, The PF algorithm aims to reconstruct and identify all final particles produce in the event ,an event is a snapchat of a collision in the LHC %source. 
 This is achieved by utilizing the fact that different particles leave different signatures in the CMS subdetectors. As shown in this figure As shown in Fig.~\ref{fig:PF_diagram}
 
@@ -52,14 +52,14 @@ Clustering in done in each calorimeter following three steps. we need to identif
 \begin{figure}[t!]
 \centering
 \includegraphics[width=0.99\textwidth]{figures/particles_signture_in_detector.png}
-\caption[particles_signture_in_detector]{}. Figure source~\cite{SMtable}.                                                                        
+\caption[Particles signture in detector]{Particles signture in detector}. Figure source~\cite{SMtable}.                                                                        
 \label{fig:Particles_in_CMS}                                                                                                               
 \end{figure}
 
 \begin{figure}[t!]
 \centering
 \includegraphics[width=0.99\textwidth]{figures/PF.png}
-\caption[how PF translate detector info]{}. Figure source~\cite{SMtable}.                                                                        
+\caption[PF translate detector info]{PF translate detector info}. Figure source~\cite{SMtable}.                                                                        
 \label{fig:PF_diagram}                                                                                                               
 \end{figure}
 
@@ -68,21 +68,21 @@ Clustering in done in each calorimeter following three steps. we need to identif
 \centering
 \includegraphics[width=0.25\textwidth]{figures/seed_4neighbours.png}
 \includegraphics[width=0.25\textwidth]{figures/seed_8neighbours.png}
-%\caption{different types of seeds}. Figure source~\cite{SMtable}.                                                                        
-%\label{fig:seeds}}                                                                                                               
-%\end{figure}
+\caption[Different types of seeds]{Different types of seeds}. Figure source~\cite{SMtable}.                                                                        
+\label{fig:seeds}}                                                                                                               
+\end{figure}
 
-%\begin{figure}[t!]
+\begin{figure}[t!]
 \centering
 \includegraphics[width=0.25\textwidth]{figures/topological_cluster_oneseed.png}
 \includegraphics[width=0.25\textwidth]{figures/topological_cluster_many_Seeds.png}
-%\caption{types of topological_cluster}. Figure source~\cite{SMtable}.                                                                        
-%\label{fig:topo_cluster}}                                                                                                               
-%\end{figure}
+\caption[Types of topological cluster]{Types of topological cluster}. Figure source~\cite{SMtable}.                                                                
+\label{fig:topo_cluster}}                                                                                                               
+\end{figure}
 
-%\begin{figure}[t!]
+\begin{figure}[t!]
 \centering
 \includegraphics[width=0.50\textwidth]{figures/energy_sharing.png}
-%\caption{how energy shared between clusters}. Figure source~\cite{SMtable}.                                                                        
+\caption[Energy shared between clusters]{Energy shared between clusters}. Figure source~\cite{SMtable}.                                                            
 \label{fig:clustering}                                                                                                               
 \end{figure}
