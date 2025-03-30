@@ -1,50 +1,25 @@
 % intro %
 \subsection{Introduction}
-When particles are collided at high energies inside a particle detector, the collision products will either decay quickly into stable particles that can be detected or simply it would not interact with the detector. To able to know the products originated from collision, we need a way to reconstruct them from information gathered from the detector signals as shown in Fig.~\ref{fig:Particles_in_CMS}. 
-CMS experiments is able to achieve that using a Holistic approach that was first developed by the ALEPH experiment at LEP that is called particle flow (PF).
+When particles collide at high energies inside a particle detector, the collision products will either decay into stable particles or simply it would not interact with the detector. To identify the original products coming out of the collision, we need a way to reconstruct them from the detector signals. The CMS experiments can achieve that using a holistic approach developed by the ALEPH experiment at LEP called particle flow (PF).
 
-This algorithm uses the various signals captured by the CMS subdetectors to derive physics objects originated from the collision, such as muons, electrons, photons, jets, taus, missing transverse energy, for each event.This section will provide a brief description of PF algorithm, and one of the PF elements calorimeter clusters. Additionally, calibration cluster calibration using the conventional method. %(might move to have his own section)
+This algorithm uses the various signals captured by the CMS subdetectors, as shown in fig:%PF_nature_detector),
+to derive physics objects such as muons, electrons, photons, jets, taus, and missing transverse energy, which is used later in physics analysis. This section will provide a description of the PF algorithm and one of its advance algorithms for energy clusters. Additionally, calorimeter cluster calibration using the conventional method will be covered (fix me).
 
 \subsection{Particle Flow Algorithm}
-As mentioned previously, The PF algorithm aims to reconstruct and identify all final particles produce in the event ,an event is a snapchat of a collision in the LHC %source. 
-This is achieved by utilizing the fact that different particles leave different signatures in the CMS subdetectors. As shown in this figure As shown in Fig.~\ref{fig:PF_diagram}
+The PF algorithm aims to reconstruct and identify all the final particles produced in an event by utilizing the fact that different particles leave different signatures in the CMS subdetectors, as shown in (fig: %cms_particle_signtures).
+There are two PF algorithms: online PF, which is used during data collection to select interesting events, and offline PF, which takes place after data is collected (%source for PF and HLT).
 
-There are two types of PF algorithms: Online (in ECAL chapter we cover HLT PF cluster calibration), required to be done quickly during data taking to select interesting events and it is not integrated in the PF framework, and offline which that is done after data is collected and it takes more time to achieve higher precision. %(source about PF and HLT , source section3  )
+The PF algorithm steps as follow: (%source) 
+First, the PF algo reconstructs the essential elements: charged particle tracks and energy clusters. Later in this chapter, the details of the clustering algorithm and the clusters' calibration will be discussed.  Second, it links the PF elements based on their spatial proximity. The linking rule here is to connect the small elements to the bigger ones, meaning they must be touching in the eta-phi space. The order of the elements is from small to big: track, ECAL cluster, and HCAL cluster. Examples of links between the elements are: tracks and ECAL clusters, tracks and HCAL clusters, and an inner tracks and muon tracks. After all the established links, the PF blocks contain the groups of linked tracks and clusters. Any left elements, like a single track or a cluster, will have their block.
 
-The PF algorithm is done in multiple steps and there are advanced algorithm used to reconstruct for energy clusters and charge particles tracks,
-are integrated in the PF framework. 
-\begin{itemize}
-\item First:it starts with reconstructing the basic elements of the PF algo: tracks, energy clusters. The details of the clustering algorithm and the calibration of the clusters will be discussed in the next sections.
-  
- \item Second: forming links between the PF elements based on their spatial proximity. the linking rule is to Cannect a small thing a big one where they must be touching in the eta-phi space, the order of the size from small to big (track,Ecal cluster, Hcal cluster).
-   Types of links that could be formed between:tracks and ECAL cluster, tracks and HCAL clusters, ECAL and HCAL clusters, inner tracks and muon tracks,
-   muon tracks and ECAL clusters, muon tracks and HCAL clusters.
-   After all the links are established, PF blocks are formed from all groups of linked tracks and clusters.
-   (We could have blocks from an alone element like a single track or a cluster (insert skitch of the blocks)
-   
- \item Final step in the PF is to derive the list of PF particle candidate from the PF blocks. This decision is done by following a strict order.
-   After checking the tracks and clusters associated to a PF candidate, they will be removed from their blocks.
-   This order starts with the cleanest signature in the CMS muons.
-   Then, isolated electrons and photons (this is ECAL clusters not linked to HCAL cluster).
-   After those neutral hadrons and photon (all left clusters without track link) where Ecal cluster will be assigned to photon candidates and HCAl clusters will be assigned to a neural hadron.
-   Lastly everything left are charged hadrons. For charged hadrons, the energy must be calibrated. This could be done by comparing the sum of cluster energy to the sum of the track momenta. (Expand more on the calibration done here, and in case overlap of charged and neutral hadron). Also, any alone tracks will be assigned as charge hadrons. 
+Third, a list of PF particle candidates which follows a strict order, starting with the cleanest signature in the CMS muons. Then, isolated electrons and photons. After that, neutral hadrons and non-isolated photons. Lastly, everything left is charged hadrons. For charged hadrons, the energy is calibrated by comparing the cluster energy sum to the track momenta sum. Also, any tracks that are alone will be assigned as charge hadrons.
 
-\end{itemize}
 
 \subsection{Calorimeter Clustering}
-Clustering in done in each calorimeter following three steps. we need to identify topological clusters and their seeds. After that we can compute cluster positions and energies.
-\begin{itemize}
- \item First, we can identify topological clusters by looking for a group of calorimeter cells, each has energy deposit above a certain threshold,
-   that share at least one neighbor. (include table of the threshold values in CMS calorimeter)
-   
- \item Then, we identify any calorimeter cell whose energy is a local maximum, with respect to its immediate neighbors, this is a seed. Topological clusters must have one seed or multiple.
-   
- \item Lastly, we compute the cluster positions and energies.we have two kinds of topological clusters.
-   One with Single-seed and the other type has Multiple-seed.
-   In the Single-seed case the cluster energy will be the sum of all the individual cell energies within the cluster and its position is going to be the energy-weighted average of the individual cell positions. For Multiple-seed case, each seed is assumed to represent a unique energy cluster, but the energy deposited in non-seed cells will be shared between the various clusters within the topological cluster. An iterative procedure is used to converge on cluster energies and positions based on energy-weighted averages of fractional cell energies.
- (include figures that shows topological clusters and their seeds Fig.~\ref{fig:clustering})  
+The clustering algorithm used in the PF computes the cluster positions and their energies. This algorithm is done separately in each calorimeter through multiple steps. First, we identify topological clusters by looking for a group of calorimeter cells with energy deposits above a certain threshold, and they must share at least one neighbor. The threshold values could be viewed in (fig:). Next, we identify any calorimeter cell, or seed whose energy is a local maximum with respect to its immediate neighbors so that each topological cluster could have one seed or multiple as shown in (fig:).
 
-\end{itemize} 
+Lastly, we compute the cluster positions and energies. In the Single-seed case, the cluster energy will be the sum of all the individual cell energies within the cluster, and its position will be the energy-weighted average of the individual cell positions. However, for the multiple-seed case, each seed is assumed to represent a unique energy cluster and the energy deposited in non-seed cells will be shared between the various clusters within the topological cluster. Here the cluster energies and positions will converge using an iterative procedure based on the energy-weighted averages of fractional cell energies. (source)
+
 
 
 %------------ figures ------------%
