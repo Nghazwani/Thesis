@@ -1,4 +1,4 @@
-% intro
+\section{Introduction}
 Machine learning (ML) have many applications in experimental particle physics, such as event identification and reconstruction which include calorimeter cluster calibration, which is the focus of this thesis. This chapter introduces some background on the used ML methods which covered in the next chapters. %(Check this source for more info and source).
 
 Before talking about ML, we need to introduce Artificial intelligence (AI). AI is the process of computers being trained to imitate how the human brain learns and solves problems. An AI computer program, software, could be simple as a chess game or complex as one that can predict the RNA structure of a virus to help develop vaccinee %source1.  
@@ -19,7 +19,7 @@ Data could be labeled, unlabeled. Labeled data is any data the has an attribute 
 \label{fig:ML_diagram}}                                                                                                                                                                                        
 \end{figure}
   
-\section{BDT}
+\section{Boosted Decision Trees}
 A decision trees (DT) ,as seen in the related figure, is a type of algorithm that looks like an upside-down tree that starts with a root at the top, and then branches out to leaves. A DT has different level of nodes: Root node is top most node and it represent the entire message of the decision. Decision node is a node where the prior node branches into two or more. Leaf node is the last node in DT and there furthers from the root node. DTs are supervised learning algorithms that can be used to make classification and regression models (this thesis deal with regression problems).
 
 In DT each node the split is chosen to maximalize the information gain (difference between in entropy before and after the potential split), in other words minimizing the entropy. Entropy is max for 50/50 split and mini for 1/0 split. The spilt is created reclusively (iteratively) and this process is repeated until some stop condition is met, ex: depth of tree no more information gains etc.
@@ -27,7 +27,7 @@ In DT each node the split is chosen to maximalize the information gain (differen
 In boosted decision trees (BDT), DT uses a boosting technique that iteratively works to improve the weak trees by combining more, tree, that will correct the error of the previous one. How this works, the new tree will be trained on the samples that were misclassified by the previous tree which gradually will refine the overall accuracy (fix me).  In BDT, the final prediction is the weighted average of all models (trees) with more weight given to those with higher accuracy.  There are different ways to iteratively adding learners %to minimize a loss function 
 most common ones for example are Adaboost (adaptive boosting), Gradient boosting, XGBoost which will be used later for ECAL CAL.
 
-\section{NN}
+\section{Neural Networks}
 Neural Networks (NN), also called artificial neural (ANN) networks because of how they mimic the neurons in the brain sending signals to each other. 
 They are one of the most used ML algorithms (in particle physics). 
 The simplest NN contains an input layer, output layer, and one hidden layer each containing number of neurons that are connected. NN’s are the backbone of DL algorithms if they have more one hidden layer. %(insert picture of a simple NN vs DL with multiple layers)
