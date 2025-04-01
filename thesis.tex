@@ -38,6 +38,7 @@
 \usepackage{adjustbox}
 \usepackage{rotating}
 \usepackage{tabu}
+\usepackage{lscape}
 
 \usepackage{lscape}
 %%KC: Graduate school asks that references to chapters use words for the numbers. the fmtcount package translates number to words. This is really rather hacky. If the formated label is an integer according to xstring, then we set the hackyCounter to have that label's value, then print it using \Numberstring
@@ -156,7 +157,8 @@
 \input{chapters/intro.tex}
 
 %=====================================
-\chapter{Theoretical Background and Experiment Setup}
+\chapter{Theoretical Background and Experimental Setup}
+\label{ch2}
 
 \section{Introduction}
 \input{chapters/ch2_intro.tex}
@@ -165,7 +167,7 @@
 %\label{chapter:ch2.1}
 \input{chapters/SM.tex}
 
-\section{The Large Hadron Collide}
+\section{The Large Hadron Collider}
 %\label{chapter:ch2.2} 
 \input{chapters/LHC.tex}
 
