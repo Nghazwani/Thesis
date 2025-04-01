@@ -11,7 +11,7 @@ AI is the process of training computers to imitate how the human brain learns an
 AI-powered software can range from simple applications, such as a chess program, to complex systems capable of predicting the RNA structure of a virus to aid in vaccine development.
 There are different types of AI, as shown in Fig.~\ref{fig:ML_diagram}, and ML is a subset of AI and deep learning (DL) is a subset of ML.
 %To understand the difference between ML and DL, ML is of AI where it needs a human intervene to improve its learning and DL where computers learn from its own past mistakes. %(Source for more info about deep learning.)
-ML requires human intervention to improve its learning, whereas DL enables computers to refine their learning frm its own past mistakes.
+ML requires human intervention to improve its learning, whereas DL enables computers to refine their learning from its own past mistakes.
 
 \begin{figure}[t!]
 \centering
@@ -44,9 +44,9 @@ Leaf node is the last node in DT and represents the outcome or prediction of the
 DTs are supervised learning algorithms that can be used to make classification and regression models.
 This thesis deals with regression problems.
 
-In each node of DT, the split is chosen to maximalize the information gain (difference between in entropy before and after the potential split), in other words, minimizing the entropy.
+In each node of DT, the split is chosen to maximize the information gain (difference between in entropy before and after the potential split), in other words, minimizing the entropy.
 Entropy is maximum for 50/50 split and minimum for 1/0 split, \ie contains only one class.
-The spilt is created reclusively (iteratively), with each split chosen to maximize the information gain.
+The spilt is created recursively (iteratively), with each split chosen to maximize the information gain.
 This process continues until a stopping condition is met, such as reaching a maximum tree depth or when no further information gain is possible.
 
 In boosted decision trees (BDT), DT uses a boosting technique that iteratively works to improve the weak trees by combining them. %KenH (KenH belieave that's what Noorah meant) more, tree, that will correct the error of the previous one.
