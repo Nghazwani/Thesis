@@ -1,9 +1,10 @@
 
 \section{Introduction}
 Electrons and photons deposit their energies in ECAL by showering, via bremsstrahlung or photon conversion, in the crystals.
-Therefore, the particle's energy spreads through multiple calorimeter clusters extending the $\eta$ and $\phi$ directions.
-The reconstructed PF cluster energy from the PF algorithm is expected to be smaller than the true energy of the incoming particle.
-This loss of energy could be due to tracker material, gaps, dead channels, etc.
+the particle's energy spreads over multiple calorimeter crystals extending in the $\eta$ and $\phi$ directions.
+The clustering algorithm described in Chapter~\ref{subsec:clustering} applies several thresholds to the ECAL crystal energies. Consequently,
+the reconstructed PF cluster energy from the PF algorithm is expected to be smaller than the true energy of the incoming particle.
+%This loss of energy could be due to tracker material, gaps, dead channels, etc.
 Therefore, a calibration of the calorimeter cluster energy is needed.
 
 This chapter presents the ML method and datasets used for calibrating the online and offline PF ECAL clusters.
@@ -43,7 +44,7 @@ However, for the special case of checking the online PF calibration, it was nece
 This is achieved by re-running the Digi$\rightarrow$Reco$\rightarrow$miniAOD step in order to create and keep HLT PF ECAL Cluster data in the miniAOD datasets.
 
 In general, there are two types of datasets used here, one with pileup (PU) 80, meaning 80 collisions occurring simultaneously within one proton-proton bunch crossing source, and another with no pile (NoPU).
-Both correspond to a center of mass energy 13.6 \TeV with pt range up for offline case to 1500\GeV{}. And 500\GeV{} with only about 1000 events for the online case.
+Both correspond to a center of mass energy 13.6 \TeV with \pt range up for offline case to 1500\GeV{}. And 500\GeV{} with only about 1000 events for the online case.
 
 Before splitting the data samples into two groups, 80\% training and 20\% testing, the training samples are divided into smaller subsets.
 This is done in order to derive better models when training the ML algorithm.
@@ -59,8 +60,9 @@ In the first step, the training is performed by running the ML algorithm on the 
 In the second step, we test the ML model on testing data (NoPU, PU).
 
 %First, we starting with the training details.
-Some detais on the training are presented below.
-In order to estimate the calibration of the PF ECAL Cluster we consider the case where a one photon has deposited all its energy in one PF cluster in the ECAL, since we have zero material as mentioned before (approximately 94\% of the incident energy of a single electron or photon is contained in 3$\times$3 crystals, and 97\% in 5$\times$5 crystals source).
+Some details on the training are presented below.
+In order to estimate the calibration of the PF ECAL Cluster we consider the case where a one photon has deposited all its energy in one PF cluster in the ECAL,
+since we have zero material as mentioned before (approximately 94\% of the incident energy of a single electron or photon is contained in 3$\times$3 crystals, and 97\% in 5$\times$5 crystals source).
 This allows us to determine the correction factor = (energy of ``generated photon'') / (energy of ``raw (uncorrected)'' PF cluster).
 
 For the training variables, we use the same variables as those used for Run~2 and earlier Run~3 (2023) calibrations. The training input variables are summarized below: %in the related table, this includes:
@@ -76,31 +78,32 @@ For the training variables, we use the same variables as those used for Run~2 an
 \end{itemize}
 
 \noindent
-After training is done, we obtain eight regression models form each group in the training data.
-To validated the results of ML training, we take the following steps:
-first, we apply the trained model on the test data to obtain the value of the correction factor,
+After training is done, we obtain eight regression models form each group from the training data.
+In order to validate the results of ML training, we take the following steps.
+First, we apply the trained model on the test data to obtain the value of the correction factor,
 then compute the corrected PF cluster energy = energy of ``raw'' PF cluster $\times$ the correction factor.
 After that, we make distributions of the response defined by the energy of ``corrected'' PF cluster / the energy of ``generated'' photon, and
-we fit the distribution with a double Crystal Ball (CB) function for each generated photon energy bin.
-Please note that, for $\pt<6\GeV$, we use Gaus a function for fitting since it is difficult to do the with double CB- in other words low pt (zero suppressed))
-finally,
+we fit its distribution with a double Crystal Ball (CB) function for each generated photon energy bin.
+Please note that, for $\pt<6\GeV$, we use the Gaussian function for fitting since the Gaussian function was found to fit the distribution better than the CB function in that \pt region.
 From the fitted curve we find the mean and effective sigma.
-We also plot the response: E ``raw PF cluster'' / E ``gen photon'', to compare mean and eff sigma to the corrected PF cluster.
+%We also plot the response: e ``raw PF cluster'' / E ``gen photon'', to compare mean and eff sigma to the corrected PF cluster.
 %(insert an example plots of the fitting)
 
 \section{Results}
 %(summary)
 
-\subsection{Offline PF ECAL cluster calibration}
+\subsection{Offline PF ECAL Cluster Calibration}
 
-We checked the 2024 double photon calibration samples for PF ECAL clusters. Generally, the new correction (133X) is very close to the current used calibration (126X).
-This shows that the existing calibration derived from 2022 samples seems to continue to working well.
-We checked the 2024 double photon calibration samples for PF ECAL clusters. Generally, the new correction (133X) is very close to the current used calibration (126X).
-This shows that the existing calibration derived from 2022 samples seems to continue to working well. (Add comments about HLT vs offline calibration)
-
+In this thesis work,
+we have checked the performance of the PF ECAL cluster calibration in the 2024 double photon simulation samples.
+%the 2024 double photon calibration samples for PF ECAL clusters.
+%
+%
 %\subsubsection{ECAL Barrel}
-First, we are presenting the results of testing the ML models on the NoPU sample then the PU case.
-These plots show response (resolution) versus generated photon \pt in GeV and in their corresponding $\eta$ range.
+First, we present the results of testing the ML models on the NoPU sample then the PU case in Figs.~\ref{fig:NOPU_EBFULL_0005_0020}--\ref{fig:PU_EEZS}.
+These figures show the mean response ($\mu$) and effective resolution ($\sigma_\mathrm{eff}$) versus generated photon \pt in GeV and in their corresponding $\eta$ range.
+The results for ECAL clusters in the barrel region are shown in Figs.~\ref{fig:NOPU_EBFULL_0005_0020}--\ref{fig:PU_EBZS}
+and results for clusters in the endcap region are shown in Figs.~\ref{fig:NOPU_EEFULL_0005_0020}--\ref{fig:PU_EEZS}.
 \include{./plots_tex/NOPU_EB_FULL_plots}
 \include{./plots_tex/NOPU_EB_ZS_plots}
 \include{./plots_tex/PU_EB_FULL_plots}
@@ -113,13 +116,23 @@ These plots show response (resolution) versus generated photon \pt in GeV and in
 \include{./plots_tex/PU_EE_FULL_plots}
 \include{./plots_tex/PU_EE_ZS_plots}
 
+Generally, it is found that the then-current calibration derived earlier in Run 3 based on the CMSSW 12\_6\_X release (labeled ``current'' in figures) was found to perform well also on the new sample produced with the 2024 data taking condition,
+and the ``new'' correction (133X) from the 2024 simulation sample is very close to the current (existing) correction.
+%the new correction (133X) is very close to the current used calibration (126X).
+This shows that the existing calibration derived from 2022 samples seems to continue to working well and it was decided to keep the same ML models for the calibration for 2024 as well based on these studies.
+
 \clearpage
-\subsection{HLT vs offline PF ECAL cluster}
+\subsection{HLT vs Offline PF ECAL Cluster}
 
-(connect to PF chapter where where we mentioned offline PF)
-(also mention the procution of a new ntuple that containes HLT information)
+The above studies are performed based on PF ECAL clusters reconstructed in the offline reconstruction chain.
+As mentioned earlier, PF ECAL clusters are also formed in the HLT reconstruction chain for online data taking.
+In the course of this study, we have made a comparison of offline version and online version of PF clusters in terms of the response and results are shown in Figs.~\ref{fig:NoPU_ECAL_Offline_vs_Online_E}--\ref{fig:PU_ECAL_Offline_vs_Online_CE}.
+The offline cluster energy was found to be up to a couple of percents higher than the online cluster energy in the NoPU scenario; however, the difference is smaller for the PU case which is much more relevant for data taking.
+From these studies, we concluded that the ML-based calibration obtained from the offline clusters can be applied also on online clusters.
 
-first for NoPU samples
+%(connect to PF chapter where where we mentioned offline PF)
+%(also mention the procution of a new ntuple that containes HLT information)
+%first for NoPU samples
 \include{./plots_tex/NoPU_HLT_offline_plots}
-Second for PUU samples
+%Second for PUU samples
 \include{./plots_tex/PU_HLT_offline_plots}
