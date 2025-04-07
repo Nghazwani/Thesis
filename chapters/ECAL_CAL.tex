@@ -48,7 +48,7 @@ Both correspond to a center of mass energy 13.6 \TeV with \pt range up for offli
 
 Before splitting the data samples into two groups, 80\% training and 20\% testing, the training samples are divided into smaller subsets.
 This is done in order to derive better models when training the ML algorithm.
-The NoPU training samples are divided first into two categories: full readout and zero suppression (ZS) (explain difference source).
+The NoPU training samples are divided first into two categories: full readout and zero suppression (ZS). ZS is a data reduction technique where only crystals with energy above a certain threshold are read out. However, full readouts do not have any energy threshold; in our studies, a three-by-three trigger tower is used in the full readout case, as shown in Fig.
 Then, each category is split further depending on the ECAL section (ECAL barrel or endcap) and \pt range.
 In the end, there are six groups for full readout and two groups for ZS readout.
 %(Add table summarizing the sample description.)
