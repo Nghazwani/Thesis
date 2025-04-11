@@ -108,18 +108,16 @@ This residual energy calibration uses a large sample of photons with varied ener
 Only photons that do not experience photon conversion (pair production) prior to the entrance in the ECAL are considered to deal with the calibration of a single cluster.
 Similar to clustering, the correction of ECAL energy clusters is applied separately in each region of the ECAL.
 
-For the barre region, the Analytical function f(E,$\eta$) = g(E)h($\eta$), where E is the energy and $\eta$ is the pseudorapidity of the cluster, is fitted to each $E^{true}$ bin's ratio distribution of ($E^{true}$ / E).
+For the barre region, the Analytical function $f(E,\eta) = g(E)h(\eta)$, where $E$ is the energy and $\eta$ is the pseudorapidity of the cluster, is fitted to each $E^{true}$ bin's ratio distribution of ($E^{true}/E$).
 By reconstruction this function, the residual correction (correction factor) to be applied to the measured cluster energy (E) is close to unity at high energy, where threshold effects vanish.
+%%
+$$E_{calib} = \alpha (E^{true}, \eta^{true})E_{ECAL} + \beta(E^{true},\eta^{true})[E_{PS1}+\gamma(E^{true},\eta^{true})E_{PS2}]$$
 
-$E_{calib} = $\alpha$(E^{true},$\eta$^{true})E_{ECAL} + $\beta$(E^{true},$\eta$^{true})[E_{PS1}+$\gamma$(E^{true},$\eta$^{true})E_{PS2}]$
-
-The endcap regions' calibrated cluster energy is expressed as in previous eq. The calibration parameters (numerical value) $\alpha$, $\beta$, and $\gamma$ are chosen in each ($E^{true}$,$\eta^{true})$ bin to minimize the $\chi^{2}$ value. The $\chi^{2}$ measures the discrepancy between observed and expected values. The smaller the value, the better fit of function between the data and the model.
-
-
+The endcap regions' calibrated cluster energy is expressed as in previous eq. The calibration parameters (numerical value) $\alpha$, $\beta$, and $\gamma$ are chosen in each $(E^{true},\eta^{true})$ bin to minimize the $\chi^{2}$ value. The $\chi^{2}$ measures the discrepancy between observed and expected values. The smaller the value, the better fit of function between the data and the model.
 
 $\chi^{2}$ equation (add equation number):
 
-$\[$\chi$^2= \sum_{i=1}^{N_{events}}\(\frac{(E_{i}^{calib} - E_{i}^{true})}{\sigma_{i}^{2}}\) \]$
+$$\chi^2= \sum_{i=1}^{N_{events}} \frac{(E_{i}^{calib} - E_{i}^{true})} {\sigma_{i}^{2}} $$
 
 
 \subsubsection{Hadron deposits}
@@ -133,4 +131,4 @@ Using a large sample of simulated neutral hadron, the calibration coefficients $
 
 hadrons equation(add eq number):
 
-$\[E_{calib} = a + b(E)f($\eta$)E_{ECAL} + c(E)g($\eta$)E_{HCAL} \]$ %for hadrons
+$$ E_{calib} = a + b(E)f(\eta)E_{ECAL} + c(E)g(\eta)E_{HCAL} $$ %for hadrons
