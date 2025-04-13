@@ -16,7 +16,9 @@ Additionally, calorimeter cluster calibration using the conventional method is c
 \label{fig:Particles_in_CMS}
 \end{figure}
 
+%================================= 
 \subsection{Particle Flow Algorithm}
+\label{subsec:PF}
 The PF algorithm aims to reconstruct and identify all the final particles produced in an event by utilizing the fact that different particles leave different signatures in the CMS subdetectors as shown in Fig~\ref{fig:PF_diagram}. %cms_particle_signtures).
 The PF algorithm in CMS operates in two different modes: online PF, which is used during data collection to select interesting events, and offline PF, which is utilized after data collection for detailed offline data analyses. %source for PF and HLT).
 
@@ -52,6 +54,7 @@ Finally, any remaining particles are classified as charged hadrons.
 For charged hadrons, the energy is determined by comparing the cluster energy sum to the track momenta sum.
 Additionally, any isolated tracks are reconstructed as charge hadrons.
 
+%=================================
 \subsection{Calorimeter Clustering}
 \label{subsec:clustering}
 The clustering algorithm used in the PF computes the cluster positions and their energies.
@@ -90,47 +93,51 @@ Here the cluster energies and positions are determined using an iterative proced
 \label{fig:clustering}
 \end{figure}
 
+%=================================
 \subsection{Calorimeter Cluster Calibration}
+\label{subsec:calibration}
 As mentioned in the PF algorithm section, photons, and neutral hadrons are reconstructed only from calorimeter clusters.
-Neural particles could have a clear signature, where a calorimeter cluster separated from any charged particle track or will overlap with a charged particle cluster.
-In the second case, the energy deposits of the neutral particles are the excess energy with respect to the sum of the associated charged particle momenta. Therefore, proper calibration of the calorimeter response to photons and hadrons will enhance particle identification and reduce the likelihood of misreconstructed energy excess.
+Neutral particles could have a clear signature, where a calorimeter cluster is separated from any charged particle track or overlap with a charged particle cluster.
+In the second case, the energy deposits of the neutral particles are the excess energy with respect to the sum of the associated charged particle momenta. Therefore, proper calibration of the calorimeter response to photons and hadrons enhance particle identification and reduce the likelihood of misreconstructed energy excess.
 The following sections describe the calibration of electromagnetic and hadron clusters.
 
+\subsubsection{Electromagentic Deposits}
 
-\subsubsection{Electromagentic deposits}
-
-In the clustering algorithm, several thresholds are applied to the ECAL cell energies %(fig).
+In the clustering algorithm, several thresholds are applied to the ECAL cell energies.%(fig).
 As a consequence, the energy measured in the clusters is expected to be smaller than the actual energy of the incoming photons, especially at low energy.
-Therefore, a calibration is required to account for the effects of the thresholds.
+Therefore, a calibration is required to account for the effects of the thresholds, residual energy.
 This calibration is applied to all ECAL clusters before the hadron cluster calibration is done and before the particle identification step.
 
-This residual energy calibration uses a large sample of photons with varied energy ranges.
-Only photons that do not experience photon conversion (pair production) prior to the entrance in the ECAL are considered to deal with the calibration of a single cluster.
-Similar to clustering, the correction of ECAL energy clusters is applied separately in each region of the ECAL.
+The residual energy calibration uses a large sample of photons with varied energy ranges.
+Only photons that do not experience photon conversion (pair production) prior to the entrance in the ECAL are considered in order to have a single cluster.
+Similar to the clustering algorithm, the correction of ECAL energy clusters is applied separately in each region of the ECAL.
 
-For the barre region, the Analytical function f(E,$\eta$) = g(E)h($\eta$), where E is the energy and $\eta$ is the pseudorapidity of the cluster, is fitted to each $E^{true}$ bin's ratio distribution of ($E^{true}$ / E).
-By reconstruction this function, the residual correction (correction factor) to be applied to the measured cluster energy (E) is close to unity at high energy, where threshold effects vanish.
+The calibration for the barrel region (EB) is done as follow:  an analytical function $f$(E,$\eta$) = $g$(E)$h$($\eta$), where E is the energy and $\eta$ is the pseudorapidity of the cluster, is fitted to each $E^{true}$ bin's ratio distribution of ($E^{true}$ / E).
+By reconstruction this function, the correction factor to be applied to the measured cluster energy (E) is close to unity at high energy, where threshold effects vanish.
 
-$E_{calib} = \alpha(E^{true},\eta^{true})E_{ECAL} + \beta(E^{true},\eta^{true})[E_{PS1}+\gamma(E^{true},\eta^{true})E_{PS2}]$
+The endcap regions' (EE) calibrated cluster energy is expressed as eq~\ref{eq:1},
+where the calibration parameters (numerical value) $\alpha$, $\beta$, and $\gamma$ are chosen in each ($E^{true}$,$\eta^{true}$) bin to minimize the $\chi^{2}$ value.
+The $\chi^{2}$ as in eq~\ref{eq:2} measures the discrepancy between observed and expected values. The smaller the value, the better fit of function between the data and the model.
 
-The endcap regions' calibrated cluster energy is expressed as in previous eq. The calibration parameters (numerical value) $\alpha$, $\beta$, and $\gamma$ are chosen in each ($E^{true}$,$\eta^{true}$) bin to minimize the $\chi^{2}$ value. The $\chi^{2}$ measures the discrepancy between observed and expected values. The smaller the value, the better fit of function between the data and the model.
+\begin{equation}
+E_{calib} = \alpha(E^{true},\eta^{true})E_{ECAL} + \beta(E^{true},\eta^{true})[E_{PS1}+\gamma(E^{true},\eta^{true})E_{PS2}]
+\label{eq:1}
+\end{equation}
 
-
-
-$\chi^{2}$ equation (add equation number):
-
-$\chi^2 = \sum_{i=1}^{N_{events}}\frac{(E_{i}^{calib} - E_{i}^{true})}{\sigma_{i}^{2}}$
-
-
-\subsubsection{Hadron deposits}
+\begin{equation}
+\chi^{2} = \sum_{i=1}^{N_{events}}\frac{(E_{i}^{calib} - E_{i}^{true})}{\sigma_{i}^{2}}
+\label{eq:2}
+\end{equation}
+%================================= 
+\subsubsection{Hadron Deposits}
 
 Hadrons generally deposit their energies in the ECAL and HCAL.
 As described in the previous section, the ECAL has already been calibrated for photons.
 However, the ECAL has a different energy response to hadrons.
-The calibrated calorimeter energy associated with a hadron is expressed as in eq()
+The calibrated calorimeter energy associated with a hadron is expressed as in eq~\ref{eq:3}.
+Using a large sample of simulated neutral hadrons, the calibration coefficients $a$, $b$, $c$, and the functions $f$ and $g$ are determined using $\chi^{2}$ method. 
 
-Using a large sample of simulated neutral hadron, the calibration coefficients $a$, $b$, $c$, and the functions $f$ and $g$ are determined using $\chi^{2}$ method, which was described previously, 
-
-hadrons equation(add eq number):
-
-$E_{calib} = a + b(E)f(\eta)E_{ECAL} + c(E)g(\eta)E_{HCAL}$ %for hadrons
+\begin{equation}
+E_{calib} = a + b(E)f(\eta)E_{ECAL} + c(E)g(\eta)E_{HCAL}
+\label{eq:3}
+\end{equation}
