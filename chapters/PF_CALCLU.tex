@@ -12,7 +12,7 @@ Additionally, calorimeter cluster calibration using the conventional method is c
 \begin{figure}[t!]
 \centering
 \includegraphics[width=0.99\textwidth]{figures/particles_signture_in_detector.png}
-\caption[Transverse view of the CMS detector]{Particles signture in detector. Figure source~\cite{PF}.}
+\caption[Transverse view of the CMS detector]{A transverse view of the CMS detector shows how different particles interact with different subdetectors. Electrons leave a curved track in the tracker and deposit their energy in the ECAL. Muons leave a curved track in the tracker before depositing hits in the muon systems and exiting the detector. Charged hadrons leave a curved track in the tracker and deposit their energy in the HCAL. Neutral hadrons deposit their energy in the HCAL, while photons deposit it in the ECAL. Figure source~\cite{PF}.}
 \label{fig:Particles_in_CMS}
 \end{figure}
 
@@ -69,7 +69,7 @@ Each topological cluster could have one seed or multiple as shown in Fig.~\ref{f
 \centering
 \includegraphics[width=0.25\textwidth]{figures/seed_4neighbours.png}
 \includegraphics[width=0.25\textwidth]{figures/seed_8neighbours.png}
-\caption[Types of cluster seed]{Different types of seeds. Figure source~\cite{Clustering}.}
+\caption[Types of cluster seed]{(left) Seed with four neighbors (blue) with a lower energy than the seed (red). (right) Seed with with eight neighbors (blue) with a lower energy a lower energy than the seed. Figure source~\cite{Clustering}.}
 \label{fig:seeds}
 \end{figure}
 
@@ -77,7 +77,7 @@ Each topological cluster could have one seed or multiple as shown in Fig.~\ref{f
 \centering
 \includegraphics[width=0.25\textwidth]{figures/topological_cluster_oneseed.png}
 \includegraphics[width=0.25\textwidth]{figures/topological_cluster_many_Seeds.png}
-\caption[Types of topological cluster]{Types of topological cluster. Figure source~\cite{Clustering}.}
+\caption[Types of topological cluster]{(left) All colored cells contain energy. Light blue cells are included in the topological cluster only if the option is used. (right) a topological cluster can contain several seeds (red). Figure source~\cite{Clustering}.}
 \label{fig:topo_cluster}
 \end{figure}
 
@@ -89,7 +89,7 @@ Here the cluster energies and positions are determined using an iterative proced
 \begin{figure}[t!]
 \centering
 \includegraphics[width=0.50\textwidth]{figures/energy_sharing.png}
-\caption[Energy shared between clusters]{Energy shared between clusters. Figure source~\cite{Clustering}.}
+\caption[Energy shared between clusters]{In a topological cluster case, each seed is assumed to represent a unique energy cluster for multiple seeds. However, the energy deposited in non-cell seeds must be shared between the clusters within the topological cluster. An iterative procedure is used to converge on cluster energies and positions based on the weighted average of fraction cell energies. Figure source~\cite{Clustering}.}
 \label{fig:clustering}
 \end{figure}
 
