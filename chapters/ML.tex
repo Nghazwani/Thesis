@@ -1,6 +1,5 @@
 
 \section{Introduction}
-% intro
 Machine learning (ML) has many applications in experimental particle physics, including event identification and reconstruction.
 One aspect of reconstruction is calorimeter cluster calibration, which is the focus of this thesis.
 This chapter introduces some background on the ML methods used, which are discussed in the following chapters. %(Check this source for more info and source).
@@ -70,7 +69,7 @@ As mentioned before each layer have multiple neurons, and each one of those neur
 can be thought of as a linear regression model with its own activation function. Each neuron processes input data, applies weights and biases, and produces an output.
 %could think of it as its one linear regression model, activation function) contains input data, weights, bias, and output. (fix me)
 
-All inputs are then multiplied by their respective weights (which helps determine the importance of each input variable) and then summed together.
+All inputs are then multiplied by their respective weights, which helps determine the importance of each input variable, and then summed together.
 The resulting sum, along with a bias, is passed through an activation function (\eg{}, ReLU, sigmoid).
 If the output exceeds a certain threshold, the neuron is activated, and the data is passed to the next layer in the network.
 %Afterward the output (with bias) is passed through the activation function (example of activation function?) if the output exceeds a given threshold, it activates the node and passing data to the next layer in the network.
