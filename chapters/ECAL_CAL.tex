@@ -48,23 +48,20 @@ Both correspond to a center of mass energy 13.6 \TeV with \pt range up for offli
 
 Before splitting the data samples into two groups, 80\% training and 20\% testing, the training samples are divided into smaller subsets.
 This is done in order to derive better models when training the ML algorithm.
-The NoPU training samples are divided first into two categories: full readout and zero suppression (ZS). ZS is a data reduction technique where only crystals with energy above a certain threshold are read out. However, full readouts do not have any energy threshold; in our studies, a three-by-three trigger tower is used in the full readout case, as shown in Fig.
+The NoPU training samples are divided first into two categories: full readout and zero suppression (ZS). ZS is a data reduction technique where only crystals with energy above a certain threshold are read out. However, full readouts do not have any energy threshold; in our studies, a three-by-three trigger tower is used in the full readout case.%as shown in Fig.
 Then, each category is split further depending on the ECAL section (ECAL barrel or endcap) and \pt range.
 In the end, there are six groups for full readout and two groups for ZS readout.
 %(Add table summarizing the sample description.)
 
 \section{PF ECAL Cluster Regression}
 The ML used for PF ECAL cluster regression is called XGBoost algorithm which has been discussed in the previous section.
-%The PF cluster regression here is done through two steps.
 In the first step, the training is performed by running the ML algorithm on the training data (NoPU).
 In the second step, we test the ML model on testing data (NoPU, PU).
 
-%First, we starting with the training details.
 Some details on the training are presented below.
 In order to estimate the calibration of the PF ECAL Cluster we consider the case where a one photon has deposited all its energy in one PF cluster in the ECAL,
 since we have zero material as mentioned before (approximately 94\% of the incident energy of a single electron or photon is contained in 3$\times$3 crystals, and 97\% in 5$\times$5 crystals source).
 This allows us to determine the correction factor = (energy of ``generated photon'') / (energy of ``raw (uncorrected)'' PF cluster).
-
 For the training variables, we use the same variables as those used for Run~2 and earlier Run~3 (2023) calibrations. The training input variables are summarized below: %in the related table, this includes:
 \begin{itemize}
 \item {\tt clusrawE} (raw energy of the cluster, uncorrected),
@@ -83,11 +80,10 @@ In order to validate the results of ML training, we take the following steps.
 First, we apply the trained model on the test data to obtain the value of the correction factor,
 then compute the corrected PF cluster energy = energy of ``raw'' PF cluster $\times$ the correction factor.
 After that, we make distributions of the response defined by the energy of ``corrected'' PF cluster / the energy of ``generated'' photon, and
-we fit its distribution with a double Crystal Ball (CB) function for each generated photon energy bin.
+we fit its distribution with a double Crystal Ball (CB) function for each generated photon energy bin, as shown in Fig.~\ref{fig:Response_distrubution}.
 Please note that, for $\pt<6\GeV$, we use the Gaussian function for fitting since the Gaussian function was found to fit the distribution better than the CB function in that \pt region.
 From the fitted curve we find the mean and effective sigma.
-%We also plot the response: e ``raw PF cluster'' / E ``gen photon'', to compare mean and eff sigma to the corrected PF cluster.
-%(insert an example plots of the fitting)
+
 
 \section{Results}
 %(summary)
@@ -96,22 +92,17 @@ From the fitted curve we find the mean and effective sigma.
 
 In this thesis work,
 we have checked the performance of the PF ECAL cluster calibration in the 2024 double photon simulation samples.
-%the 2024 double photon calibration samples for PF ECAL clusters.
-%
-%
-%\subsubsection{ECAL Barrel}
-First, we present the results of testing the ML models on the NoPU sample then the PU case in Figs.~\ref{fig:NOPU_EBFULL_0005_0020}--\ref{fig:PU_EEZS}.
-These figures show the mean response ($\mu$) and effective resolution ($\sigma_\mathrm{eff}$) versus generated photon \pt in GeV and in their corresponding $\eta$ range.
-The results for ECAL clusters in the barrel region are shown in Figs.~\ref{fig:NOPU_EBFULL_0005_0020}--\ref{fig:PU_EBZS}
-and results for clusters in the endcap region are shown in Figs.~\ref{fig:NOPU_EEFULL_0005_0020}--\ref{fig:PU_EEZS}.
+First, we present the results of testing the ML models on the NoPU sample then the PU case in Figs.~\ref{fig:NOPU_EBFULL_pt}--\ref{fig:PU_EEZS}.
+These figures show the mean response ($\mu$) and effective resolution ($\sigma_\mathrm{eff}$) versus generated photon \pt in \GeV and in their corresponding $\eta$ range.
+The results for ECAL clusters in the barrel region are shown in Figs.~\ref{fig:NOPU_EBFULL_pt}--\ref{fig:PU_EBZS}
+and results for clusters in the endcap region are shown in Figs.~\ref{fig:NOPU_EEFULL_pt}--\ref{fig:PU_EEZS}.
 
 %======================================
 % response distributions with actual CB fits.
 \begin{figure}[t!]
 \centering
 \includegraphics[width=0.99\textwidth]{./plots_pdf/ECAL_plots/plotsNoPU/EB/FULL/png/EBFULL_GENPT_0005_0020_PerBinFitEcor91formula}
-\caption[Energy response distributions with CB fits for PF ECAL cluster calibrated using 2024 conditions]{NoPU - EB Full energy response distributions with CB fits for \pt 5--20 \GeV}
-%Figure source~\cite{}
+\caption[Distributions of energy response with with CB fits for PF ECAL cluster calibrated using 2024 condition]{Distributions of the response defined by the energy of ``corrected'' PF cluster/ the energy of ``generated'' photon with CB fits for NoPU EB Full readout senario \pt range  5--20 GeV}
 \label{fig:Response_distrubution}
 \end{figure}
 
@@ -141,9 +132,5 @@ In the course of this study, we have made a comparison of offline version and on
 The offline cluster energy was found to be up to a couple of percents higher than the online cluster energy in the NoPU scenario; however, the difference is smaller for the PU case which is much more relevant for data taking.
 From these studies, we concluded that the ML-based calibration obtained from the offline clusters can be applied also on online clusters.
 
-%(connect to PF chapter where where we mentioned offline PF)
-%(also mention the procution of a new ntuple that containes HLT information)
-%first for NoPU samples
 \include{./plots_tex/NoPU_HLT_offline_plots}
-%Second for PUU samples
 \include{./plots_tex/PU_HLT_offline_plots}
