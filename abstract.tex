@@ -1,8 +1,10 @@
 
 The Electromagnetic Calorimeter (ECAL) and Hadronic Calorimeter (HCAL) are key components of the CMS detector.
-The ECAL is designed to measure the energies of electrons and photons, while the HCAL measures the energies of charged and neutral hadrons.
+The ECAL is designed to measure the energies of electrons and photons, while the HCAL primarily measures the energies of charged and neutral hadrons.
 An algorithm called Particle Flow (PF) integrates information from various CMS sub-detectors to reconstruct and identify all particles produced in proton collisions.
-Photons and neural hadrons are reconstructed using PF element energy clusters.
+Photons and neural hadrons are reconstructed using calorimeter energy deposit clusters,
+and reconstruction of charged particle candidates and their separation from neutral particle candidates rely on measurements of charged particle tracks and calorimeter clusters.
+%
 A proper calibration enhances particle identification and reduces the likelihood of misreconstructed energy excess.
 %An accurate calibration of calorimeter response to Photons and neural hadrons is important to maximize the probability to identify these particles and minimize the rate of the misreconstructed energy excess.
 Machine learning techniques, such as Boosted Decision Trees (BDT) and Graph Neural Networks (GNN), are employed to calibrate PF energy clusters, improving both the response and the resolution of the measured energy. 
