@@ -21,7 +21,7 @@ This algorithm
 uses gradient boosting to combine multiple decision trees sequentially, focusing on correcting errors from previous trees to achieve high accuracy.
 %During training process:
 %The algorithm starts with an initial prediction and compute the residuals, loss. Then it creates other decision trees using a similarity score for the residuals (clarify better) which are then used to generate the output values for each leaf.  This process is repeated either until the residuals (error) stop reducing or for a specific number of times. In general, each subsequent tree learns from the previous ones.
-The algorithm starts with an initial prediction and calculates residuals (the difference between predicted and actual values) and loss.
+The algorithm starts with an initial prediction and calculates residuals, the difference between predicted and actual values, and loss.
 Then, it iteratively builds decision trees, focusing on the residuals to improve predictions, and uses these trees to refine the output values in each leaf node, repeating until the residuals (error) stop decreasing or a specified number of iterations are reached.
 
 XGBoost uses assign higher importance to misclassified samples in subsequent trees, allowing them to focus on correcting errors and improving accuracy.

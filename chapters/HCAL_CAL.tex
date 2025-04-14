@@ -7,23 +7,36 @@ This chapter introduces the details of testing an ML technique, Dynamic Reductio
 %source1 https://www.desy.de/~schleper/lehre/Det_Dat/SS_2018/06_lecture_calorimetry_HAD.pdf
 
 \section{Graph Neural Network} %source
-Graph neural network (GNN) is a type of NN used to process data that can be represented as graphs. Compared to other kinds of NN, GNN can be applied to sparse data, such as rechits. %(introduce rechits)
-As shown in (fig), a graph consists of nodes and edges. Nodes represent the objects, and edges reflect the relationship between the nodes. In our case, rechits are the nodes, and the edges represent their connection in a cluster. Graph Convolutional Networks (GCNs)(source) relies on message-passing methods to exchange information and messages between the neighbors (rechits). GCNs work through two steps. First, each node creates a feature vector representing the message it wants to share with others. In the second step, messages are sent to the neighbors so that each node learns about its neighbors and itself. In (fig), there is a visualization of message passing.
+Graph neural network (GNN) is a type of NN used to process data that can be represented as graphs. Compared to other kinds of NN, GNN can be applied to sparse data, such as rechits. %(introduce rechits) As shown in (fig).
+A graph consists of nodes and edges.
+Nodes represent the objects, and edges reflect the relationship between the nodes.
+In our case, rechits are the nodes, and the edges represent their connection in a cluster.
+Graph Convolutional Networks (GCNs)%(source)
+relies on message-passing methods to exchange information and messages between the neighbors (rechits).
+GCNs work through two steps. First, each node creates a feature vector representing the message it wants to share with others.
+In the second step, messages are sent to the neighbors so that each node learns about its neighbors and itself.
+% In (fig), there is a visualization of message passing.
 
 \section{Datasets Description}
-The second part of this thesis focuses on correcting charged hadron PF clusters for Run~3. Single pion gun Monte Carlo (MC) samples are used for this calibration. The datasets are centrally produced and reconstructed under CMSSW 12\_6\_4 (126X) under the 2023 condition. These samples are also available through the DAS web page and cover energy ranges of 2--200 GeV and 200--500 GeV. For training the ML model, the data are divided into EH-hadrons and H-hadrons. %(add figure shows EH.H location in CMS)
+The second part of this thesis focuses on correcting charged hadron PF clusters for Run~3.
+Single pion gun Monte Carlo (MC) samples are used for this calibration.
+The datasets are centrally produced and reconstructed under CMSSW 12\_6\_4 (126X) under the 2023 condition.
+These samples are also available through the DAS web page and cover energy ranges of 2--200 GeV and 200--500 GeV.
+For training the ML model, the data are divided into EH-hadrons and H-hadrons. %(add figure shows EH.H location in CMS)
 
 \section{PF Cluster Regression using DRN}
-Dynamic Reduction Network (DRN) (source) is based on the Graph Neural Network (GNN) used in this thesis to reconstruct hadron (pion) showers in the calorimeters.
-A schematic drawing of the DRN is shown in (fig), and a summary of the information flow from the inputs to the targets is as follows:
+Dynamic Reduction Network (DRN)%(source)
+is based on the Graph Neural Network (GNN) used in this thesis to reconstruct hadron (pion) showers in the calorimeters.
+%A schematic drawing of the DRN is shown in (fig), and
+ Summary of the information flow from the inputs to the targets is as follows:
 
 First, the input features, the coordinates ({\tt x}, {\tt y}, and {\tt z)} and energy ({\tt E}) of rechits in a point cloud image of the detectors are mapped onto a 64-dimensional latent space using a fully connected neural network (FCNN).
 The FCNN is a multi-layer perceptron (MLP) encoder with a depth of three layers connected by activation functions (exponential linear unit, ELU).
 
 Second, high-level features are learned using the GNN techniques by repeating the following steps twice.
 Starting with a graph generation (KNN) step, each point in the point cloud in the 64-dimensional latent space is connected to its 16 nearest neighboring nodes, including itself, to form graphs.
-We have 3D point clouds, scattered collections of points (clusters) (source.)
-Each node (input) is connected to its {\tt K} nearest neighbors in the feature space. The direct graph has vertices and edges. %(k=100)
+We have 3D point clouds, scattered collections of points (clusters)%(source.)
+ Each node (input) is connected to its {\tt K} nearest neighbors in the feature space. The direct graph has vertices and edges. %(k=100)
 Then, in the graph convolution step, the resulting graphs are processed using the operation “EdgeConv,” where two-layer (here 2 or 3) fully connected networks are used to create messages sent along the edges of the graph.
 These messages are aggregated at each node in the graph to form the new node feature. %(define edge features)
 Next, in the graph clustering and pooling, graph clustering uses the Graclus Clustering algorithm and pooling step.
@@ -40,15 +53,9 @@ Results are shown for four different targets used for the training, such as the 
 Overall regardless of the training targets, the DRN model provides a good response distribution, although the response becomes a little unstable for the endcap region outside the tracker overage (\ie, $|\eta|>2.5$).
 In terms of the resolution, the DRN model generally provides either similar performance or slight improvements over the traditional $\chi^2$ method for the H hadron case.
 More significant improvements are observed for EH hadrons and the improvement in resolution are up to a factor 2.
-These results are still shown only for isolated single pions in simulation with pileup interactions, and we still need to see how it will work on a more realistic collision events with pileup interactions for hadrons within ``jets`` where these corrections would play a most important role; however, results shown here are promising and motivate further exploration.
+These results are still shown only for isolated single pions in simulation with pileup interactions, and we still need to see how it will work on a more realistic collision events with pileup interactions for hadrons within ``jets'' where these corrections would play a most important role; however, results shown here are promising and motivate further exploration.
 
-%(for the calibration  DRN vs Chi2)
-%The results of the 
 
-%\subsection{EH Hadrons}
-%The presented results are for the training target ratioflip
-
-%\subsection{H hadrons}
 \include{./plots_tex/target_trueE_H_plots}
 \include{./plots_tex/target_ratio_H_plots}
 \include{./plots_tex/target_ratioflip_H_plots}
@@ -59,3 +66,7 @@ These results are still shown only for isolated single pions in simulation with 
 \include{./plots_tex/target_ratioflip_EH_plots}
 \include{./plots_tex/target_logratioflip_EH_plots}
 
+
+% figures
+%% GNN %%
+%% DRN %%
