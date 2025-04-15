@@ -1,16 +1,20 @@
+
+The Compact Muon Solenoid (CMS) is a general-purpose experiment at the Large Hadron Collider (LHC) designed to study a wide range of physics phenomena.
+The majority of physics analyses from the CMS experiment relies on the particle flow algorithm to reconstruct particle candidates produced in proton-proton collisions.
+%
 Calibrating the calorimeter clusters is a crucial step in the particle flow algorithm, which enhances particle identification and reduces the likelihood of misreconstructed energy in the CMS experiment at the LHC.
-The work in this thesis is organized into two sections.
-In the first part, the performance of the ML (BDT) model derived from an earlier run was applied to 2024 data-taking.
+
+This thesis comprises two main components.
+%The work in this thesis is organized into two sections.
+The first part concerns with the calibraiton of clusters formed by energy deposits in the electromagnetic calorimeter (ECAL).
+For this PF ECAL cluster calibration,
+a machine-learning (ML) model, based on boosted decision tree, derived from an earlier run was applied to the PF ECAL cluster calibration sample simulated under the 2024 data-taking condition.
 The results showed that the existing calibration works well; therefore, the same ML models were used for the 2024 PF ECAL calibration.
-Another ML method (DRN) was tested and compared to the conventional method for hadron cluster calibration in the second part.
-The model generally provides a good energy response, except for the endcap outside the tracker, where the energy response becomes unstable.
-However, a significant improvement in energy resolution was observed for EH hadrons.
-Also, a comparison between the offline and online versions of PF HCAL clusters was studied, and the results showed that the ML-based calibration obtained from offline clusters can be applied to online clusters.
+Also, a comparison between the offline and online versions of PF ECAL clusters was performed, and the results showed that the ML-based calibration obtained from offline clusters can be applied to online clusters.
 
-
-
-
-
+Another ML method, Dynamic Reduction Network (DRN), was tested and compared to the conventional method for hadron cluster calibration in the second part.
+The model generally provides a good energy response, except for the endcap outside the tracker covorage region, where the energy response becomes unstable.
+However, a promising improvement in energy resolution has been observed for hadrons, especially for those called EH hadrons which start showers in the ECAL before reaching the hadron calorimeter.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\section{Lists}
