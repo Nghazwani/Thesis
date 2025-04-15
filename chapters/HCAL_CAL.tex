@@ -14,7 +14,7 @@ In our case, rechits are the nodes, and the edges represent their connection in 
 Graph Convolutional Networks (GCNs)%(source)
 relies on message-passing methods to exchange information and messages between the neighbors (rechits).
 GCNs work through two steps. First, each node creates a feature vector representing the message it wants to share with others.
-In the second step, messages are sent to the neighbors so that each node learns about its neighbors and itself.
+In the second step, messages are sent to the neighbors so that each node learns about its neighbors and itself~\cite{GNN}.
 % In (fig), there is a visualization of message passing.
 
 \section{Datasets Description}
@@ -42,7 +42,7 @@ These messages are aggregated at each node in the graph to form the new node fea
 Next, in the graph clustering and pooling, graph clustering uses the Graclus Clustering algorithm and pooling step.
 In this step, the updated features are weighted by distance, and the clusters are combined using a max-pooling strategy to form a single point.
 
-The final set of nodes is reduced using global max-pooling and passed through an FCNN to obtain the final target, which in our case is the pion energy or some variable related to the correction factor on the raw PF cluster energy.
+The final set of nodes is reduced using global max-pooling and passed through an FCNN to obtain the final target, which in our case is the pion energy or some variable related to the correction factor on the raw PF cluster energy.~\cite{GNN_DRN}--\cite{DGCNN}.
 
 \section{Results}
 The results of response and resolution in both barrel region and endcap region are shown in Figs.~\ref{fig:H_ratioflip}--\ref{fig:EH_trueE}.
