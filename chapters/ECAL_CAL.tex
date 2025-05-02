@@ -1,66 +1,81 @@
 
 \section{Introduction}
-Electrons and photons deposit their energies in ECAL by showering, via bremsstrahlung or photon conversion, in the crystals.
-the particle's energy spreads over multiple calorimeter crystals extending in the $\eta$ and $\phi$ directions.
-The clustering algorithm described in Chapter~\ref{subsec:clustering} applies several thresholds to the ECAL crystal energies. Consequently,
-the reconstructed PF cluster energy from the PF algorithm is expected to be smaller than the true energy of the incoming particle.
-%This loss of energy could be due to tracker material, gaps, dead channels, etc.
-Therefore, a calibration of the calorimeter cluster energy is needed.
-This chapter presents the ML method and datasets used for calibrating the online and offline PF ECAL clusters.
+Electrons and photons deposit their energies in ECAL by showering their energies into the crystals via bremsstrahlung or photon conversion.
+The particle's energy spreads over multiple calorimeter crystals, extending in the $\eta$ and $\phi$ directions.
+The clustering algorithm described in Chapter~\ref{subsec:clustering} applies several thresholds to the ECAL crystal energies.
+Consequently, the reconstructed PF cluster energy from the PF algorithm is expected to be smaller than the true energy of the incoming particle.
+Therefore, a calibration of the calorimeter cluster energy is needed. This chapter presents the ML method and datasets for calibrating the online and offline PF ECAL clusters.
 
-\section{XGBoost} %source1  source2
+\section{XGBoost}
 
-The ML algorithm used to calibrate the ECAL PF cluster is called XGBoost algorithm.
-XGBoost stands for eXtreme Gradient Boosting which is a type of gradient boosting.
-%Gradient boosting uses the gradient decent %(clarify better – how is calculated)
-%to create new the learners where the loss function, which defines the distance between the truth and prediction, is differentiable. %(find the related figure)
+The ML algorithm used to calibrate the ECAL PF cluster is called the XGBoost algorithm.
+XGBoost stands for eXtreme Gradient Boosting, a type of gradient boosting.
 Gradient boosting algorithms use gradient descent to iteratively improve predictions by adding weak learners, minimizing a differentiable loss function that measures the difference between predicted and actual values.
 
-This algorithm
-%works by combining the boosting technique and many decision trees to get the final prediction to achieve higher accuracy.
-uses gradient boosting to combine multiple decision trees sequentially, focusing on correcting errors from previous trees to achieve high accuracy.
-%During training process:
-%The algorithm starts with an initial prediction and compute the residuals, loss. Then it creates other decision trees using a similarity score for the residuals (clarify better) which are then used to generate the output values for each leaf.  This process is repeated either until the residuals (error) stop reducing or for a specific number of times. In general, each subsequent tree learns from the previous ones.
+This algorithm uses gradient boosting to combine multiple decision trees sequentially, focusing on correcting errors from previous trees to achieve high accuracy.
 The algorithm starts with an initial prediction and calculates residuals, the difference between predicted and actual values, and loss.
-Then, it iteratively builds decision trees, focusing on the residuals to improve predictions, and uses these trees to refine the output values in each leaf node, repeating until the residuals (error) stop decreasing or a specified number of iterations are reached.
+Then, it iteratively builds decision trees, focusing on the residuals to improve predictions.
+It then uses these trees to refine the output values in each leaf node, repeating until the residuals (error) stop decreasing or a specified number of iterations are reached.
 
-XGBoost uses assign higher importance to misclassified samples in subsequent trees, allowing them to focus on correcting errors and improving accuracy.
-%the misclassified sample during the reconstruction of the next tree. Meaning the next tree can focus on correcting those mistakes and by doing that the algorithm improves its accuracy.
-To prevent overfitting, %the algorithm is uses of a regularization term.
-the algorithm employs a regularization technique.
+XGBoost assigns higher importance to misclassified samples in subsequent trees, allowing them to focus on correcting errors and improving accuracy.
+The next tree can focus on correcting those mistakes, and by doing that, the algorithm improves its accuracy. The algorithm employs a regularization technique to prevent overfitting.  
+
+% ..........................
+%The ML algorithm used to calibrate the ECAL PF cluster is called XGBoost algorithm.
+%XGBoost stands for eXtreme Gradient Boosting which is a type of gradient boosting.
+%%Gradient boosting uses the gradient decent %(clarify better – how is calculated)
+%%to create new the learners where the loss function, which defines the distance between the truth and prediction, is differentiable. %(find the related figure)
+%Gradient boosting algorithms use gradient descent to iteratively improve predictions by adding weak learners, minimizing a differentiable loss function that measures the difference between predicted and actual values.
+
+%This algorithm
+%%works by combining the boosting technique and many decision trees to get the final prediction to achieve higher accuracy.
+%uses gradient boosting to combine multiple decision trees sequentially, focusing on correcting errors from previous trees to achieve high accuracy.
+%%During training process:
+%%The algorithm starts with an initial prediction and compute the residuals, loss. Then it creates other decision trees using a similarity score for the residuals (clarify better) which are then used to generate the output values for each leaf.  This process is repeated either until the residuals (error) stop reducing or for a specific number of times. In general, each subsequent tree learns from the previous ones.
+%The algorithm starts with an initial prediction and calculates residuals, the difference between predicted and actual values, and loss.
+%Then, it iteratively builds decision trees, focusing on the residuals to improve predictions, and uses these trees to refine the output values in each leaf node, repeating until the residuals (error) stop decreasing or a specified number of iterations are reached.
+
+%XGBoost uses assign higher importance to misclassified samples in subsequent trees, allowing them to focus on correcting errors and improving accuracy.
+%%the misclassified sample during the reconstruction of the next tree. Meaning the next tree can focus on correcting those mistakes and by doing that the algorithm improves its accuracy.
+%To prevent overfitting, %%the algorithm is uses of a regularization term.
+%the algorithm employs a regularization technique.
 
 
 \section{Datasets Description}
-The first part of this thesis focuses on calibrating PF ECAL clusters for Run~3.
-This includes calibrating both online (High Level Trigger) and offline PF ECAL clusters.
-The samples used here are double-photon with zero-material Monte Carlo (MC) simulation samples.
-The double-photon means each event contains two photons, and zero-material means there is no tracker material in front of the calorimeter to eliminate dealing with bremsstrahlung and photon conversions.
+
+The first part of this thesis focuses on calibrating PF ECAL clusters for Run~3, which includes calibrating online (High-Level Trigger) and offline PF ECAL clusters.
+The samples are double-photon with zero-material Monte Carlo (MC) simulation samples.
+The double-photon means each event contains two photons, and zero-material means there is no tracker material in front of the calorimeter to eliminate dealing with
+bremsstrahlung and photon conversions.
 
 The datasets used for this thesis research are centrally produced and reconstructed in CMSSW 13\_3\_0 (133X) under the 2024 data-taking condition.
 For the offline case, the ``miniAOD'' samples were found through the Data Aggregation System (DAS) web page.
-However, for the special case of checking the online PF calibration, it was necessary to produce a new miniAOD dataset that contains HLT PF ECAL clusters.
-This is achieved by re-running the Digi$\rightarrow$Reco$\rightarrow$miniAOD step in order to create and keep HLT PF ECAL Cluster data in the miniAOD datasets.
+However, a new miniAOD dataset containing HLT PF ECAL clusters was necessary for the special case of checking the online PF calibration,
+which is achieved by re-running the Digi$\rightarrow$Reco$\rightarrow$miniAOD step to create and keep HLT PF ECAL Cluster data in the miniAOD datasets.
 
-In general, there are two types of datasets used here, one with pileup (PU) 80, meaning 80 collisions occurring simultaneously within one proton-proton bunch crossing source, and another with no pile (NoPU).
+In general, two types of datasets are used here: one with pileup (PU) 80, meaning 80 collisions occurring simultaneously within one proton-proton bunch crossing source,
+and another with no pile (NoPU).
 Both correspond to a center of mass energy 13.6 \TeV with \pt range up for offline case to 1500\GeV{}. And 500\GeV{} with only about 1000 events for the online case.
 
-Before splitting the data samples into two groups, 80\% training and 20\% testing, the training samples are divided into smaller subsets.
-This is done in order to derive better models when training the ML algorithm.
-The NoPU training samples are divided first into two categories: full readout and zero suppression (ZS). ZS is a data reduction technique where only crystals with energy above a certain threshold are read out. However, full readouts do not have any energy threshold; in our studies, a three-by-three trigger tower is used in the full readout case.%as shown in Fig.
-Then, each category is split further depending on the ECAL section (ECAL barrel or endcap) and \pt range.
-In the end, there are six groups for full readout and two groups for ZS readout.
-%(Add table summarizing the sample description.)
+Before splitting the data samples into two groups, 80\% training, and 20\% testing, the training samples are divided into smaller subsets.
+This is done to derive better models when training the ML algorithm.
+The NoPU training samples are first divided into full readout and zero suppression (ZS).
+ZS is a data reduction technique where only crystals with energy above a certain threshold are read out.
+However, full readouts do not have any energy threshold; in our studies, a three-by-three trigger tower is used in the full readout case.
+Then, each category is split further depending on the ECAL section (ECAL barrel or endcap) and \pt range. In the end, there are six groups for full readout and two for ZS readout. 
+
 
 \section{PF ECAL Cluster Regression}
-The ML used for PF ECAL cluster regression is called XGBoost algorithm which has been discussed in the previous section.
+The ML used for PF ECAL cluster regression is the XGBoost algorithm discussed in the previous section.
 In the first step, the training is performed by running the ML algorithm on the training data (NoPU).
 In the second step, we test the ML model on testing data (NoPU, PU).
 
-Some details on the training are presented below.
-In order to estimate the calibration of the PF ECAL Cluster we consider the case where a one photon has deposited all its energy in one PF cluster in the ECAL,
-since we have zero material as mentioned before (approximately 94\% of the incident energy of a single electron or photon is contained in 3$\times$3 crystals, and 97\% in 5$\times$5 crystals source).
+Some details of the training are presented below. In order to estimate the calibration of the PF ECAL Cluster,
+we consider the case where one photon has deposited all its energy in one PF cluster in the ECAL since we have zero material,
+as mentioned before (approximately 94\% of the incident energy of a single electron or photon is contained in 3$\times$3 crystals, and 97\% in 5$\times$5 crystal).
 This allows us to determine the correction factor = (energy of ``generated photon'') / (energy of ``raw (uncorrected)'' PF cluster).
-For the training variables, we use the same variables as those used for Run~2 and earlier Run~3 (2023) calibrations. The training input variables are summarized below: %in the related table, this includes:
+For the training variables, we use the same variables as those used for Run~2 and earlier Run~3 (2023) calibrations. The training input variables are summarized below:
+
 \begin{itemize}
 \item {\tt clusrawE} (raw energy of the cluster, uncorrected),
 \item {\tt ieta, iphi} (polar coordinate indices for clusters in EB),
@@ -69,31 +84,29 @@ For the training variables, we use the same variables as those used for Run~2 an
 \item {\tt (clusPS1+clusPS2)/clusrawE} (clusPSi in pre shower layer i, only EE),
 \item number of hits in the cluster (which takes values of 1, 2 and 3 --- it takes 3 if n hits$\geq3$),
 \item and the target used in the training is {\tt log(Egen/Eraw)}.
-%(Mostly lognormal distribution in energies? source).
+
 \end{itemize}
 
 \noindent
-After training is done, we obtain eight regression models form each group from the training data.
+After training, we obtain eight regression models from each group from the training data.
 In order to validate the results of ML training, we take the following steps.
 First, we apply the trained model on the test data to obtain the value of the correction factor,
-then compute the corrected PF cluster energy = energy of ``raw'' PF cluster $\times$ the correction factor.
-After that, we make distributions of the response defined by the energy of ``corrected'' PF cluster / the energy of ``generated'' photon, and
-we fit its distribution with a double Crystal Ball (CB) function for each generated photon energy bin, as shown in Fig.~\ref{fig:Response_distrubution}.
-Please note that, for $\pt<6\GeV$, we use the Gaussian function for fitting since the Gaussian function was found to fit the distribution better than the CB function in that \pt region.
-From the fitted curve we find the mean and effective sigma.
+then compute the corrected PF cluster energy = energy of the ``raw'' PF cluster $\times$ the correction factor.
+After that, we make distributions of the response defined by the energy of the ``corrected'' PF cluster / the energy of the ``generated'' photon, and we fit its distribution with
+a double Crystal Ball (CB) function for each generated photon energy bin, as shown in Fig.~\ref{fig:Response_distrubution}.
+Please note that, for $\pt<6\GeV$, we use the Gaussian function for fitting since the Gaussian function fits the distribution better than the CB function in that \pt region.
+From the fitted curve, we find the mean and effective sigma.
 
 
 \section{Results}
-%(summary)
 
 \subsection{Offline PF ECAL Cluster Calibration}
 
-In this thesis work,
-we have checked the performance of the PF ECAL cluster calibration in the 2024 double photon simulation samples.
-First, we present the results of testing the ML models on the NoPU sample then the PU case in Figs.~\ref{fig:NOPU_EBFULL_pt}--\ref{fig:PU_EEZS}.
+In this thesis work, we have checked the PF ECAL cluster calibration performance in the 2024 double photon simulation samples.
+First, we present the results of testing the ML models on the NoPU sample and then the PU case in Figs.~\ref{fig:NOPU_EBFULL_pt}--\ref{fig:PU_EEZS}.
 These figures show the mean response ($\mu$) and effective resolution ($\sigma_\mathrm{eff}$) versus generated photon \pt in \GeV and in their corresponding $\eta$ range.
-The results for ECAL clusters in the barrel region are shown in Figs.~\ref{fig:NOPU_EBFULL_pt}--\ref{fig:PU_EBZS}
-and results for clusters in the endcap region are shown in Figs.~\ref{fig:NOPU_EEFULL_pt}--\ref{fig:PU_EEZS}.
+The results for ECAL clusters in the barrel region are shown in Figs.~\ref{fig:NOPU_EBFULL_pt}--\ref{fig:PU_EBZS}.
+Moreover, results for clusters in the endcap region are shown in Figs.~\ref{fig:NOPU_EEFULL_pt}--\ref{fig:PU_EEZS}.
 
 %======================================
 % response distributions with actual CB fits.
@@ -109,26 +122,25 @@ and results for clusters in the endcap region are shown in Figs.~\ref{fig:NOPU_E
 \include{./plots_tex/PU_EB_FULL_plots}
 \include{./plots_tex/PU_EB_ZS_plots}
 
-%\subsubsection{ECAL Endcap}
-
 \include{./plots_tex/NOPU_EE_FULL_plots}
 \include{./plots_tex/NOPU_EE_ZS_plots}
 \include{./plots_tex/PU_EE_FULL_plots}
 \include{./plots_tex/PU_EE_ZS_plots}
 
-Generally, it is found that the then-current calibration derived earlier in Run 3 based on the CMSSW 12\_6\_X release (labeled ``current'' in figures) was found to perform well also on the new sample produced with the 2024 data taking condition,
-and the ``new'' correction (133X) from the 2024 simulation sample is very close to the current (existing) correction.
-%the new correction (133X) is very close to the current used calibration (126X).
-This shows that the existing calibration derived from 2022 samples seems to continue to working well and it was decided to keep the same ML models for the calibration for 2024 as well based on these studies.
+Generally, it is found that the then-current calibration derived earlier in Run 3 based on the CMSSW 12\_6\_X release (labeled ``current'' in figures)
+was found to perform well also on the new sample produced with the 2024 data-taking condition, and the ``new'' correction (133X)
+from the 2024 simulation sample is very close to the current (existing) correction.
+This shows that the existing calibration derived from 2022 samples continues to work well and it was decided to keep the same ML models for the calibration for 2024 based on these studies.
 
 \clearpage
 \subsection{HLT vs Offline PF ECAL Cluster}
 
-The above studies are performed based on PF ECAL clusters reconstructed in the offline reconstruction chain.
-As mentioned earlier, PF ECAL clusters are also formed in the HLT reconstruction chain for online data taking.
-In the course of this study, we have made a comparison of offline version and online version of PF clusters in terms of the response and results are shown in Figs.~\ref{fig:NoPU_ECAL_Offline_vs_Online_E}--\ref{fig:PU_ECAL_Offline_vs_Online_CE}.
-The offline cluster energy was found to be up to a couple of percents higher than the online cluster energy in the NoPU scenario; however, the difference is smaller for the PU case which is much more relevant for data taking.
-From these studies, we concluded that the ML-based calibration obtained from the offline clusters can be applied also on online clusters.
+The above studies are based on PF ECAL clusters reconstructed in the offline reconstruction chain.
+As mentioned, PF ECAL clusters are also formed in the HLT reconstruction chain for online data taking.
+In the course of this study, we have made a comparison of the offline version and online version of PF clusters in terms of the response,
+and results are shown in Figs.~\ref{fig:NoPU_ECAL_Offline_vs_Online_E}--\ref{fig:PU_ECAL_Offline_vs_Online_CE}.
+The offline cluster energy was up to a couple of percent higher than the online cluster energy in the NoPU scenario; however, the difference is smaller for the PU case,
+which is much more relevant for data taking. From these studies, we concluded that the ML-based calibration obtained from the offline clusters can also be applied to online clusters.
 
 \include{./plots_tex/NoPU_HLT_offline_plots}
 \include{./plots_tex/PU_HLT_offline_plots}
