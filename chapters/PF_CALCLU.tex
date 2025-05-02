@@ -1,12 +1,14 @@
 \subsection{Introduction}
-When particles collide at high energies inside a particle detector, the collision products either decay into stable particles or simply do not interact with the detector.
-In order to identify the original decay products coming out of the collision, we need a way to reconstruct them from the detector signals.
+When particles collide at high energies inside a particle detector, the collision products decay into stable particles or do not interact with the detector.
+To identify the original decay products coming out of the collision, we need a way to reconstruct them from the detector signals.
 The CMS experiment can achieve this using a holistic approach developed by the ALEPH experiment at LEP called particle flow (PF).
 
-This algorithm uses the various signals captured by the CMS subdetectors, as shown in Fig.~\ref{fig:Particles_in_CMS}, in order to reconstruct physics objects such as muons, electrons, photons, jets, taus, and missing transverse energy, which are used later in physics analyses.
-This section provides a description of the PF algorithm and its process for forming energy clusters from energy deposits in the calorimeters.
-Additionally, calorimeter cluster calibration using the conventional method is covered.
+This algorithm uses the various signals captured by the CMS subdetectors, as shown in Fig.~\ref{fig:Particles_in_CMS},
+in order to reconstruct physics objects such as muons, electrons, photons, jets, taus, and missing transverse energy, which are used later in physics analyses.
+This section describes the PF algorithm and its process for forming energy clusters from energy deposits in the calorimeters.
+It also covers calorimeter cluster calibration using the conventional method.
 
+% figure %
 \begin{figure}[t!]
 \centering
 \includegraphics[width=0.99\textwidth]{figures/particles_signture_in_detector.png}
@@ -22,44 +24,47 @@ Additionally, calorimeter cluster calibration using the conventional method is c
 %...................................... 
 \subsection{Particle Flow Algorithm}
 \label{subsec:PF}
-The PF algorithm aims to reconstruct and identify all the final particles produced in an event by utilizing the fact that different particles leave different signatures in the CMS subdetectors as shown in Fig~\ref{fig:PF_diagram}.
-The PF algorithm in CMS operates in two different modes: online PF, which is used during data collection to select interesting events, and offline PF, which is utilized after data collection for detailed offline data analyses. 
+The PF algorithm aims to reconstruct and identify all the final particles produced in an event by utilizing the fact that different particles leave different
+signatures in the CMS subdetectors, as shown in Fig~\ref{fig:PF_diagram}.
+The PF algorithm in CMS operates in two modes: online PF, which is used during data collection to select interesting events, and offline PF,
+which is utilized after data collection for detailed offline data analyses.
 
 \begin{figure}[t!]
 \centering
 \includegraphics[width=0.99\textwidth]{figures/PF.png}
 \caption[A diagram of the PF algorithm]
-        {The CMS Particle Flow algorithm combines sub-detector information and reconstructs individual
-          particles in collision events for converting detector signals back to physical objects.
+        {The CMS Particle Flow algorithm combines sub-detector information and reconstructs individual particles
+          in collision events to convert detector signals back to physical objects.
           Figure source~\cite{PF_diagram}.}
 \label{fig:PF_diagram}
 \end{figure}
 
-The PF algorithm follows these steps:%(source)
-First, the PF algorithm reconstructs essential elements which are charged particle tracks and calorimeter energy clusters.
+The PF algorithm follows these steps:
+First, the PF algorithm reconstructs essential elements, such as charged particle tracks and calorimeter energy clusters.
 Details of the clustering algorithm and the cluster calibration will be discussed later in this chapter.
 
 Second, it links these PF elements based on their spatial proximity in $\eta$-$\phi$ space.
 The linking order is: track $\rightarrow$ ECAL cluster $\rightarrow$ HCAL cluster.
-Examples of linked elements include tracks and ECAL clusters, tracks and HCAL clusters, and inner tracks and muon tracks.
-Once all connections are established, PF blocks are formed, consisting of groups of linked tracks and clusters.
-Any unlinked elements, such as isolated tracks or clusters, form their own separate blocks.
+Tracks and ECAL clusters, tracks and HCAL clusters, and inner tracks and muon tracks are examples of linked elements.
+Once all connections are established, PF blocks are formed, consisting of linked tracks and clusters.
+Any unlinked elements, such as isolated tracks or clusters, form separate blocks.
 
-Third, the algorithm reconstructs a list of PF particle candidates in a hierarchical order, beginning with the cleanest signatures in CMS: Muons are identified first, followed by isolated electrons and photons. Next, neutral hadrons and non-isolated photons are reconstructed.
+Third, the algorithm reconstructs a list of PF particle candidates in a hierarchical order,
+beginning with the cleanest signatures in CMS: Muons are identified first, followed by isolated electrons and photons.
+Next, neutral hadrons and non-isolated photons are reconstructed.
 Finally, any remaining particles are classified as charged hadrons.
-For charged hadrons, the energy is determined by comparing the cluster energy sum to the track momenta sum.
+The energy is determined for charged hadrons by comparing the cluster energy sum to the track momenta sum.
 Additionally, any isolated tracks are reconstructed as charge hadrons~\cite{PF_workshop}.
-
 %............................................
 \subsection{Calorimeter Clustering}
 \label{subsec:clustering}
 The clustering algorithm used in the PF computes the cluster positions and their energies.
 This algorithm is done separately in each calorimeter through multiple steps.
-First, we identify topological clusters by looking for a group of calorimeter cells with energy deposits above a certain threshold, and they must share at least one neighbor.
-%The threshold values could be viewed in Fig.~\ref{fig:seeds}.
-Next, we identify any calorimeter cell, or seed whose energy is a local maximum with respect to its immediate neighbors.
+First, we identify topological clusters by looking for a group of calorimeter cells with energy deposits above a certain threshold.
+These cells must share at least one neighbor.
+Next, we identify any calorimeter cell or seed whose energy is a local maximum with respect to its immediate neighbors.
 Different configurations of cluster seeds are shown in Fig.~\ref{fig:seeds}.
-Each topological cluster could have one seed or multiple as shown in Fig.~\ref{fig:topo_cluster}.
+Each topological cluster could have one seed or multiple, as shown in Fig.~\ref{fig:topo_cluster}.
 
 \begin{figure}[t!]
 \centering
@@ -84,9 +89,11 @@ Each topological cluster could have one seed or multiple as shown in Fig.~\ref{f
 \end{figure}
 
 Lastly, we compute the cluster positions and energies.
-In the single-seed case, the cluster energy will be the sum of all the individual cell energies within the cluster, and its position will be the energy-weighted average of the individual cell positions.
-However, for the multiple-seed case, each seed is assumed to represent a unique energy cluster and the energy deposited in non-seed cells will be shared between the various clusters within the topological cluster.
-Here the cluster energies and positions are determined using an iterative procedure based on the energy-weighted averages of fractional cell energies as shown in Fig.~\ref{fig:clustering}. %(source)
+In the single-seed case, the cluster energy will be the sum of all the individual cell energies within the cluster,
+and its position will be the energy-weighted average of the individual cell positions.
+However, each seed is assumed to represent a unique energy cluster for the multiple-seed case.
+The energy deposited in non-seed cells will be shared between the various clusters within the topological cluster.
+Here, the cluster energies and positions are determined using an iterative procedure based on the energy-weighted averages of fractional cell energies as shown in Fig.~\ref{fig:clustering}.
 
 \begin{figure}[t!]
 \centering
@@ -94,31 +101,31 @@ Here the cluster energies and positions are determined using an iterative proced
 \caption[Energy shared between clusters]
         {In a topological cluster case, each seed is assumed to represent a unique energy cluster for multiple seeds.
           However, the energy deposited in non-cell seeds must be shared between the clusters within the topological cluster.
-          An iterative procedure is used to converge on cluster energies and positions based on the weighted average of fraction cell energies.
-          Figure source~\cite{Clustering}.}
+          An iterative procedure converges on cluster energies and positions based on the weighted average of fraction cell energies.
+          Figure source~\cite{Clustering}
 \label{fig:clustering}
 \end{figure}
 
 %....................................................
 \subsection{Calorimeter Cluster Calibration}
 \label{subsec:calibration}
-As mentioned in the PF algorithm section, photons and neutral hadrons reconstructed primarily from calorimeter clusters.
-Neutral particles could have a clear signature, where a calorimeter cluster is separated from any charged particle track or overlap with a charged particle cluster.
+As mentioned previously in the PF algorithm section, photons and neutral hadrons are reconstructed primarily from calorimeter clusters.
+Neutral particles could have a clear signature, where a calorimeter cluster is separated from any charged particle track or overlaps with a charged particle cluster.
 In the second case, the energy deposits of the neutral particles are the excess energy with respect to the sum of the associated charged particle momenta.
-Therefore, proper calibration of the calorimeter response to photons and hadrons enhance particle identification and reduce the likelihood of misreconstructed energy excess.
+Therefore, properly calibrating the calorimeter response to photons and hadrons enhances particle identification and reduces the likelihood of misreconstructed energy excess.
 The following sections describe the calibration of electromagnetic and hadron clusters.
 
 \subsubsection{Electromagentic Deposits}
-In the clustering algorithm, several thresholds are applied to the ECAL cell energies. %(fig).
-As a consequence, the energy measured in the clusters is expected to be smaller than the actual energy of the incoming photons, especially at low energy.
-Therefore, a calibration is required to account for the effects of the thresholds. % residual energy.
-This calibration is applied to all ECAL clusters before the hadron cluster calibration is done and before the particle identification step.
+
+Several thresholds are applied to the ECAL cell energies in the clustering algorithm.
+Consequently, the energy measured in the clusters is expected to be smaller than the actual energy of the incoming photons, especially at low energy.
+Therefore, a calibration is required to account for the effects of the thresholds.
+This calibration is applied to all ECAL clusters before the hadron cluster calibration and before the particle identification step.
 
 The energy calibration uses a large sample of photons simulated in varied energy ranges.
-Only photons that do not experience photon conversion (electron-positron pair production) prior to the entrance in the ECAL are considered in order to have a single cluster.
-Similarly to the clustering algorithm itself, the correction of ECAL energy clusters is applied separately in each region of the ECAL.
-
-Details of the eletromagnetic cluster calibration is discussed in Chapter~\ref{chapter:ch4}.
+Only photons that do not experience photon conversion (electron-positron pair production) before entering the ECAL are considered to have a single cluster.
+Similarly to the clustering algorithm, the correction of ECAL energy clusters is applied separately in each region of the ECAL.
+The electromagnetic cluster calibration details are discussed in Chapter~\ref{chapter:ch4}.
 
 %% The calibration for the barrel region (EB) is done as follows: an analytical function $f(E,\eta) = g(E)h(\eta)$, where $E$ is the energy and $\eta$ is the pseudorapidity of the cluster, is fit to each $E^\mathrm{true}$ bin's ratio distribution of ($E^\mathrm{true} / E$).
 %% By reconstruction this function, the correction factor to be applied to the measured cluster energy ($E$) is close to unity at high energy, where threshold effects vanish.
@@ -144,8 +151,7 @@ Hadrons generally deposit their energies in the ECAL and HCAL.
 As described in the previous section, the ECAL has already been calibrated for photons.
 However, the ECAL has a different energy response to hadrons.
 The calibrated calorimeter energy associated with a hadron is expressed as in eq~\ref{eq:3}.
-Using a large sample of simulated neutral hadrons, the calibration coefficients $a$, $b$, $c$, and the functions $f$ and $g$ are determined using $\chi^{2}$ method~\cite{PF}. 
-
+Using a large sample of simulated neutral hadrons, the calibration coefficients $a$, $b$, $c$, and the functions $f$ and $g$ are determined using the $\chi^{2}$ method~\cite{PF}.
 \begin{equation}
 E_{calib} = a + b(E)f(\eta)E_{ECAL} + c(E)g(\eta)E_{HCAL}
 \label{eq:3}
