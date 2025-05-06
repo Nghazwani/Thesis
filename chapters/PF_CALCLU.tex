@@ -115,8 +115,7 @@ In the second case, the energy deposits of the neutral particles are the excess 
 Therefore, properly calibrating the calorimeter response to photons and hadrons enhances particle identification and reduces the likelihood of misreconstructed energy excess.
 The following sections describe the calibration of electromagnetic and hadron clusters.
 
-\subsubsection{Electromagentic Deposits}
-
+\subsubsection{Electromagentic deposits}
 Several thresholds are applied to the ECAL cell energies in the clustering algorithm.
 Consequently, the energy measured in the clusters is expected to be smaller than the actual energy of the incoming photons, especially at low energy.
 Therefore, a calibration is required to account for the effects of the thresholds.
@@ -125,7 +124,8 @@ This calibration is applied to all ECAL clusters before the hadron cluster calib
 The energy calibration uses a large sample of photons simulated in varied energy ranges.
 Only photons that do not experience photon conversion (electron-positron pair production) before entering the ECAL are considered to have a single cluster.
 Similarly to the clustering algorithm, the correction of ECAL energy clusters is applied separately in each region of the ECAL.
-The electromagnetic cluster calibration details are discussed in Chapter~\ref{chapter:ch4}.
+The electromagnetic cluster calibration details are discussed in Chapter Four. 
+%~\ref{chapter:ch4}.
 
 %% The calibration for the barrel region (EB) is done as follows: an analytical function $f(E,\eta) = g(E)h(\eta)$, where $E$ is the energy and $\eta$ is the pseudorapidity of the cluster, is fit to each $E^\mathrm{true}$ bin's ratio distribution of ($E^\mathrm{true} / E$).
 %% By reconstruction this function, the correction factor to be applied to the measured cluster energy ($E$) is close to unity at high energy, where threshold effects vanish.
@@ -145,14 +145,14 @@ The electromagnetic cluster calibration details are discussed in Chapter~\ref{ch
 %% \label{eq:2}
 %% \end{equation}
 
-\subsubsection{Hadron Deposits}
-
+\subsubsection{Hadron deposits}
 Hadrons generally deposit their energies in the ECAL and HCAL.
 As described in the previous section, the ECAL has already been calibrated for photons.
 However, the ECAL has a different energy response to hadrons.
 The calibrated calorimeter energy associated with a hadron is expressed as in eq~\ref{eq:3}.
 Using a large sample of simulated neutral hadrons, the calibration coefficients $a$, $b$, $c$, and the functions $f$ and $g$ are determined using the $\chi^{2}$ method~\cite{PF}.
 \begin{equation}
-E_{calib} = a + b(E)f(\eta)E_{ECAL} + c(E)g(\eta)E_{HCAL}
+
+  E_{calib} = a + b(E)f(\eta)E_{ECAL} + c(E)g(\eta)E_{HCAL}
 \label{eq:3}
 \end{equation}
