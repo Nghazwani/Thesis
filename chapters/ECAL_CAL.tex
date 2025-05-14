@@ -82,14 +82,14 @@ For the training variables, we use the same variables as those used for Run~2 an
 \item {\tt ix, iy} (cartesian coordinate indices for clusters in EE),
 \item {\tt ieta mod20, iphi mod20} (polar coordinate indices of the crystal in which the main cluster detected modulo 20, only for clusters in EB),
 \item {\tt (clusPS1+clusPS2)/clusrawE} (clusPSi in pre shower layer i, only EE),
-\item number of hits in the cluster (which takes values of 1, 2 and 3 --- it takes 3 if n hits$\geq3$),
-\item and the target used in the training is {\tt log(Egen/Eraw)}.
-
+\item number of hits in the cluster (which takes values of 1, 2 and 3 --- it takes 3 if n hits$\geq3$).
 \end{itemize}
+The target used in the training is {\tt log(Egen/Eraw)}.
+
 
 \noindent
 After training, we obtain eight regression models from each group from the training data.
-In order to validate the results of ML training, we take the following steps.
+In order to validate results of ML training, we take the following steps.
 First, we apply the trained model on the test data to obtain the value of the correction factor,
 then compute the corrected PF cluster energy = energy of the ``raw'' PF cluster $\times$ the correction factor.
 After that, we make distributions of the response defined by the energy of the ``corrected'' PF cluster / the energy of the ``generated'' photon, and we fit its distribution with
@@ -103,9 +103,9 @@ From the fitted curve, we find the mean and effective sigma.
 \subsection{Offline PF ECAL Cluster Calibration}
 
 In this thesis work, we have checked the PF ECAL cluster calibration performance in the 2024 double photon simulation samples.
-First, we present the results of testing the ML models on the NoPU sample and then the PU case in Figs.~\ref{fig:NOPU_EBFULL_pt}--\ref{fig:PU_EEZS}.
-These figures show the mean response ($\mu$) and effective resolution ($\sigma_\mathrm{eff}$) versus generated photon \pt in \GeV and in their corresponding $\eta$ range.
-The results for ECAL clusters in the barrel region are shown in Figs.~\ref{fig:NOPU_EBFULL_pt}--\ref{fig:PU_EBZS}.
+First, we present results of testing the ML models on the NoPU sample and then the PU case in Figs.~\ref{fig:NOPU_EBFULL_pt}--\ref{fig:PU_EEZS}.
+These figures show the mean response ($\mu$) and effective resolution ($\sigma_\mathrm{eff}$) versus generated photon \pt in \GeVns and in their corresponding $\eta$ ranges.
+Results for ECAL clusters in the barrel region are shown in Figs.~\ref{fig:NOPU_EBFULL_pt}--\ref{fig:PU_EBZS}.
 Moreover, results for clusters in the endcap region are shown in Figs.~\ref{fig:NOPU_EEFULL_pt}--\ref{fig:PU_EEZS}.
 
 %======================================
@@ -113,26 +113,26 @@ Moreover, results for clusters in the endcap region are shown in Figs.~\ref{fig:
 \begin{figure}[t!]
 \centering
 \includegraphics[width=0.99\textwidth]{./plots_pdf/ECAL_plots/plotsNoPU/EB/FULL/png/EBFULL_GENPT_0005_0020_PerBinFitEcor91formula}
-\caption[Distributions of energy response with CB fits for PF ECAL cluster calibrated using the 2024 condition]{Distributions of the response defined by the energy of ``corrected'' PF cluster/ the energy of ``generated'' photon with CB fits for NoPU EB Full readout scenario \pt range  5--20 GeV.}
+\caption[Distributions of energy response for PF ECAL clusters]{Distributions of the response defined by the energy of ``corrected'' PF cluster / the energy of ``generated'' photon with CB fits for the NoPU EB Full readout scenario with \pt range of 5--20\GeV.}
 \label{fig:Response_distrubution}
 \end{figure}
 
-\include{./plots_tex/NOPU_EB_FULL_plots}
-\include{./plots_tex/NOPU_EB_ZS_plots}
-\include{./plots_tex/PU_EB_FULL_plots}
-\include{./plots_tex/PU_EB_ZS_plots}
+\input{./plots_tex/NOPU_EB_FULL_plots}
+\input{./plots_tex/NOPU_EB_ZS_plots}
+\input{./plots_tex/PU_EB_FULL_plots}
+\input{./plots_tex/PU_EB_ZS_plots}
 
-\include{./plots_tex/NOPU_EE_FULL_plots}
-\include{./plots_tex/NOPU_EE_ZS_plots}
-\include{./plots_tex/PU_EE_FULL_plots}
-\include{./plots_tex/PU_EE_ZS_plots}
+\input{./plots_tex/NOPU_EE_FULL_plots}
+\input{./plots_tex/NOPU_EE_ZS_plots}
+\input{./plots_tex/PU_EE_FULL_plots}
+\input{./plots_tex/PU_EE_ZS_plots}
 
-Generally, it is found that the then-current calibration derived earlier in Run 3 based on the CMSSW 12\_6\_X release (labeled ``current'' in figures)
+Generally, it is found that the then-current calibration derived earlier in Run~3 based on the CMSSW 12\_6\_X release (labeled ``current'' in figures)
 was found to perform well also on the new sample produced with the 2024 data-taking condition, and the ``new'' correction (133X)
 from the 2024 simulation sample is very close to the current (existing) correction.
-This shows that the existing calibration derived from 2022 samples continues to work well and it was decided to keep the same ML models for the calibration for 2024 based on these studies.
+This shows that the existing calibration derived from 2022 samples continues to work well and it was decided to keep the same ML models for the calibration of 2024 data based on these studies.
 
-%\clearpage
+\clearpage
 \subsection{HLT vs Offline PF ECAL Cluster}
 
 The above studies are based on PF ECAL clusters reconstructed in the offline reconstruction chain.

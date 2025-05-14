@@ -1,5 +1,5 @@
 \section{Introduction}
-The last set of PF candidates that are reconstructed are hadrons.
+The last set of PF candidates that are reconstructed include hadrons.
 The calorimetric measurements, energy clusters, are the only way to identify neutral hadrons, while these measurements complement the track measurements for charged hadrons.
 When hadrons enter calorimeters, some hadrons start showering in the ECAL and extend to the HCAL (EH-hadrons), while others do not have nuclear interactions until the HCAL (H-hadrons).
 Hadronic showers have electromagnetic (EM) and hadronic (HAD) components.
@@ -27,8 +27,8 @@ These samples are also available through the DAS web page, covering energy range
 For training the ML model, the data are divided into EH-hadrons and H-hadrons.
 
 \section{PF Cluster Regression using DRN}
-Dynamic Reduction Network (DRN) is based on the Graph Neural Network (GNN) used in this thesis to reconstruct hadron (pion) showers in the calorimeters.
-Summary of the information flow from the inputs to the targets is as follows:
+Dynamic Reduction Network (DRN)~\cite{DGCNN} is based on the Graph Neural Network (GNN) used in this thesis to reconstruct hadron (pion) showers in the calorimeters.
+A summary of the information flow from the inputs to the targets is as follows:
 
 First, the input features, the coordinates ({\tt x}, {\tt y}, and {\tt z)} and energy ({\tt E}) of rechits in a point cloud image of the detectors
 are mapped onto a 64-dimensional latent space using a fully connected neural network (FCNN).
@@ -46,22 +46,25 @@ Next, graph clustering and pooling, graph clustering uses the Graclus Clustering
 In this step, the updated features are weighted by distance, and the clusters are combined using a max-pooling strategy to form a single point.
 
 The final set of nodes is reduced using global max-pooling and passed through an FCNN to obtain the final target, which in our case is the pion energy or
-some variable related to the correction factor on the raw PF cluster energy.~\cite{GNN_DRN}--\cite{DGCNN}.
+some variable related to the correction factor on the raw PF cluster energy.
+
+This DRN model used in this thesis is based on the one which was successfully tested on the CMS high-granularity calorimeter test-beam data~\cite{GNN_DRN}.
+In this thesis, the equivalent model is tested on the simulated data of pions with CMS Run~3 ECAL and HCAL in both the barrel and endcap regions.
 
 \section{Results}
-The results of response and resolution in both barrel region and endcap region are shown in Figs.~\ref{fig:H_ratioflip}--\ref{fig:EH_trueE}.
+The results of response and resolution in both barrel region and endcap region are shown in Figs.~\ref{fig:H_trueE}--\ref{fig:EH_logratioflip}.
 The results are shown for the calibrations based on the DRN and the traditional method based on $\chi^2$ fit to the response distribution.
-Results for H hadrons are shown in Figs.~\ref{fig:H_ratioflip}-\ref{fig:H_trueE} and results for EH hadrons are shown in Figs.~\ref{fig:EH_ratioflip}--\ref{fig:EH_trueE}.
-Results are shown for four different targets used for the training, such as the generator particle's actual energy (true E),
-the ratio of the generator particle's actual energy to the PF cluster's raw energy (ratio), the ratio of the PF cluster's raw energy to the generator particle's actual energy (ratiofilp),
-and the logarithm of the ratio (log ratioflip).
+Results for H hadrons are shown in Figs.~\ref{fig:H_trueE}--\ref{fig:H_logratioflip} and results for EH hadrons are shown in Figs.~\ref{fig:EH_trueE}--\ref{fig:EH_logratioflip}.
+Results are shown for four different targets used for the training, such as the generator particle's actual energy ({\tt trueE}),
+the ratio of the generator particle's actual energy to the PF cluster's raw energy ({\tt ratio}), the ratio of the PF cluster's raw energy to the generator particle's actual energy ({\tt ratiofilp}),
+and the logarithm of the ratio ({\tt log(ratioflip)}).
 
 Regardless of the training targets, the DRN model provides a good response distribution.
 However, the response becomes slightly unstable for the endcap region outside the tracker overage (\ie, $|\eta|>2.5$).
 In terms of the resolution, the DRN model generally provides either similar performance or slight improvements over the traditional $\chi^2$ method for the H hadron case.
 More significant improvements are observed for EH hadrons, and the improvement in resolution is up to a factor of two.
-These results are still shown only for isolated single pions in simulation with pileup interactions, and we still need to see how it will work on more realistic collision events
-with pileup interactions for hadrons within ``jets'' where these corrections would play a most important role, however, results shown here are promising and motivate further exploration.
+These results are still shown only for isolated single pions in simulation without pileup interactions, and we still need to see how it will work on more realistic collision events
+with pileup interactions for hadrons within ``jets'' where these corrections would play a most important role; however, results shown here are promising and motivate further exploration.
 
 
 \include{./plots_tex/target_trueE_H_plots}
