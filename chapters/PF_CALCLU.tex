@@ -44,17 +44,23 @@ First, the PF algorithm reconstructs essential elements, such as charged particl
 Details of the clustering algorithm and the cluster calibration will be discussed later in this chapter.
 
 Second, it links these PF elements based on their spatial proximity in $\eta$-$\phi$ space.
-The linking order is: track $\rightarrow$ ECAL cluster $\rightarrow$ HCAL cluster.
+%The linking order is: track $\rightarrow$ ECAL cluster $\rightarrow$ HCAL cluster.
 Tracks and ECAL clusters, tracks and HCAL clusters, and inner tracks and muon tracks are examples of linked elements.
 Once all connections are established, PF blocks are formed, consisting of linked tracks and clusters.
 Any unlinked elements, such as isolated tracks or clusters, form separate blocks.
 
 Third, the algorithm reconstructs a list of PF particle candidates in a hierarchical order,
-beginning with the cleanest signatures in CMS: Muons are identified first, followed by isolated electrons and photons.
-Next, neutral hadrons and non-isolated photons are reconstructed.
-Finally, any remaining particles are classified as charged hadrons.
-The energy is determined for charged hadrons by comparing the cluster energy sum to the track momenta sum.
-Additionally, any isolated tracks are reconstructed as charge hadrons~\cite{PF_workshop}.
+beginning with the cleanest signatures in CMS: muons are identified first, followed by isolated electrons and photons.
+Next, neutral hadrons, non-isolated photons, and charged hadrons are reconstructed.
+%Finally, any remaining particles are classified as charged hadrons.
+The energy is determined for charged hadrons by comparing the cluster energy sum to the linked track momenta sum, and
+the significant excess in the calorimeter energy sum forms neutral hadrons and non-isolated photons.
+Additionally, any isolated tracks are reconstructed as charge hadrons,
+isolated ECAL clusters are reconstructed as photons, and
+isolated HCAL clusters are reconstructed as neutral hadrons~\cite{PF_workshop}.
+Details of the PF algorithm are described in Ref.~\cite{PF}.
+
+
 %............................................
 \subsection{Calorimeter Clustering}
 \label{subsec:clustering}
@@ -102,7 +108,7 @@ Here, the cluster energies and positions are determined using an iterative proce
         {In a topological cluster case, each seed is assumed to represent a unique energy cluster for multiple seeds.
           However, the energy deposited in non-cell seeds must be shared between the clusters within the topological cluster.
           An iterative procedure converges on cluster energies and positions based on the weighted average of fraction cell energies.
-          Figure source~\cite{Clustering}}
+          Figure source~\cite{Clustering}.}
 \label{fig:clustering}
 \end{figure}
 
@@ -149,10 +155,9 @@ The electromagnetic cluster calibration details are discussed in Chapter Four.
 Hadrons generally deposit their energies in the ECAL and HCAL.
 As described in the previous section, the ECAL has already been calibrated for photons.
 However, the ECAL has a different energy response to hadrons.
-The calibrated calorimeter energy associated with a hadron is expressed as in eq~\ref{eq:3}.
+The calibrated calorimeter energy associated with a hadron is expressed as in Eq.~\eqref{eq:3}.
 Using a large sample of simulated neutral hadrons, the calibration coefficients $a$, $b$, $c$, and the functions $f$ and $g$ are determined using the $\chi^{2}$ method~\cite{PF}.
 \begin{equation}
-
-  E_{calib} = a + b(E)f(\eta)E_{ECAL} + c(E)g(\eta)E_{HCAL}
+  E_\text{calib} = a + b(E)f(\eta)E_\text{ECAL} + c(E)g(\eta)E_\text{HCAL}
 \label{eq:3}
 \end{equation}
